@@ -4,8 +4,9 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import memesReducer from './allMemes';
+import singleMemeReducer from './SingleMemes';
 
-const reducer = combineReducers({ auth, memes: memesReducer });
+const reducer = combineReducers({ auth, memes: memesReducer , singleMeme: singleMemeReducer});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

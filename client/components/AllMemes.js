@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import  React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {getMemes} from '../store/allMemes'
-
+import {getMemes} from '../store/allMemes';
+import {Link} from 'react-router-dom';
 
 
 
@@ -20,12 +20,12 @@ function AllMemes(props) {
           <div key={meme.id} className="listed-meme">
             <h2>{meme.name}</h2>
             <h4>{meme.price}</h4>
-            <img src={meme.imgUrl} />
+            <Link to={`/memes/${meme.id}`}> <img src={meme.imageUrl} /></Link>
           </div>
         );
       })}
     </div>
   );
-};
+}
 
 export default AllMemes;
