@@ -12,3 +12,11 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
+
+router.post('/', async (req, res, next) => {
+  try {
+    const currentMeme = await Meme.findByPk();
+  } catch (err) {
+    next(err);
+  }
+});
