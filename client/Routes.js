@@ -4,6 +4,7 @@ import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import AllMemes from './components/AllMemes';
+import SingleMemes from './components/SingleMeme';
 import { me } from './store';
 
 /**
@@ -23,7 +24,8 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route path="/home" component={Home} />
-          <Route path="/memes" component={AllMemes}/>
+          <Route exact path="/memes" component={AllMemes}/>
+          <Route path="/memes/:id" component={SingleMemes}/>
           <Redirect to="/home" />
         </Switch>
       ) : (
