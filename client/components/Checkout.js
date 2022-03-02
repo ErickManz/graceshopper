@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import Confirmation from './Confirmation';
 import { useSelector, useDispatch } from 'react-redux';
 import {getMemes} from '../store/allMemes'
+import {Link} from 'react-router-dom'
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.memes); //PLACEHOLDER for cartItem slice
@@ -16,7 +17,7 @@ export default function Checkout() {
       <table>
       <thead>
         <tr>
-            <th>Meme</th>
+            <th scope='col'>Meme</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
         </tr>
@@ -29,8 +30,18 @@ export default function Checkout() {
               <td>Quantity: 2</td>
             </tr>
           ))}
+          <tr><td>Total: $70</td></tr>
       </tbody>
       </table>
+      <div className="payment">
+          Payment Options
+      </div>
+      <div className="Shipping Address">
+            Shipping Address
+      </div>
+      <Link to="/confirmation">
+      <button type="submit" label="confirm purchase">Confirm Purchase</button>
+      </Link>
     </div>
   );
 }
