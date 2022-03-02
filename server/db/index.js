@@ -7,6 +7,17 @@ const CartItem = require('./models/CartItem');
 const ShoppingSession = require('./models/ShoppingSession');
 //associations could go here!
 
+User.hasOne(ShoppingSession);
+ShoppingSession.belongsTo(User);
+
+CartItem.belongsTo(Meme);
+Meme.hasMany(CartItem);
+
+ShoppingSession.hasMany(CartItem);
+CartItem.belongsTo(ShoppingSession);
+
+Meme;
+
 module.exports = {
   db,
   models: {
