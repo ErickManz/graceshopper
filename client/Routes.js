@@ -4,6 +4,7 @@ import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import AllMemes from './components/AllMemes';
+import Confirmation from './components/Confirmation'
 import { me } from './store';
 
 /**
@@ -24,13 +25,12 @@ const Routes = () => {
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/memes" component={AllMemes}/>
+          <Route path="/confirmation" component={Confirmation}/>
           <Redirect to="/home" />
         </Switch>
       ) : (
         <Switch>
-          <Route path="/" exact>
-            {Login}
-          </Route>
+          <Route path="/" exact>{Login}</Route>
           <Route path="/login">{Login}</Route>
           <Route path="/signup">{Signup}</Route>
         </Switch>
