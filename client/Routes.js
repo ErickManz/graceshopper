@@ -6,6 +6,7 @@ import Home from './components/Home';
 import AllMemes from './components/AllMemes';
 import SingleMemes from './components/SingleMeme';
 import Confirmation from './components/Confirmation'
+import Checkout from './components/Checkout'
 import { me } from './store';
 
 /**
@@ -29,10 +30,13 @@ const Routes = () => {
           <Route path="/memes/:id" component={SingleMemes}/>
           <Route path="/memes" component={AllMemes}/>
           <Route path="/confirmation" component={Confirmation}/>
+          <Route path="/checkout" component={Checkout}/>
           <Redirect to="/home" />
         </Switch>
       ) : (
         <Switch>
+          <Route path="/confirmation" component={Confirmation}/>
+          <Route path="/checkout" component={Checkout}/>
           <Route path="/" exact>{Login}</Route>
           <Route path="/login">{Login}</Route>
           <Route path="/signup">{Signup}</Route>
