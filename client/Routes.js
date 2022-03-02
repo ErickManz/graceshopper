@@ -23,6 +23,7 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route path="/home" component={Home} />
+          <Route path="/memes" component={AllMemes}/>
           <Redirect to="/home" />
         </Switch>
       ) : (
@@ -32,7 +33,6 @@ const Routes = () => {
           </Route>
           <Route path="/login">{Login}</Route>
           <Route path="/signup">{Signup}</Route>
-          <Route path="/memes">{AllMemes}</Route>
         </Switch>
       )}
     </div>
