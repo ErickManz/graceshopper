@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Meme },
+  models: { User, Meme, ShoppingSession, CartItem },
 } = require('../server/db');
 
 /**
@@ -67,12 +67,26 @@ async function seed() {
     }),
   ]);
 
+  const cartItems = await Promise.all([
+    CartItem.create({ quantity: 1 }),
+    CartItem.create({ quantity: 2 }),
+  ]);
+
+  const session = await ShoppingSession.create({ total: 30.0 });
+
+  await users[0].setShoppingSession(session);
+  await session.setCartItems([...cartItems]);
+  await cartItems[0].setMeme(memes[4]);
+  await cartItems[1].setMeme(memes[0]);
+
   return {
     users: {
       cody: users[0],
       murphy: users[1],
     },
     memes,
+    cartItems,
+    session,
   };
 }
 
