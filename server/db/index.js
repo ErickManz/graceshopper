@@ -16,8 +16,6 @@ Meme.hasMany(CartItem);
 ShoppingSession.hasMany(CartItem);
 CartItem.belongsTo(ShoppingSession);
 
-Meme;
-
 module.exports = {
   db,
   models: {
