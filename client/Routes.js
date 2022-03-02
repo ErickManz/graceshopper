@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import AllMemes from './components/AllMemes';
 import SingleMemes from './components/SingleMeme';
+import Confirmation from './components/Confirmation'
 import { me } from './store';
 
 /**
@@ -26,13 +27,13 @@ const Routes = () => {
           <Route path="/home" component={Home} />
           <Route exact path="/memes" component={AllMemes}/>
           <Route path="/memes/:id" component={SingleMemes}/>
+          <Route path="/memes" component={AllMemes}/>
+          <Route path="/confirmation" component={Confirmation}/>
           <Redirect to="/home" />
         </Switch>
       ) : (
         <Switch>
-          <Route path="/" exact>
-            {Login}
-          </Route>
+          <Route path="/" exact>{Login}</Route>
           <Route path="/login">{Login}</Route>
           <Route path="/signup">{Signup}</Route>
         </Switch>
