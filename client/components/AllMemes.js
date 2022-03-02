@@ -1,15 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {getMemes} from '../store/allMemes'
 
-const memes = [
-  { id: 1, name: 'wojak', price: 25.99, imgUrl: 'testurl' },
-  { id: 2, name: 'Elmo burns', price: 34.99, imgUrl: 'testurl' },
-  { id: 3, name: 'pepe', price: 19.99, imgUrl: 'testurl' },
-];
 
-const AllMemes = () => {
-  return (
-    <div id="all-meme-view">
+
+
+function AllMemes(props) {
+  const memes = useSelector(state => state.memes)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getMemes());
+  }, []);
+
+
+  return (<div id="all-meme-view">
       {memes.map((meme) => {
         return (
           <div key={meme.id} className="listed-meme">
