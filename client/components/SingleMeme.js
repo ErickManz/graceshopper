@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMeme } from '../store/SingleMeme';
+import { getMeme } from '../store/singleMeme';
 
 
 function SingleMeme(props) {

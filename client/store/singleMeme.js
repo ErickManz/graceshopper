@@ -18,7 +18,7 @@ export const getMeme = (id) => {
   };
 };
 
-const singleMemeReducer = (meme = {}, action) => {
+export default singleMemeReducer = (meme = {}, action) => {
   switch (action.type) {
     case SET_MEME:
       return action.meme;
@@ -26,4 +26,3 @@ const singleMemeReducer = (meme = {}, action) => {
       return meme;
   }
 };
-export default singleMemeReducer;
