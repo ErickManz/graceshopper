@@ -5,9 +5,9 @@
 ### Meme
 
 - This seems to be your product entity.
-- should Artist be a separate table so you can later on browse by artist?
+- should Artist be a separate table so you can later on browse by artist? (also not Tier 1 necessarily)
 - Stockquantity is nice to have but not a Tier 1 function (it's related to inventory management)
-- Should genre be a table of genres?
+- Should genre be a table of genres? (Also not tier 1 necessarily)
 - price should probably be DECIMAL(10, 2)
 - imageURL should probably be TEXT (because of possible URL length)
 - should the Meme name be unique?
