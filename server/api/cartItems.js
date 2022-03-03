@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const { body, validationResult } = require('express-validator');
+
 const {
   models: { User, Meme, ShoppingSession, CartItem },
 } = require('../db');
@@ -59,12 +61,30 @@ router.post('/:id/cart', async (req, res, next) => {
 });
 
 router.delete('/:id/cart', async (req, res, next) => {
-  try{
-    const itemToDelete = await CartItem.findByPk(req.body.id)
-    itemToDelete.destroy()
-    res.json(itemToDelete)
-
-  }catch(error){
-    next(error)
+  try {
+    const itemToDelete = await CartItem.findByPk(req.body.id);
+    itemToDelete.destroy();
+    res.json(itemToDelete);
+  } catch (error) {
+    next(error);
   }
-})
+});
+
+//edit quantity of cart item
+//validating that body of request is an integer with express-validator
+router.put('/:id/cart/',  async (req, res, next) => {
+  try {
+
+    const itemToUpdate = await CartItem.findByPk(req.body.id);
+    if (req.body.quantity === 0) {
+      await itemToUpdate.destroy();
+    } else {
+       itemToUpdate.quantity = req.body.quantity;
+       await itemToUpdate.save()
+    }
+
+    res.send(itemToUpdate)
+  } catch (error) {
+    next(error);
+  }
+});
