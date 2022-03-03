@@ -13,7 +13,7 @@ router.get('/:id', async (req, res, next) => {
         userId: req.params.id,
       },
     });
-    console.log(currentSession)
+
     const items = await CartItem.findAll({
       where: {
         shoppingSessionId: currentSession.id,
@@ -58,7 +58,7 @@ router.post('/:id/cart', async (req, res, next) => {
   }
 });
 
-router.delete(':id/cart', async (req, res, next) => {
+router.delete('/:id/cart', async (req, res, next) => {
   try{
     const itemToDelete = await CartItem.findByPk(req.body.id)
     itemToDelete.destroy()
