@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSingleMeme } from '../store/SingleMemes';
+import { getSingleMeme, addCartItem } from '../store/SingleMemes';
 
 
 function SingleMemes(props) {
@@ -20,7 +20,7 @@ function SingleMemes(props) {
             <img src={meme.imageUrl} />
             <p>{`${meme.description} by ${meme.artist}`}</p>
             <h4>{meme.stockQuantity}</h4>
-            <button type= "button" >Add to cart </button>
+            <button type= "button" onClick={() =>dispatch(addCartItem()) } >Add to cart </button>
           </div>
 
   );
