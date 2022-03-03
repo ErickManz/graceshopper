@@ -5,7 +5,7 @@
 ### Meme
 
 - This seems to be your product entity.
-- should Artist be a separate table so you can later on browse by artist? (also not Tier 1 necessarily)
+- should Artist be a separate table so you can later on browse by artist? (also not Tier 1 necessarily) (and actually are artists users of the site as well with a different role?)
 - Stockquantity is nice to have but not a Tier 1 function (it's related to inventory management)
 - Should genre be a table of genres? (Also not tier 1 necessarily)
 - price should probably be DECIMAL(10, 2)
