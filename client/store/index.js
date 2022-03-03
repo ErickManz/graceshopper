@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import memesReducer from './allMemes';
-import singleMemeReducer from './singleMemes';
+import singleMemeReducer from './singleMeme';
 
 const reducer = combineReducers({
   auth,

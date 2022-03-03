@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSingleMeme } from '../store/SingleMemes';
+import { getMeme } from '../store/SingleMeme';
 
 
-function SingleMemes(props) {
+function SingleMeme(props) {
   const meme = useSelector(state => state.singleMeme)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getSingleMeme(props.match.params.id));
+    dispatch(getMeme(props.match.params.id));
   }, []);
 
 //current can not set up the function of adding to the cart
@@ -26,4 +26,4 @@ function SingleMemes(props) {
   );
 }
 
-export default SingleMemes;
+export default SingleMeme;

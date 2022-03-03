@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-const GET_SINGLE_MEME = 'GET_SINGLE_MEME';
+const SET_MEME = 'SET_MEME';
 
-const singleMeme = (meme) => ({
-  type: GET_SINGLE_MEME,
+const setMeme = (meme) => ({
+  type: SET_MEME,
   meme,
 });
 
-export const getSingleMeme = (id) => {
+export const getMeme = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/memes/${id}`);
-      dispatch(singleMeme(data));
+      dispatch(setMeme(data));
     } catch (error) {
       console.error(error);
     }
@@ -20,7 +20,7 @@ export const getSingleMeme = (id) => {
 
 const singleMemeReducer = (meme = {}, action) => {
   switch (action.type) {
-    case GET_SINGLE_MEME:
+    case SET_MEME:
       return action.meme;
     default:
       return meme;
