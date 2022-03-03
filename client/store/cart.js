@@ -4,11 +4,11 @@ const ADD_ITEM = 'ADD_ITEM';
 
 export const addItem = (item) => ({ type: ADD_ITEM, item });
 
-export const fetchItems = (id) => async (dispatch) => {
-  const response = await axios.post(`/api/memes/${id}/cart`);
-  const item = response.data;
-  console.log(item);
-  dispatch(addItem(item));
+export const fetchItems = (id, item) => async (dispatch) => {
+  const response = await axios.post(`/api/cartitems/${id}/cart`, item);
+  const newitem = response.data;
+  console.log(newitem);
+  dispatch(addItem(newitem));
 };
 
 // export const addItem = () => async (dispatch) => {};

@@ -17,29 +17,3 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
-
-router.post('/:id/cart', async (req, res, next) => {
-  try {
-    // const id = req.params.id;
-    const currentUser = await User.findByPk({
-      where: {
-        id: req.params.id,
-      },
-    });
-    // const currentSession = await ShoppingSession.findByPk({
-    //   where: {
-    //     id: currentUser,
-    //   },
-    // });
-
-    // currentSession.addCartItem(memeId);
-    // console.log(Object.keys(currentMeme.__proto__));
-    res.json(currentUser);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// find user
-// use user to find sessionId
-// check sessionId for cartItemID
