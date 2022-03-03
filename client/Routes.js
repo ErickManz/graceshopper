@@ -1,7 +1,7 @@
 import React, { Component, Fragment, useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
+import { Login, Signup } from './components/forms/AuthForm';
 import Home from './components/Home';
 import AllMemes from './components/AllMemes';
 import SingleMemes from './components/SingleMeme';
