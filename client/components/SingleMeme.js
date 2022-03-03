@@ -6,7 +6,7 @@ import {me} from '../store';
 
 
 
-function SingleMemes(props) {
+function SingleMeme(props) {
   const meme = useSelector(state => state.singleMeme)
   const user = useSelector(state => state.auth.id);
   const [quantity, setQuantity] = useState(1);
@@ -41,4 +41,4 @@ function SingleMemes(props) {
   );
 }
 
-export default SingleMemes;
+export default SingleMeme;
