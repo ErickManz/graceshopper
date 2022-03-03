@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const GET_USER = "GET_USER"
 
-const singleUser = (user) =>({
+const AllUser = (user) =>({
   type:GET_USER,
   user
 })
@@ -10,14 +10,14 @@ const singleUser = (user) =>({
 export const getUser = () =>{
   return async (dispatch) =>{
     try {
-      const {data} = await axios.get('/auth/me')
-      dispatch(singleUser(data));
+      const {data} = await axios.get('/api/users')
+      dispatch(AllUser(data));
     }catch(error) {
     console.error(error)
     }
   }
 }
-const userReducer = (user = {}, action) =>{
+const userReducer = (user = [], action) =>{
   switch(action.type){
     case GET_USER:
       return action.user
