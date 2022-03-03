@@ -8,12 +8,12 @@ module.exports = router;
 //get route is user session NOT shopping session
 router.get('/:id', async (req, res, next) => {
   try {
+    const id = req.params.id
     const currentSession = await ShoppingSession.findOne({
       where: {
-        userId: req.params.id,
+        userId: id,
       },
     });
-
     const items = await CartItem.findAll({
       where: {
         shoppingSessionId: currentSession.id,
