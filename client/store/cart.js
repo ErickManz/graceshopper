@@ -21,19 +21,20 @@ export const getItems = (id) => {
   };
 };
 
+
 export const addItems = (id, item) => async (dispatch) => {
   const response = await axios.post(`/api/cartitems/${id}/cart`, item);
   const newitem = response.data;
   console.log(item);
   dispatch(addItem(newitem));
-};
-
+}
 const cartItemsReducer = (items = [], action) => {
   switch (action.type) {
     case SET_ITEMS:
       return action.cartItems;
     case ADD_ITEM:
       return [...items, action.item];
+
     default:
       return items;
   }
