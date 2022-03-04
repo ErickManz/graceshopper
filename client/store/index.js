@@ -5,14 +5,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import memesReducer from './allMemes';
 import singleMemeReducer from './singleMeme';
-import cartItemsReducer from './cart';
+import OrderItemsReducer from './Order';
 
 
 const reducer = combineReducers({
   auth,
   memes: memesReducer,
   singleMeme: singleMemeReducer,
-  cartItems: cartItemsReducer,
+  OrderItems: OrderItemsReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

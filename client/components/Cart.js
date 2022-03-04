@@ -1,23 +1,26 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../store/cart';
+import { getItems } from '../store/Order';
 import { Link } from 'react-router-dom';
+import {me} from '../store'
 
 function Cart(props) {
-  const cartItems = useSelector((state) => state.items);
+  const OrderItems = useSelector((state) => state.OrderItems);
+  const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
   //not sure why getItem wont mount? I tried hardcoding userID.
   useEffect(() => {
-    // dispatch(getItems());
+     dispatch(me())
+     dispatch(getItems(user));
   }, []);
 
   console.log(props);
   return (
     <div>
-      {/* <div key={cartItems.id} className="cartItem">
+      {/* <div key={OrderItems.id} className="OrderItem">
         <h2></h2>
-        <h4>{cartItems.quantity}</h4> */}
+        <h4>{OrderItems.quantity}</h4> */}
       <button type="button">
         {' '}
         <Link to="/checkout">Checkout </Link>

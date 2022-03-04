@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import Confirmation from './Confirmation';
 import { useSelector, useDispatch } from 'react-redux';
-import {getItems} from '../store/cart'
+import {getItems} from '../store/Order'
 import {Link} from 'react-router-dom'
 
 export default function Checkout() {
-  const cartItems = useSelector((state) => state.items); //PLACEHOLDER for cartItem slice
+  const OrderItems = useSelector((state) => state.items); //PLACEHOLDER for OrderItem slice
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Checkout() {
         </tr>
         </thead>
         <tbody>
-          {cartItems.map((meme) => (
+          {OrderItems.map((meme) => (
             <tr key={meme.id}>
               <td>{meme.name}</td>
               <td>${meme.price}</td>

@@ -10,14 +10,14 @@ const Meme = db.define('meme', {
     },
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.DECIMAL(10,2),
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     defaultValue: 'https://imgflip.com/i/672dsa',
   },
   description: {
@@ -25,9 +25,6 @@ const Meme = db.define('meme', {
   },
   stockQuantity: {
     type: Sequelize.INTEGER,
-  },
-  artist: {
-    type: Sequelize.STRING,
   },
 });
 

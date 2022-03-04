@@ -2,7 +2,7 @@ import  React, { useEffect,useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {getMemes} from '../store/allMemes';
 import {Link} from 'react-router-dom';
-import { addItems } from '../store/cart';
+import { addItems } from '../store/Order';
 import {me} from '../store';
 
 

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
 const {
-  models: { User, Meme, ShoppingSession, CartItem },
+  models: { User, Meme, Orders, OrderItem },
 } = require('../db');
 
 module.exports = router;
@@ -11,14 +11,14 @@ module.exports = router;
 router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id
-    const currentSession = await ShoppingSession.findOne({
+    const currentSession = await Orders.findOne({
       where: {
         userId: id,
       },
     });
-    const items = await CartItem.findAll({
+    const items = await OrderItem.findAll({
       where: {
-        shoppingSessionId: currentSession.id,
+        OrdersId: currentSession.id,
       },
     });
     res.json(items);
@@ -34,25 +34,25 @@ router.post('/:id/cart', async (req, res, next) => {
 
     const currentUser = await User.findByPk(req.params.id);
 
-    const [currentSession, created] = await ShoppingSession.findOrCreate({
+    const [currentSession, created] = await Orders.findOrCreate({
       where: {
         userId: currentUser.id,
       },
     });
 
-    const currentItem = await CartItem.create({
+    const currentItem = await OrderItem.create({
       memeId: req.body.memeId,
 
       quantity: req.body.quantity,
     });
 
     if (currentSession) {
-      currentSession.addCartItem(currentItem);
+      currentSession.addOrderItem(currentItem);
       // console.log(Object.keys(currentSession.__proto__));
       res.json(currentSession);
     } else {
       created.setUser(currentUser);
-      created.addCartItem(currentItem);
+      created.addOrderItem(currentItem);
       res.json(created);
     }
   } catch (err) {
@@ -62,7 +62,7 @@ router.post('/:id/cart', async (req, res, next) => {
 
 router.delete('/:id/cart', async (req, res, next) => {
   try {
-    const itemToDelete = await CartItem.findByPk(req.body.id);
+    const itemToDelete = await OrderItem.findByPk(req.body.id);
     itemToDelete.destroy();
     res.json(itemToDelete);
   } catch (error) {
@@ -75,7 +75,7 @@ router.delete('/:id/cart', async (req, res, next) => {
 router.patch('/:id/cart/',  async (req, res, next) => {
   try {
 
-    const itemToUpdate = await CartItem.findByPk(req.body.id);
+    const itemToUpdate = await OrderItem.findByPk(req.body.id);
     if (req.body.quantity === 0) {
       await itemToUpdate.destroy();
     } else {
