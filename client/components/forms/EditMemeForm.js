@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { editMeme } from '../../store/singleMeme';
 
 function EditMemeForm(props) {
   const meme = props.meme;
@@ -14,11 +15,12 @@ function EditMemeForm(props) {
     const val = e.target.value;
 
     setFormData({ ...formData, [name]: val });
-    console.log(formData);
   };
 
-  const handleSubmit = () => {
-    console.log('hi');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(meme);
+    dispatch(editMeme(formData));
   };
 
   return (
