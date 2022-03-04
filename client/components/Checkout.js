@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import Confirmation from './Confirmation';
 import { useSelector, useDispatch } from 'react-redux';
-import {getMemes} from '../store/allMemes'
+import {getItems} from '../store/cart'
 import {Link} from 'react-router-dom'
 
 export default function Checkout() {
-  const cartItems = useSelector((state) => state.memes); //PLACEHOLDER for cartItem slice
+  const cartItems = useSelector((state) => state.items); //PLACEHOLDER for cartItem slice
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMemes());
+    dispatch(getItems());
   }, []);
 
 
