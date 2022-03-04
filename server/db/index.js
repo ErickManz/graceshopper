@@ -5,6 +5,7 @@ const Meme = require('./models/Meme');
 const User = require('./models/User');
 const CartItem = require('./models/CartItem');
 const ShoppingSession = require('./models/ShoppingSession');
+const Genre = require('./models/Genre');
 //associations could go here!
 
 User.hasOne(ShoppingSession);
@@ -16,6 +17,9 @@ Meme.hasMany(CartItem);
 ShoppingSession.hasMany(CartItem);
 CartItem.belongsTo(ShoppingSession);
 
+Genre.hasMany(Meme);
+Meme.hasOne(Genre);
+
 module.exports = {
   db,
   models: {
@@ -23,5 +27,6 @@ module.exports = {
     Meme,
     CartItem,
     ShoppingSession,
+    Genre,
   },
 };
