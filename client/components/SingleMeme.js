@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMeme } from '../store/singleMeme';
-import { addItems } from '../store/cart';
+// import { addItems } from '../store/cart';
 import { me } from '../store';
 
 function SingleMeme(props) {

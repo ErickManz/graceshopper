@@ -19,10 +19,10 @@ ShoppingSession.hasMany(CartItem);
 CartItem.belongsTo(ShoppingSession);
 
 Genre.hasMany(Meme);
-Meme.hasOne(Genre);
+Meme.belongsTo(Genre);
 
 Role.hasMany(User);
-User.hasOne(Role);
+User.belongsTo(Role);
 
 module.exports = {
   db,
