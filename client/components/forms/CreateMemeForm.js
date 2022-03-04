@@ -57,14 +57,6 @@ function CreateMemeForm(props) {
           onChange={handleChange}
         />
 
-        <label htmlFor="genre">Genre:</label>
-        <input
-          name="genre"
-          placeholder="Genre"
-          value={formData.genre}
-          onChange={handleChange}
-        />
-
         <label htmlFor="stockQuantity">Stock Quantity:</label>
         <input
           type="number"
@@ -72,14 +64,6 @@ function CreateMemeForm(props) {
           placeholder="Qty"
           step="1"
           value={formData.stockQuantity}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="artist">Artist:</label>
-        <input
-          name="artist"
-          placeholder="Artist"
-          value={formData.artist}
           onChange={handleChange}
         />
 
