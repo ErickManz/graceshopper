@@ -7,6 +7,7 @@ const {
 
 module.exports = router;
 
+
 //get route is user session NOT shopping session
 router.get('/:id', async (req, res, next) => {
   try {
@@ -15,6 +16,10 @@ router.get('/:id', async (req, res, next) => {
         userId: req.params.id,
       },
     });
+
+    if(currentSession=== null){
+      throw new Error('Invalid User Id')
+    }
 
     const items = await CartItem.findAll({
       where: {
@@ -70,7 +75,7 @@ router.post('/:id/cart', isValidMeme(), body('quantity').isInt({min: 1}), async 
       res.json(created);
     }
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 });
 
@@ -82,6 +87,10 @@ const isValidCartItem = () => body('id').custom(async (cartItemId) => {
 })
 router.delete('/:id/cart', isValidCartItem(), async (req, res, next) => {
   try {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      throw errors.mapped()
+    }
     const itemToDelete = await CartItem.findByPk(req.body.id);
     itemToDelete.destroy();
     res.json(itemToDelete);
@@ -94,7 +103,10 @@ router.delete('/:id/cart', isValidCartItem(), async (req, res, next) => {
 //validating that body of request is an integer with express-validator
 router.patch('/:id/cart/', isValidCartItem(), async (req, res, next) => {
   try {
-
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      throw errors.mapped()
+    }
     const itemToUpdate = await CartItem.findByPk(req.body.id);
     if (req.body.quantity === 0) {
       await itemToUpdate.destroy();
