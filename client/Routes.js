@@ -1,5 +1,5 @@
 import React, { Component, Fragment, useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/forms/AuthForm';
 import Home from './components/Home';
@@ -9,6 +9,7 @@ import Confirmation from './components/Confirmation';
 import Checkout from './components/Checkout';
 import CreateMemeForm from './components/forms/CreateMemeForm'
 import { me } from './store';
+import Cart from './components/Cart';
 
 /**
  * COMPONENT
@@ -30,8 +31,10 @@ const Routes = () => {
           <Route exact path="/memes" component={AllMemes} />
           <Route path="/memes/:id" component={SingleMeme} />
           <Route path="/confirmation" component={Confirmation} />
+          <Route path="/mycart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
-          <Route path='/createMeme' component={CreateMemeForm} />
+          <Route path="/createMeme" component={CreateMemeForm} />
+
           <Redirect to="/home" />
         </Switch>
       ) : (
