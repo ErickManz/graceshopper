@@ -74,7 +74,13 @@ router.post('/:id/cart', isValidMeme(), body('quantity').isInt({min: 1}), async 
   }
 });
 
-router.delete('/:id/cart', async (req, res, next) => {
+const isValidCartItem = () => body('id').custom(async (cartItemId) => {
+  const meme = await CartItem.findByPk(cartItemId)
+  if(meme===null){
+    throw new Error('Invalid CartItemId')
+  }
+})
+router.delete('/:id/cart', isValidCartItem(), async (req, res, next) => {
   try {
     const itemToDelete = await CartItem.findByPk(req.body.id);
     itemToDelete.destroy();
@@ -86,7 +92,7 @@ router.delete('/:id/cart', async (req, res, next) => {
 
 //edit quantity of cart item
 //validating that body of request is an integer with express-validator
-router.patch('/:id/cart/',  async (req, res, next) => {
+router.patch('/:id/cart/', isValidCartItem(), async (req, res, next) => {
   try {
 
     const itemToUpdate = await CartItem.findByPk(req.body.id);
