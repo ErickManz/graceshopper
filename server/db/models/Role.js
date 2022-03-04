@@ -6,9 +6,6 @@ const Role = db.define('role', {
     type: Sequelize.ENUM,
     values: ['admin', 'user', 'guest'],
   },
-  isAdmin: {
-    type: Sequelize.BOOLEAN,
-  },
 });
 
 module.exports = Role;

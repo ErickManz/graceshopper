@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Confirmation from './Confirmation';
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchItems} from '../store/cart'
+import {getItems} from '../store/cart'
 import {Link} from 'react-router-dom'
 
 export default function Checkout() {
@@ -9,7 +9,7 @@ export default function Checkout() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchItems());
+    dispatch(getItems());
   }, []);
 
 
