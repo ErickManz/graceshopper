@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { createMeme } from '../../store/allMemes';
 
 function CreateMemeForm(props) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: '',
     price: 0,
@@ -17,12 +19,16 @@ function CreateMemeForm(props) {
     const val = e.target.value;
 
     setFormData({ ...formData, [name]: val });
-    console.log(formData);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createMeme(formData));
   };
 
   return (
     <div className="create-edit">
-      <form id="create-meme">
+      <form id="create-meme" onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
           name="name"
@@ -62,8 +68,9 @@ function CreateMemeForm(props) {
         <label htmlFor="stockQuantity">Stock Quantity:</label>
         <input
           type="number"
-          name="stockQantityu"
+          name="stockQuantity"
           placeholder="Qty"
+          step="1"
           value={formData.stockQuantity}
           onChange={handleChange}
         />
