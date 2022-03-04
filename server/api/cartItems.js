@@ -72,15 +72,14 @@ router.delete('/:id/cart', async (req, res, next) => {
 
 //edit quantity of cart item
 //validating that body of request is an integer with express-validator
-router.put('/:id/cart/',  async (req, res, next) => {
+router.patch('/:id/cart/',  async (req, res, next) => {
   try {
 
     const itemToUpdate = await CartItem.findByPk(req.body.id);
     if (req.body.quantity === 0) {
       await itemToUpdate.destroy();
     } else {
-       itemToUpdate.quantity = req.body.quantity;
-       await itemToUpdate.save()
+      await itemToUpdate.update({quantity: req.body.quantity})
     }
 
     res.send(itemToUpdate)
