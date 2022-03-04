@@ -23,13 +23,6 @@ const Meme = db.define('meme', {
   description: {
     type: Sequelize.TEXT,
   },
-  genre: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-  },
   stockQuantity: {
     type: Sequelize.INTEGER,
   },
