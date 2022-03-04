@@ -7,6 +7,7 @@ const {
 
 module.exports = router;
 
+
 //get route is user session NOT shopping session
 router.get('/:id', async (req, res, next) => {
   try {
@@ -16,6 +17,12 @@ router.get('/:id', async (req, res, next) => {
         userId: id,
       },
     });
+
+
+    if(currentSession=== null){
+      throw new Error('Invalid User Id')
+    }
+
     const items = await CartItem.findAll({
       where: {
         shoppingSessionId: currentSession.id,
@@ -28,10 +35,24 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //post item here
-router.post('/:id/cart', async (req, res, next) => {
-  try {
-    // const id = req.params.id;
+//callback custom validator that checks if memeId is in our database
+const isValidMeme = () => body('memeId').custom(async (memeId) => {
+  const meme = await Meme.findByPk(memeId)
+  if(meme===null){
+    throw new Error('Invalid MemeId')
+  }
+})
 
+//validation for quantity > 1, valid memeId
+router.post('/:id/cart', isValidMeme(), body('quantity').isInt({min: 1}), async (req, res, next) => {
+  try {
+    //collects errors from validators
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      throw errors.mapped()
+    }
+
+  
     const currentUser = await User.findByPk(req.params.id);
 
     const [currentSession, created] = await ShoppingSession.findOrCreate({
@@ -60,8 +81,18 @@ router.post('/:id/cart', async (req, res, next) => {
   }
 });
 
-router.delete('/:id/cart', async (req, res, next) => {
+const isValidCartItem = () => body('id').custom(async (cartItemId) => {
+  const meme = await CartItem.findByPk(cartItemId)
+  if(meme===null){
+    throw new Error('Invalid CartItemId')
+  }
+})
+router.delete('/:id/cart', isValidCartItem(), async (req, res, next) => {
   try {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      throw errors.mapped()
+    }
     const itemToDelete = await CartItem.findByPk(req.body.id);
     itemToDelete.destroy();
     res.json(itemToDelete);
@@ -72,9 +103,12 @@ router.delete('/:id/cart', async (req, res, next) => {
 
 //edit quantity of cart item
 //validating that body of request is an integer with express-validator
-router.patch('/:id/cart/',  async (req, res, next) => {
+router.patch('/:id/cart/', isValidCartItem(), async (req, res, next) => {
   try {
-
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      throw errors.mapped()
+    }
     const itemToUpdate = await CartItem.findByPk(req.body.id);
     if (req.body.quantity === 0) {
       await itemToUpdate.destroy();
