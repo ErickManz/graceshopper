@@ -9,9 +9,11 @@ module.exports = router;
 
 
 //get route is user session NOT shopping session
+//secure cart / user
+//reads token via payload
 router.get('/:id', async (req, res, next) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
     const currentSession = await ShoppingSession.findOne({
       where: {
         userId: id,
@@ -27,6 +29,7 @@ router.get('/:id', async (req, res, next) => {
       where: {
         shoppingSessionId: currentSession.id,
       },
+      include: [{ model: Meme }],
     });
     res.json(items);
   } catch (err) {
