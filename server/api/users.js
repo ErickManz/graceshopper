@@ -3,8 +3,9 @@ const {
   models: { User, Meme, Orders, OrderItem },
 } = require('../db');
 module.exports = router;
+const { requireToken } = require('../security/gatekeeping');
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
