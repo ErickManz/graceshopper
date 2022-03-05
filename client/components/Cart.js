@@ -6,7 +6,7 @@ import { me } from '../store';
 
 function Cart(props) {
   //should match reducer key
-  // const cartItems = useSelector((state) => state.cartItems);
+  const cartItems = useSelector((state) => state.cartItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
@@ -17,19 +17,28 @@ function Cart(props) {
     dispatch(getItems(user));
   }, []);
 
-  console.log(user);
+  // console.log(user);
 
-  // console.log(cartItems);
+  console.log(cartItems);
+
   return (
     <div>
-      {/* <div key={cartItems.id} className="cartItem"> */}
-      <h2></h2>
-      {/* <h4>{cartItems.quantity}</h4> */}
-      <button type="button">
-        <Link to="/checkout">Checkout </Link>
-      </button>
+      <div className="cartItem">
+        {cartItems.map((cartItem) => (
+          <div key={cartItem.id}>
+            <h3>{cartItem.meme.name}</h3>
+            <img src={cartItem.meme.imageUrl}></img>
+            <h3>Price: {cartItem.meme.price}</h3>
+            <h3>Quantity: {cartItem.quantity}</h3>
+          </div>
+        ))}
+        <h2></h2>
+        <h4>{cartItems.quantity}</h4>
+        <button type="button">
+          <Link to="/checkout">Checkout </Link>
+        </button>
+      </div>
     </div>
-    // </div>
   );
 }
 

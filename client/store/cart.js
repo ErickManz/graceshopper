@@ -10,7 +10,7 @@ export const setItems = (items) => ({
 // export const addItem = (cartItem) => ({ type: ADD_ITEM, cartItem });
 
 export const getItems = (id) => {
-  async (dispatch) => {
+  return async (dispatch) => {
     console.log('test');
     try {
       const response = await axios.get(`/api/cartitems/${id}`);
@@ -30,11 +30,11 @@ export const getItems = (id) => {
 //   console.log(item);
 //   dispatch(addItem(newitem));
 // };
-const item = [1];
-const cartItemsReducer = (items = item, action) => {
+
+const cartItemsReducer = (items = [], action) => {
   switch (action.type) {
     case SET_ITEMS:
-      return [items, ...action.items];
+      return [...action.items];
     // case ADD_ITEM:
     //   return [...items, action.item];
     default:
