@@ -10,8 +10,7 @@ const SingleUser =(user) => ({
 export const getUser = (id) => {
   return async (dispatch) =>{
     try{
-      const {data} =await axios.get(`api/users/${id}`);
-      console.log(data);
+      const {data} =await axios.get(`/api/users/${id}`);
       dispatch(SingleUser(data));
     }catch(error){
       console.error(error);

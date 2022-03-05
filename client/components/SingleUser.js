@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getUser } from '../store/User';
+import { getUser } from '../store/SingleUser';
 
 function SingleUser(props){
-  const {user} = useSelector((state)=> state.user)
+  const user = useSelector((state)=> state.singleUser)
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getUser(props.match.params.id))

@@ -2,12 +2,10 @@ import axios from 'axios';
 
 const GET_USER = "GET_USER"
 
-
 const AllUser = (users) =>({
   type:GET_USER,
   users
 })
-
 
 export const getUsers = () =>{
   return async (dispatch) =>{
