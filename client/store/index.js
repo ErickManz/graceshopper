@@ -6,6 +6,7 @@ import auth from './auth';
 import memesReducer from './allMemes';
 import singleMemeReducer from './singleMeme';
 import OrderItemsReducer from './Order';
+import userReducer from './User';
 
 
 const reducer = combineReducers({
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   memes: memesReducer,
   singleMeme: singleMemeReducer,
   OrderItems: OrderItemsReducer,
+  user: userReducer
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
