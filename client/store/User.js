@@ -33,14 +33,18 @@ export const getUser = (id) => {
     }
   }
 }
-const userReducer = (user = [], action) =>{
+const userState ={
+  users:[],
+  user:{}
+}
+const userReducer = (state = userState, action) =>{
   switch(action.type){
     case GET_USER:
-      return action.users
+      return {users:action.users}
     case GET_SINGLE_USER:
-      return action.user
+      return {user: action.user}
     default:
-      return user;
+      return state;
   }
 }
 export default userReducer;
