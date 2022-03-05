@@ -7,6 +7,7 @@ import memesReducer from './allMemes';
 import singleMemeReducer from './singleMeme';
 import cartItemsReducer from './cart';
 
+
 const reducer = combineReducers({
   auth,
   memes: memesReducer,

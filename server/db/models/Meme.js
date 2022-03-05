@@ -23,7 +23,6 @@ const Meme = db.define('meme', {
   description: {
     type: Sequelize.TEXT,
   },
-
   stockQuantity: {
     type: Sequelize.INTEGER,
   },

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMeme } from '../store/singleMeme';
 // import { addItems } from '../store/cart';
 import { me } from '../store';
+import EditMemeForm from './forms/EditMemeForm';
 
 function SingleMeme(props) {
   const meme = useSelector((state) => state.singleMeme);
@@ -40,6 +41,9 @@ function SingleMeme(props) {
       <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
         Add to cart{' '}
       </button>
+      <div id="edit-meme">
+        <EditMemeForm meme={meme} />
+      </div>
     </div>
   );
 }

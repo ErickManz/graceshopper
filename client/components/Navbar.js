@@ -20,6 +20,8 @@ const Navbar = () => {
             </a>
             <Link to="/memes">All Memes</Link>
             <Link to="/mycart">View My Cart</Link>
+            <Link to="/createMeme">Create Meme</Link>
+
           </div>
         ) : (
           <div>
