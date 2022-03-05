@@ -17,3 +17,16 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/:id', async(req,res,next) =>{
+  try{
+    const user = await User.findByPk(req.params.id);
+      if(user){
+        res.status(201).send(user);
+      }else{
+        res.status(404).send("User doesnt not exist")
+      }
+  }catch(err){
+    next(err);
+  }
+} )
