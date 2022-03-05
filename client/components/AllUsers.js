@@ -5,9 +5,15 @@ import { getUser } from '../store/User';
 import { me } from '../store';
 
 function AllUser(props){
+ const users = useSelector((state)=> state.user);
+ const {currentUser} = useSelector((state)=> state.auth)
+ const dispatch = useDispatch();
 
+useEffect(()=>{
+  dispatch(me());
+  dispatch(getUser());
+},[])
 
-
-  return()
+  return("hello")
 }
 export default AllUser;
