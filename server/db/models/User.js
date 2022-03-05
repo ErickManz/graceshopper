@@ -25,8 +25,17 @@ const User = db.define('user', {
       isEmail:true
     }
   },
-  address:{
+  Street:{
     type:Sequelize.TEXT
+  },
+  City:{
+    type:Sequelize.STRING
+  },
+  Zip:{
+    type:Sequelize.STRING
+  },
+  PhoneNumber:{
+    type:Sequelize.STRING
   },
   name:{
     type: Sequelize.STRING

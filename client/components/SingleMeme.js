@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMeme } from '../store/singleMeme';
-// import { addItems } from '../store/cart';
+import { addItems } from '../store/Order';
 import { me } from '../store';
 import EditMemeForm from './forms/EditMemeForm';
 
@@ -32,6 +32,7 @@ function SingleMeme(props) {
       <div>
         <label htmlFor="quantity">Quantity:</label>
         <input
+          min="1"
           type="number"
           name="quantity"
           value={quantity}

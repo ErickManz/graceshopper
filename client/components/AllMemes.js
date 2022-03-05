@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMemes } from '../store/allMemes';
 import { Link } from 'react-router-dom';
-// import { addItems } from '../store/cart';
+import { addItems } from '../store/Order';
 import { me } from '../store';
 
 function AllMemes(props) {
@@ -17,7 +17,7 @@ function AllMemes(props) {
   }, []);
   const onSubmit = (e, memeId) => {
     e.preventDefault();
-    // dispatch(addItems(user, { memeId: memeId, quantity: quantity }));
+    dispatch(addItems(user, { memeId: memeId, quantity: quantity }));
     setQuantity(1);
   };
 
@@ -31,6 +31,7 @@ function AllMemes(props) {
             <div>
               <label htmlFor="quantity">Quantity:</label>
               <input
+                min="1"
                 type="number"
                 name="quantity"
                 value={quantity}

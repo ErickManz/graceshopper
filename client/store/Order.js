@@ -1,22 +1,21 @@
 import axios from 'axios';
 const SET_ITEMS = 'SET_ITEMS';
- const ADD_ITEM = 'ADD_ITEM';
+const ADD_ITEM = 'ADD_ITEM';
 
-export const setItems = (items) => ({
+export const setItems = (OrderItems) => ({
   type: SET_ITEMS,
-  items,
+  OrderItems,
 });
 
- export const addItem = (cartItem) => ({ type: ADD_ITEM, cartItem });
+export const addItem = (OrderItem) => ({ type: ADD_ITEM, OrderItem });
 
 export const getItems = (id) => {
   return async (dispatch) => {
     console.log('test');
     try {
-      const response = await axios.get(`/api/cartitems/${id}`);
-
-      const cartItems = response.data;
-      dispatch(setItems(cartItems));
+      const response = await axios.get(`/api/orderItems/${id}`);
+      const OrderItems = response.data;
+      dispatch(setItems(OrderItems));
     } catch (error) {
       console.log('test');
       console.log(error);
@@ -24,18 +23,16 @@ export const getItems = (id) => {
   };
 };
 
-<
-
 export const addItems = (id, item) => async (dispatch) => {
-  const response = await axios.post(`/api/cartitems/${id}/cart`, item);
+  const response = await axios.post(`/api/orderItems/${id}/cart`, item);
   const newitem = response.data;
   console.log(item);
   dispatch(addItem(newitem));
-}
-const cartItemsReducer = (items = [], action) => {
+};
+const OrderItemsReducer = (items = [], action) => {
   switch (action.type) {
     case SET_ITEMS:
-      return action.cartItems;
+      return action.OrderItems;
     case ADD_ITEM:
       return [...items, action.item];
     default:
@@ -43,4 +40,4 @@ const cartItemsReducer = (items = [], action) => {
   }
 };
 
-export default cartItemsReducer;
+export default OrderItemsReducer;

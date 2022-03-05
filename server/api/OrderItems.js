@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
 const {
-  models: { User, Meme, ShoppingSession, orderItem },
+  models: { User, Meme, Orders, OrderItem },
 } = require('../db');
 
 module.exports = router;
@@ -13,7 +13,7 @@ module.exports = router;
 router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
-    const currentSession = await ShoppingSession.findOne({
+    const currentSession = await Orders.findOne({
       where: {
         userId: id,
       },
@@ -23,9 +23,9 @@ router.get('/:id', async (req, res, next) => {
       throw new Error('Invalid User Id');
     }
 
-    const items = await orderItem.findAll({
+    const items = await OrderItem.findAll({
       where: {
-        shoppingSessionId: currentSession.id,
+        OrdersId: currentSession.id,
       },
       include: [{ model: Meme }],
     });
@@ -60,25 +60,25 @@ router.post(
 
       const currentUser = await User.findByPk(req.params.id);
 
-      const [currentSession, created] = await ShoppingSession.findOrCreate({
+      const [currentSession, created] = await Orders.findOrCreate({
         where: {
           userId: currentUser.id,
         },
       });
 
-      const currentItem = await orderItem.create({
+      const currentItem = await OrderItem.create({
         memeId: req.body.memeId,
 
         quantity: req.body.quantity,
       });
 
       if (currentSession) {
-        currentSession.addorderItem(currentItem);
+        currentSession.addOrderItem(currentItem);
         // console.log(Object.keys(currentSession.__proto__));
         res.json(currentSession);
       } else {
         created.setUser(currentUser);
-        created.addorderItem(currentItem);
+        created.addOrderItem(currentItem);
         res.json(created);
       }
     } catch (err) {
@@ -89,7 +89,7 @@ router.post(
 
 const isValidorderItem = () =>
   body('id').custom(async (orderItemId) => {
-    const meme = await orderItem.findByPk(orderItemId);
+    const meme = await OrderItem.findByPk(orderItemId);
     if (meme === null) {
       throw new Error('Invalid orderItemId');
     }
@@ -100,7 +100,7 @@ router.delete('/:id/cart', isValidorderItem(), async (req, res, next) => {
     if (!errors.isEmpty()) {
       throw errors.mapped();
     }
-    const itemToDelete = await orderItem.findByPk(req.body.id);
+    const itemToDelete = await OrderItem.findByPk(req.body.id);
     itemToDelete.destroy();
     res.json(itemToDelete);
   } catch (error) {
@@ -116,7 +116,7 @@ router.patch('/:id/cart/', isValidorderItem(), async (req, res, next) => {
     if (!errors.isEmpty()) {
       throw errors.mapped();
     }
-    const itemToUpdate = await orderItem.findByPk(req.body.id);
+    const itemToUpdate = await OrderItem.findByPk(req.body.id);
     if (req.body.quantity === 0) {
       await itemToUpdate.destroy();
     } else {

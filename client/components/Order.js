@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../store/cart';
+import { getItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
 function Cart(props) {
-  //should match reducer key
-  const cartItems = useSelector((state) => state.cartItems);
+  const orderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
@@ -19,21 +18,21 @@ function Cart(props) {
 
   // console.log(user);
 
-  console.log(cartItems);
+  console.log(orderItems);
 
   return (
     <div>
-      <div className="cartItem">
-        {cartItems.map((cartItem) => (
-          <div key={cartItem.id}>
-            <h3>{cartItem.meme.name}</h3>
-            <img src={cartItem.meme.imageUrl}></img>
-            <h3>Price: {cartItem.meme.price}</h3>
-            <h3>Quantity: {cartItem.quantity}</h3>
+      <div className="orderItem">
+        {orderItems.map((orderItem) => (
+          <div key={orderItem.id}>
+            <h3>{orderItem.meme.name}</h3>
+            <img src={orderItem.meme.imageUrl}></img>
+            <h3>Price: {orderItem.meme.price}</h3>
+            <h3>Quantity: {orderItem.quantity}</h3>
           </div>
         ))}
         <h2></h2>
-        <h4>{cartItems.quantity}</h4>
+        <h4>{orderItems.quantity}</h4>
         <button type="button">
           <Link to="/checkout">Checkout </Link>
         </button>
