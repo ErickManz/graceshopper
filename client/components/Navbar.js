@@ -17,7 +17,7 @@ const Navbar = () => {
       <nav>
         {isLoggedIn && (isLogged.roleId === 1) ? (
           <div>
-            {/* The navbar will show these links after you log in */}
+            {/* The navbar will show these links after you log in and you are a admin */}
             <Link to="/home">Home</Link>
             <a href="#" onClick={() => dispatch(logout())}>
               Logout
@@ -25,11 +25,12 @@ const Navbar = () => {
             <Link to="/memes">All Memes</Link>
             <Link to="/mycart">View My Cart</Link>
             <Link to="/createMeme">Create Meme</Link>
+            <Link to="/users">View all users</Link>
 
           </div>
         ) : isLoggedIn && (isLogged.roleId === 2) ? (
           <div>
-          {/* The navbar will show these links after you log in */}
+          {/* The navbar will show these links after you log in and you are a users */}
           <Link to="/home">Home</Link>
           <a href="#" onClick={() => dispatch(logout())}>
             Logout

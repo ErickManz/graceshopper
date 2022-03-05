@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getUser } from '../store/User';
+import { getUsers } from '../store/User';
 import { me } from '../store';
 
 function AllUser(props){
- const users = useSelector((state)=> state.user);
- const {currentUser} = useSelector((state)=> state.auth)
+ const users = useSelector((state)=> state.user.users);
  const dispatch = useDispatch();
 
 useEffect(()=>{
   dispatch(me());
-  dispatch(getUser());
+  dispatch(getUsers());
 },[])
+console.log(users);
+  return(
+    <div>
+      {users.map((user)=>{
+        if(user.roleId === 1){
+          return(
+            <div key={user.id}>
+            <h2>Id {user.id} username: {user.username} role: admin</h2>
+            </div>
+          )
+        }else {
+        return(
+          <div key={user.id}>
+            <h2>Id {user.id} username: {user.username} role: customer</h2>
 
-  return("hello")
+          </div>
+        )
+        }
+      })}
+    </div>
+  )
 }
 export default AllUser;
