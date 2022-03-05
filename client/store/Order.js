@@ -11,7 +11,7 @@ export const addItem = (OrderItem) => ({ type: ADD_ITEM, OrderItem });
 
 export const getItems = (id) => {
   return async (dispatch) => {
-    console.log('test');
+    console.log(id);
     try {
       const response = await axios.get(`/api/orderItems/${id}`);
       const OrderItems = response.data;
@@ -34,7 +34,7 @@ const OrderItemsReducer = (items = [], action) => {
     case SET_ITEMS:
       return action.OrderItems;
     case ADD_ITEM:
-      return [...items, action.item];
+      return [...items, action.OrderItem];
     default:
       return items;
   }

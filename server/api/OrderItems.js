@@ -25,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
 
     const items = await OrderItem.findAll({
       where: {
-        OrdersId: currentSession.id,
+        orderId: currentSession.id,
       },
       include: [{ model: Meme }],
     });

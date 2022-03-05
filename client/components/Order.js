@@ -4,11 +4,11 @@ import { getItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
-function Cart(props) {
+function Order(props) {
   const orderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
-
+  console.log(user);
   //not sure why getItem wont mount? I tried hardcoding userID.
   useEffect(() => {
     //me was from boiler plate
@@ -31,8 +31,7 @@ function Cart(props) {
             <h3>Quantity: {orderItem.quantity}</h3>
           </div>
         ))}
-        <h2></h2>
-        <h4>{orderItems.quantity}</h4>
+
         <button type="button">
           <Link to="/checkout">Checkout </Link>
         </button>
@@ -41,7 +40,7 @@ function Cart(props) {
   );
 }
 
-export default Cart;
+export default Order;
 
 // Completed Tier 1 (or mostly done!)
 // Up-to-date Project Board

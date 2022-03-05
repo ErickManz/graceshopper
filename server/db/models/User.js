@@ -15,32 +15,28 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
-  isAdmin:{
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  },
-  email:{
-    type:Sequelize.STRING,
-    validate:{
-      isEmail:true
-    }
-  },
-  Street:{
-    type:Sequelize.TEXT
-  },
-  City:{
-    type:Sequelize.STRING
-  },
-  Zip:{
-    type:Sequelize.STRING
-  },
-  PhoneNumber:{
-    type:Sequelize.STRING
-  },
-  name:{
-    type: Sequelize.STRING
-  }
 
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true,
+    },
+  },
+  Street: {
+    type: Sequelize.TEXT,
+  },
+  City: {
+    type: Sequelize.STRING,
+  },
+  Zip: {
+    type: Sequelize.STRING,
+  },
+  PhoneNumber: {
+    type: Sequelize.STRING,
+  },
+  name: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = User;
