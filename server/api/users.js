@@ -17,17 +17,6 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
-router.put('/:id/update', async(req,res,next)=>{
-  try {
-    console.log(req.params.id);
-    const user = await User.findByPk(req.params.id);
-    const updated = await user.update(req.body);
-    res.json(updated);
-  } catch (error) {
-    next(console.error(error));
-  }
-
-})
 
 router.get('/:id', async(req,res,next) =>{
   try{
@@ -41,3 +30,30 @@ router.get('/:id', async(req,res,next) =>{
     next(err);
   }
 } );
+router.delete('/:id', async(req,res,next) =>{
+  try{
+    const user = await User.destroy({
+      where:{id : req.params.id}
+    });
+    if(user){
+      res.sendStatus(204);
+    }else{
+      res.sendStatus(404);
+    }
+  }catch(err){
+    next(err);
+  }
+} );
+router.put('/:id/update', async(req,res,next)=>{
+  try {
+    const user = await User.findByPk(req.params.id);
+    const updated = await user.update(req.body);
+    res.json(updated);
+  } catch (error) {
+    next(console.error(error));
+  }
+
+})
+
+
+
