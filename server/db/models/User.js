@@ -22,16 +22,16 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
-  Street: {
+  street: {
     type: Sequelize.TEXT,
   },
-  City: {
+  city: {
     type: Sequelize.STRING,
   },
-  Zip: {
+  zip: {
     type: Sequelize.STRING,
   },
-  PhoneNumber: {
+  phoneNumber: {
     type: Sequelize.STRING,
   },
   name: {
