@@ -31,6 +31,7 @@ function SingleMeme(props) {
       <div>
         <label htmlFor="quantity">Quantity:</label>
         <input
+          min='1'
           type="number"
           name="quantity"
           value={quantity}

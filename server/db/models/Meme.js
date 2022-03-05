@@ -14,6 +14,7 @@ const Meme = db.define('meme', {
     allowNull: false,
     validate: {
       notEmpty: true,
+      min:0,
     },
   },
   imageUrl: {

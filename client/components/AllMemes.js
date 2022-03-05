@@ -32,7 +32,12 @@ function AllMemes(props) {
             <h4>{meme.price}</h4>
             <div>
             <label htmlFor="quantity">Quantity:</label>
-            <input type= "number" name="quantity" value={quantity} onChange={e=> setQuantity(e.target.value)} />
+            <input
+              min="1"
+              type= "number"
+              name="quantity"
+              value={quantity}
+              onChange={e=> setQuantity(e.target.value)} />
             </div>
             <button type= "button" onClick={(e) => onSubmit(e ,meme.id) } >Add to cart </button>
             <Link to={`/memes/${meme.id}`}> <img src={meme.imageUrl} /></Link>
