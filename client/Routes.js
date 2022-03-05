@@ -9,6 +9,7 @@ import Confirmation from './components/Confirmation';
 import Checkout from './components/Checkout';
 import CreateMemeForm from './components/forms/CreateMemeForm';
 import AllUser from './components/AllUsers';
+import SingleUser from './components/SingleUser';
 import { me } from './store';
 import Order from './components/Order';
 
@@ -36,6 +37,7 @@ const Routes = () => {
           <Route path="/checkout" component={Checkout} />
           <Route path="/createMeme" component={CreateMemeForm} />
           <Route path="/users" component={AllUser}/>
+          <Route path="/user/:id" component={SingleUser}/>
           <Redirect to="/home" />
         </Switch>
       ) : (
