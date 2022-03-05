@@ -7,9 +7,9 @@ import AllMemes from './components/AllMemes';
 import SingleMeme from './components/SingleMeme';
 import Confirmation from './components/Confirmation';
 import Checkout from './components/Checkout';
-import CreateMemeForm from './components/forms/CreateMemeForm'
+import CreateMemeForm from './components/forms/CreateMemeForm';
 import { me } from './store';
-import Cart from './components/Cart';
+import Order from './components/Order';
 
 /**
  * COMPONENT
@@ -31,7 +31,7 @@ const Routes = () => {
           <Route exact path="/memes" component={AllMemes} />
           <Route path="/memes/:id" component={SingleMeme} />
           <Route path="/confirmation" component={Confirmation} />
-          <Route path="/mycart" component={Cart} />
+          <Route path="/mycart" component={Order} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/createMeme" component={CreateMemeForm} />
 
