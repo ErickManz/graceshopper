@@ -15,9 +15,9 @@ function AllMemes(props) {
     dispatch(getMemes());
     dispatch(me());
   }, []);
-  const onSubmit = (e, memeId) => {
+  const onSubmit = (e, meme) => {
     e.preventDefault();
-    dispatch(addItems(user, { memeId: memeId, quantity: quantity }));
+    dispatch(addItems(user, { memeId: meme.id, quantity: quantity, salePrice: meme.price}));
     setQuantity(1);
   };
 
@@ -38,7 +38,7 @@ function AllMemes(props) {
                 onChange={(e) => setQuantity(e.target.value)}
               />
             </div>
-            <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
+            <button type="button" onClick={(e) => onSubmit(e, meme)}>
               Add to cart{' '}
             </button>
             <Link to={`/memes/${meme.id}`}>

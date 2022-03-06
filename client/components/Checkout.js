@@ -4,8 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
+
+export function total(orderItems){
+  return orderItems.reduce((currentOrderItem, previousTotal) =>
+  {( previousTotal + currentOrderItem.salePrice*currentOrderItem.quantity)})
+}
 export default function Checkout() {
-  const OrderItems = useSelector((state) => state.OrderItems); //PLACEHOLDER for OrderItem slice
+  const OrderItems = useSelector((state) => state.OrderItems); 
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
@@ -25,19 +30,20 @@ export default function Checkout() {
           </tr>
         </thead>
         <tbody>
-          {OrderItems.map((meme) => {
+          {OrderItems.map((orderItem) => {
             return (
-              <tr key={meme.id}>
-                <td>{meme.name}</td>
-                <td>${meme.price}</td>
-                <td>${meme.quantity}</td>
+              <tr key={orderItem.meme.memeId}>
+                <td>{orderItem.meme.name}</td>
+                <td>${orderItem.meme.price}</td>
+                <td>{orderItem.quantity}</td>
               </tr>
             );
           })}
         </tbody>
 
         <tr>
-          <td>Total: $70</td>
+          <td>Total</td>
+          <td>{total(OrderItems)}</td>
         </tr>
       </table>
       <div className="payment">Payment Options</div>
