@@ -68,8 +68,8 @@ async function seed() {
   ]);
 
   const OrderItems = await Promise.all([
-    OrderItem.create({ quantity: 1 }),
-    OrderItem.create({ quantity: 2 }),
+    OrderItem.create({ quantity: 1, salePrice: 10 }),
+    OrderItem.create({ quantity: 2, salePrice: 10 }),
   ]);
 
   const Role = await Promise.all([

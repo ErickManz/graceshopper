@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import { me } from '../store';
 
 export function total(orderItems){
-  return orderItems.reduce((currentOrderItem, previousTotal) =>
-  {( previousTotal + currentOrderItem.salePrice*currentOrderItem.quantity)})
+  return orderItems.reduce((total, orderItem) => total + Number(orderItem.salePrice)*orderItem.quantity, 0)
 }
 export default function Checkout() {
   const OrderItems = useSelector((state) => state.OrderItems); 
@@ -32,9 +31,10 @@ export default function Checkout() {
         <tbody>
           {OrderItems.map((orderItem) => {
             return (
+              
               <tr key={orderItem.meme.memeId}>
                 <td>{orderItem.meme.name}</td>
-                <td>${orderItem.meme.price}</td>
+                <td>${orderItem.salePrice}</td>
                 <td>{orderItem.quantity}</td>
               </tr>
             );
@@ -43,7 +43,7 @@ export default function Checkout() {
 
         <tr>
           <td>Total</td>
-          <td>{total(OrderItems)}</td>
+          <td>${total(OrderItems)}</td>
         </tr>
       </table>
       <div className="payment">Payment Options</div>

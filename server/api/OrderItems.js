@@ -70,6 +70,8 @@ router.post(
         memeId: req.body.memeId,
 
         quantity: req.body.quantity,
+
+        salePrice: req.body.salePrice
       });
 
       if (currentSession) {
