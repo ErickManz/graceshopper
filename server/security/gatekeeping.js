@@ -3,6 +3,7 @@ const {
 } = require('../db');
 
 const requireToken = async (req, res, next) => {
+  console.log('test');
   try {
     const token = req.headers.authorization;
     const user = await User.findByToken(token);
