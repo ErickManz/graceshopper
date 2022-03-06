@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async(req,res,next) =>{
   try{
     const user = await User.findByPk(req.params.id);
-    console.log(user);
+
       if(user){
         res.json(user);
       }else{
@@ -33,6 +33,7 @@ router.get('/:id', async(req,res,next) =>{
 } );
 router.put('/:id/update', async(req,res,next)=>{
   try {
+    console.log(req.params.id)
     const user = await User.findByPk(req.params.id);
     const updated = await user.update(req.body);
     res.json(updated);

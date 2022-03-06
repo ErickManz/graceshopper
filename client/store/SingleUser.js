@@ -26,7 +26,8 @@ export const getUser = (id) => {
 export const editUser = (id, info) => {
   return async (dispatch) =>{
     try{
-      const {data} =await axios.get(`/api/users/${id}/update`, info);
+      console.log(info);
+      const {data} =await axios.put(`/api/users/${id}/update`, info);
       dispatch(updateUser(data));
     }catch(error){
       console.error(error);
