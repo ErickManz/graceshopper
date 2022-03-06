@@ -42,7 +42,7 @@ function AllMemes(props) {
               Add to cart{' '}
             </button>
             <Link to={`/memes/${meme.id}`}>
-              {' '}
+
               <img src={meme.imageUrl} />
             </Link>
           </div>

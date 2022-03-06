@@ -19,7 +19,7 @@ const Meme = db.define('meme', {
   },
   imageUrl: {
     type: Sequelize.TEXT,
-    defaultValue: 'https://imgflip.com/i/672dsa',
+    defaultValue: 'https://i.imgflip.com/672dsa.jpg',
   },
   description: {
     type: Sequelize.TEXT,

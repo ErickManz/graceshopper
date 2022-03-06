@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Meme, Orders, OrderItem },
+  models: { User, Meme, Orders, OrderItem,Roles },
 } = require('../server/db');
 
 /**
@@ -72,6 +72,12 @@ async function seed() {
     OrderItem.create({ quantity: 2 }),
   ]);
 
+  const Role = await Promise.all([
+    Roles.create({name:'admin'}),
+    Roles.create({name:'user'}),
+    Roles.create({name:'guest'}),
+  ])
+
   const session = await Orders.create({ total: 30.0 });
 
   await users[0].setOrder(session);
@@ -79,6 +85,8 @@ async function seed() {
   await OrderItems[0].setMeme(memes[4]);
   await OrderItems[1].setMeme(memes[0]);
 
+  await users[0].setRole(Role[0]);
+  await users[1].setRole(Role[1]);
   return {
     users: {
       cody: users[0],
@@ -87,6 +95,7 @@ async function seed() {
     memes,
     OrderItems,
     session,
+    Role
   };
 }
 
