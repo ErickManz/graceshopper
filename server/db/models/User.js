@@ -22,6 +22,9 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+  },
   Street: {
     type: Sequelize.TEXT,
   },
