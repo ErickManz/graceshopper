@@ -1,4 +1,6 @@
-const { User } = require('../db/models/User');
+const {
+  models: { User },
+} = require('../db');
 
 const requireToken = async (req, res, next) => {
   try {
@@ -10,6 +12,15 @@ const requireToken = async (req, res, next) => {
   }
 };
 
+const isAdmin = (req, res, next) => {
+  if (!req.user.isAdmin) {
+    return res.status(403).send('You do not have Admin privilege');
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   requireToken,
+  isAdmin,
 };
