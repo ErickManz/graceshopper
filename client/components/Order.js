@@ -26,7 +26,18 @@ function Order(props) {
         {orderItems.map((orderItem) => (
           <div key={orderItem.id}>
             <h3>{orderItem.meme.name}</h3>
-            <img src={orderItem.meme.imageUrl}></img>
+            <img
+              src={orderItem.meme.imageUrl}
+              style={{
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                maxHeight: '200vh',
+                maxWidth: '200px',
+              }}
+            ></img>
             <h3>Price: {orderItem.meme.price}</h3>
             <h3>Quantity: {orderItem.quantity}</h3>
           </div>

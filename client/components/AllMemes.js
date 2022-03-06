@@ -43,7 +43,18 @@ function AllMemes() {
             </button>
             <Link to={`/memes/${meme.id}`}>
               {' '}
-              <img src={meme.imageUrl} />
+              <img
+                src={meme.imageUrl}
+                style={{
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: '100vh',
+                  maxWidth: '400px',
+                }}
+              />
             </Link>
           </div>
         );
