@@ -24,7 +24,7 @@ router.patch('/:id', async (req, res, next) => {
             }
         })
 
-        if(openOrder.id){
+        if(openOrder!==null){
             openOrder.update({status: 'complete'})
             res.status(200)
         }
@@ -47,8 +47,9 @@ router.post('/:id', async (req,res,next) => {
         
         if(openOrder === null){
             const user = await User.findByPk(req.params.id)
-            
+            console.log(user)
             const newOrder = await Order.create()
+            user.addOrder(newOrder)
             res.status(201).send(newOrder)
         } else throw new Error('Open Order Already Exists')
     }catch(error){
