@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Meme, Orders, OrderItem,Roles },
+  models: { User, Meme, Order, OrderItem,Roles },
 } = require('../server/db');
 
 /**
@@ -78,9 +78,9 @@ async function seed() {
     Roles.create({name:'guest'}),
   ])
 
-  const session = await Orders.create({ total: 30.0 });
+  const session = await Order.create();
 
-  await users[0].setOrder(session);
+  await users[0].setOrders(session);
   await session.setOrderItems([...OrderItems]);
   await OrderItems[0].setMeme(memes[4]);
   await OrderItems[1].setMeme(memes[0]);

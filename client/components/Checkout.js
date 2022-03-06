@@ -5,9 +5,11 @@ import { getItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
-export function total(orderItems){
+function total(orderItems){
   return orderItems.reduce((total, orderItem) => total + Number(orderItem.salePrice)*orderItem.quantity, 0)
 }
+
+
 export default function Checkout() {
   const OrderItems = useSelector((state) => state.OrderItems); 
   const user = useSelector((state) => state.auth.id);
@@ -18,6 +20,9 @@ export default function Checkout() {
     dispatch(getItems(user));
   }, []);
 
+  function onSubmit()  {
+    console.log('nice')
+  }
   return (
     <div className="container">
       <table>
@@ -49,7 +54,7 @@ export default function Checkout() {
       <div className="payment">Payment Options</div>
       <div className="Shipping Address">Shipping Address</div>
       <Link to="/confirmation">
-        <button type="submit" label="confirm purchase">
+        <button type="submit" label="confirm purchase" onClick={(e) => onSubmit(e, meme)}>
           Confirm Purchase
         </button>
       </Link>

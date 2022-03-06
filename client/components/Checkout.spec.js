@@ -12,9 +12,6 @@ const dispatch = useDispatch();
 
 describe('Total', () => {
     beforeEach(() => {
-        checkout = shallow(<Checkout />)
-        dispatch(addItems(user, { memeId: 1, quantity: 2 }));
-        dispatch(getItems());
 
     })
     
