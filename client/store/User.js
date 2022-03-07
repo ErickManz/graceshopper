@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const GET_USER = "GET_USER"
 
-const AllUser = (user) =>({
+const AllUser = (users) =>({
   type:GET_USER,
-  user
+  users
 })
 
-export const getUser = () =>{
+export const getUsers = () =>{
   return async (dispatch) =>{
     try {
       const {data} = await axios.get('/api/users')
@@ -17,12 +17,16 @@ export const getUser = () =>{
     }
   }
 }
-const userReducer = (user = [], action) =>{
+
+const userState ={
+  users:[],
+}
+const userReducer = (state = userState, action) =>{
   switch(action.type){
     case GET_USER:
-      return action.user
+      return {...state, users: action.users}
     default:
-      return user;
+      return state;
   }
 }
 export default userReducer;

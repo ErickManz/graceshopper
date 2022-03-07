@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Meme, Orders, OrderItem, Role },
+  models: { User, Meme, Order, OrderItem, Role },
 } = require('../server/db');
 
 /**
@@ -18,12 +18,6 @@ async function seed() {
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ]);
-  const roles = await Promise.all([
-    Role.create({ name: 'admin' }),
-    Role.create({ name: 'user' }),
-  ]);
-  await users[0].setRole(roles[0]);
-  await users[1].setRole(roles[1]);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
@@ -74,25 +68,34 @@ async function seed() {
   ]);
 
   const OrderItems = await Promise.all([
-    OrderItem.create({ quantity: 1 }),
-    OrderItem.create({ quantity: 2 }),
+    OrderItem.create({ quantity: 1, salePrice: 10 }),
+    OrderItem.create({ quantity: 2, salePrice: 10 }),
   ]);
 
-  const session = await Orders.create({ total: 30.0 });
+  const roles = await Promise.all([
+    Role.create({ name: 'admin' }),
+    Role.create({ name: 'user' }),
+    Role.create({ name: 'guest' }),
+  ]);
 
-  await users[0].setOrder(session);
+  const session = await Order.create();
+
+  await users[0].setOrders(session);
   await session.setOrderItems([...OrderItems]);
   await OrderItems[0].setMeme(memes[4]);
   await OrderItems[1].setMeme(memes[0]);
 
+  await users[0].setRole(roles[0]);
+  await users[1].setRole(roles[1]);
   return {
     users: {
       cody: users[0],
       murphy: users[1],
     },
     memes,
-    OrderItems,
+    OrderItem,
     session,
+    roles,
   };
 }
 
