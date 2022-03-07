@@ -1,9 +1,7 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
-const {
-  models: { User, Meme, Orders, OrderItem },
-} = require('../db');
+const { User, Meme, Order, OrderItem } = require('../db');
 
 module.exports = router;
 
@@ -13,7 +11,7 @@ module.exports = router;
 router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
-    const currentSession = await Orders.findOne({
+    const currentSession = await Order.findOne({
       where: {
         userId: id,
       },
@@ -60,7 +58,7 @@ router.post(
 
       const currentUser = await User.findByPk(req.params.id);
 
-      const [currentSession, created] = await Orders.findOrCreate({
+      const [currentSession, created] = await Order.findOrCreate({
         where: {
           userId: currentUser.id,
         },
