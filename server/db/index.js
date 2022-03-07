@@ -29,13 +29,11 @@ User.belongsTo(Role);
 
 module.exports = {
   db,
+  User,
+  Meme,
+  OrderItem,
+  Order,
+  Genre,
+  Role,
 
-  models: {
-    User,
-    Meme,
-    OrderItem,
-    Order,
-    Genre,
-    Role,
-  },
 };

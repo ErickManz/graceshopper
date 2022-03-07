@@ -1,9 +1,8 @@
 'use strict';
 
-const {
-  db,
-  models: { User, Meme, Order, OrderItem, Role },
-} = require('../server/db');
+
+const { db, User, Meme, Order, OrderItem, Role } = require('../server/db');
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -31,6 +30,7 @@ async function seed() {
       description: 'frog',
       genre: 'pepe',
       stockQuantity: 5,
+      status: 'listed',
     }),
     Meme.create({
       name: 'arthur fist',
@@ -40,6 +40,7 @@ async function seed() {
       description: 'arthur',
       genre: 'mad',
       stockQuantity: 10,
+      status: 'listed',
     }),
     Meme.create({
       name: 'evil patrick',
@@ -58,16 +59,20 @@ async function seed() {
       description: 'is this a butterfly',
       genre: 'confused',
       stockQuantity: 5,
+      status: 'listed',
     }),
     Meme.create({
       name: 'kermit',
       price: 10,
       genre: 'funny',
       stockQuantity: 5,
+      status: 'unlisted',
     }),
   ]);
 
-  const OrderItems = await Promise.all([
+
+  const orderItems = await Promise.all([
+
     OrderItem.create({ quantity: 1, salePrice: 10 }),
     OrderItem.create({ quantity: 2, salePrice: 10 }),
   ]);
@@ -81,9 +86,11 @@ async function seed() {
   const session = await Order.create();
 
   await users[0].setOrders(session);
-  await session.setOrderItems([...OrderItems]);
-  await OrderItems[0].setMeme(memes[4]);
-  await OrderItems[1].setMeme(memes[0]);
+
+  await session.setOrderItems([...orderItems]);
+  await orderItems[0].setMeme(memes[4]);
+  await orderItems[1].setMeme(memes[0]);
+
 
   await users[0].setRole(roles[0]);
   await users[1].setRole(roles[1]);
