@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
+import { submitOrder} from '../store/Order'
 
 function total(orderItems){
   return orderItems.reduce((total, orderItem) => total + Number(orderItem.salePrice)*orderItem.quantity, 0)
@@ -21,7 +22,7 @@ export default function Checkout() {
   }, []);
 
   function onSubmit()  {
-    console.log('nice')
+    dispatch(submitOrder(user.id))
   }
   return (
     <div className="container">
@@ -54,7 +55,7 @@ export default function Checkout() {
       <div className="payment">Payment Options</div>
       <div className="Shipping Address">Shipping Address</div>
       <Link to="/confirmation">
-        <button type="submit" label="confirm purchase" onClick={(e) => onSubmit(e, meme)}>
+        <button type="submit" label="confirm purchase" onClick={() => onSubmit()}>
           Confirm Purchase
         </button>
       </Link>
