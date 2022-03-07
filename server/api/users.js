@@ -1,7 +1,5 @@
 const router = require('express').Router();
-const {
-  models: { User, Meme, Orders, OrderItem },
-} = require('../db');
+const { User, Meme, Order, OrderItem } = require('../db');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
@@ -10,7 +8,17 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username',"email","street", "city", "zip", "phoneNumber", "name","roleId"],
+      attributes: [
+        'id',
+        'username',
+        'email',
+        'street',
+        'city',
+        'zip',
+        'phoneNumber',
+        'name',
+        'roleId',
+      ],
     });
     res.json(users);
   } catch (err) {
@@ -18,43 +26,41 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async(req,res,next) =>{
-  try{
+router.get('/:id', async (req, res, next) => {
+  try {
     const user = await User.findByPk(req.params.id);
 
-      if(user){
-        res.json(user);
-      }else{
-        res.status(404).send("User doesnt not exist")
-      }
-  }catch(err){
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send('User doesnt not exist');
+    }
+  } catch (err) {
     next(err);
   }
-} );
-router.put('/:id/update', async(req,res,next)=>{
+});
+router.put('/:id/update', async (req, res, next) => {
   try {
-    console.log(req.params.id)
+    console.log(req.params.id);
     const user = await User.findByPk(req.params.id);
     const updated = await user.update(req.body);
     res.json(updated);
   } catch (error) {
     next(console.error(error));
   }
+});
 
-})
-
-router.delete('/:id', async(req,res,next) =>{
-  try{
+router.delete('/:id', async (req, res, next) => {
+  try {
     const user = await User.destroy({
-      where:{id : req.params.id}
+      where: { id: req.params.id },
     });
-    if(user){
+    if (user) {
       res.sendStatus(204);
-    }else{
+    } else {
       res.sendStatus(404);
     }
-  }catch(err){
+  } catch (err) {
     next(err);
   }
-} );
-
+});

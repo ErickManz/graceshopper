@@ -4,34 +4,32 @@ const db = require('./db');
 const Meme = require('./models/Meme');
 const User = require('./models/User');
 const OrderItem = require('./models/OrderItem');
-const Orders = require('./models/Orders');
+const Order = require('./models/Order');
 const Genre = require('./models/Genre');
-const Roles = require('./models/Role');
+const Role = require('./models/Role');
 //associations could go here!
 
-User.hasOne(Orders);
-Orders.belongsTo(User);
+User.hasOne(Order);
+Order.belongsTo(User);
 
 OrderItem.belongsTo(Meme);
 Meme.hasMany(OrderItem);
 
-Orders.hasMany(OrderItem);
-OrderItem.belongsTo(Orders);
+Order.hasMany(OrderItem);
+OrderItem.belongsTo(Order);
 
 Genre.hasMany(Meme);
 Meme.belongsTo(Genre);
 
-Roles.hasMany(User);
-User.belongsTo(Roles);
+Role.hasMany(User);
+User.belongsTo(Role);
 
 module.exports = {
   db,
-  models: {
-    User,
-    Meme,
-    OrderItem,
-    Orders,
-    Genre,
-    Roles,
-  },
+  User,
+  Meme,
+  OrderItem,
+  Order,
+  Genre,
+  Role,
 };
