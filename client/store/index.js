@@ -10,7 +10,7 @@ import userReducer from './userReducer';
 import singleUserReducer from './singleUserReducer';
 
 const reducer = combineReducers({
-  authReducer,
+  auth: authReducer,
   memes: memesReducer,
   singleMeme: singleMemeReducer,
   OrderItems: OrderItemsReducer,
