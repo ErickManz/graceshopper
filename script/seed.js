@@ -1,9 +1,6 @@
 'use strict';
 
-const {
-  db,
-  models: { User, Meme, Order, OrderItem, Role },
-} = require('../server/db');
+const { db, User, Meme, Order, OrderItem, Role } = require('../server/db');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -31,6 +28,7 @@ async function seed() {
       description: 'frog',
       genre: 'pepe',
       stockQuantity: 5,
+      status: 'listed',
     }),
     Meme.create({
       name: 'arthur fist',
@@ -40,6 +38,7 @@ async function seed() {
       description: 'arthur',
       genre: 'mad',
       stockQuantity: 10,
+      status: 'listed',
     }),
     Meme.create({
       name: 'evil patrick',
@@ -58,12 +57,14 @@ async function seed() {
       description: 'is this a butterfly',
       genre: 'confused',
       stockQuantity: 5,
+      status: 'listed',
     }),
     Meme.create({
       name: 'kermit',
       price: 10,
       genre: 'funny',
       stockQuantity: 5,
+      status: 'unlisted',
     }),
   ]);
 
