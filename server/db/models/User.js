@@ -22,7 +22,7 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
-  Street: {
+  street: {
     type: Sequelize.TEXT,
   },
   city: {
