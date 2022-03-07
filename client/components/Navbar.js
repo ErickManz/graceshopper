@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../store';
-import { me } from '../store';
+import { me, logout } from '../store/authReducer';
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const isLogged = useSelector((state) => state.auth);
