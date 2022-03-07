@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import { addItems } from '../store/Order';
 import { me } from '../store';
 
-function AllMemes(props) {
+function AllMemes() {
   const memes = useSelector((state) => state.memes);
   const user = useSelector((state) => state.auth.id);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMemes());
     dispatch(me());
+    dispatch(getMemes());
   }, []);
   const onSubmit = (e, meme) => {
     e.preventDefault();

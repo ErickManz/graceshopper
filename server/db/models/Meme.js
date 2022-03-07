@@ -10,11 +10,11 @@ const Meme = db.define('meme', {
     },
   },
   price: {
-    type: Sequelize.DECIMAL(10,2),
+    type: Sequelize.DECIMAL(10, 2),
     allowNull: false,
     validate: {
       notEmpty: true,
-      min:0,
+      min: 0,
     },
   },
   imageUrl: {
@@ -26,6 +26,10 @@ const Meme = db.define('meme', {
   },
   stockQuantity: {
     type: Sequelize.INTEGER,
+  },
+  status: {
+    type: Sequelize.ENUM('listed', 'unlisted'),
+    defaultValue: 'unlisted',
   },
 });
 

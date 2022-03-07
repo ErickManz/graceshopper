@@ -1,11 +1,7 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
-
-const {
-  models: { User, Meme, Order, OrderItem },
-} = require('../db');
-
+const { User, Meme, Order, OrderItem } = require('../db');
 
 module.exports = router;
 
@@ -19,14 +15,14 @@ router.get('/:id', async (req, res, next) => {
     const currentSession = await Order.findOne({
       where: {
         status: 'open',
-        userId: id
+        userId: id,
       },
     });
 
     if (currentSession === null) {
       throw new Error('Invalid User Id');
     }
-  
+
     const items = await OrderItem.findAll({
       where: {
         orderId: currentSession.id,
@@ -67,7 +63,7 @@ router.post(
       const [currentSession, created] = await Order.findOrCreate({
         where: {
           userId: currentUser.id,
-          status: 'open'
+          status: 'open',
         },
       });
 
@@ -76,7 +72,7 @@ router.post(
 
         quantity: req.body.quantity,
 
-        salePrice: req.body.salePrice
+        salePrice: req.body.salePrice,
       });
 
       if (currentSession) {
