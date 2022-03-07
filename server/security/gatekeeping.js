@@ -1,5 +1,5 @@
 const {
-  models: { User },
+  User ,
 } = require('../db');
 
 const requireToken = async (req, res, next) => {
