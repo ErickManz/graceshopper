@@ -35,4 +35,5 @@ module.exports = {
   Order,
   Genre,
   Role,
+
 };

@@ -1,6 +1,8 @@
 'use strict';
 
+
 const { db, User, Meme, Order, OrderItem, Role } = require('../server/db');
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -68,7 +70,9 @@ async function seed() {
     }),
   ]);
 
+
   const orderItems = await Promise.all([
+
     OrderItem.create({ quantity: 1, salePrice: 10 }),
     OrderItem.create({ quantity: 2, salePrice: 10 }),
   ]);
@@ -82,9 +86,11 @@ async function seed() {
   const session = await Order.create();
 
   await users[0].setOrders(session);
+
   await session.setOrderItems([...orderItems]);
   await orderItems[0].setMeme(memes[4]);
   await orderItems[1].setMeme(memes[0]);
+
 
   await users[0].setRole(roles[0]);
   await users[1].setRole(roles[1]);
@@ -94,7 +100,7 @@ async function seed() {
       murphy: users[1],
     },
     memes,
-    orderItems,
+    OrderItem,
     session,
     roles,
   };
