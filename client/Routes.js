@@ -11,7 +11,7 @@ import CreateMemeForm from './components/forms/CreateMemeForm';
 import UnlistedMemes from './components/UnlistedMemes';
 import AllUser from './components/AllUsers';
 import SingleUser from './components/SingleUser';
-import { me } from './store';
+import { me } from './store/authReducer';
 import Order from './components/Order';
 
 /**
