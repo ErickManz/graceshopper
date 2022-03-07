@@ -54,7 +54,7 @@ User.prototype.generateToken = function () {
 };
 
 User.prototype.isAdmin = function () {
-  if (User.roleId === 1) {
+  if (this.roleId === 1) {
     return true;
   } else {
     return false;

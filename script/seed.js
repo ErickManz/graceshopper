@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Meme, Orders, OrderItem },
+  models: { User, Meme, Orders, OrderItem, Role },
 } = require('../server/db');
 
 /**
@@ -15,9 +15,15 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123', isAdmin: true }),
-    User.create({ username: 'murphy', password: '123', isAdmin: false }),
+    User.create({ username: 'cody', password: '123' }),
+    User.create({ username: 'murphy', password: '123' }),
   ]);
+  const roles = await Promise.all([
+    Role.create({ name: 'admin' }),
+    Role.create({ name: 'user' }),
+  ]);
+  await users[0].setRole(roles[0]);
+  await users[1].setRole(roles[1]);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
