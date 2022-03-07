@@ -1,28 +1,32 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
+
 const {
-  models: { User, Meme, Orders, OrderItem },
+  models: { User, Meme, Order, OrderItem },
 } = require('../db');
+
 
 module.exports = router;
 
 //get route is user session NOT shopping session
 //secure cart / user
 //reads token via payload
+//route only returns 'open' order items
 router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
-    const currentSession = await Orders.findOne({
+    const currentSession = await Order.findOne({
       where: {
-        userId: id,
+        status: 'open',
+        userId: id
       },
     });
 
     if (currentSession === null) {
       throw new Error('Invalid User Id');
     }
-
+  
     const items = await OrderItem.findAll({
       where: {
         orderId: currentSession.id,
@@ -60,9 +64,10 @@ router.post(
 
       const currentUser = await User.findByPk(req.params.id);
 
-      const [currentSession, created] = await Orders.findOrCreate({
+      const [currentSession, created] = await Order.findOrCreate({
         where: {
           userId: currentUser.id,
+          status: 'open'
         },
       });
 
@@ -70,6 +75,8 @@ router.post(
         memeId: req.body.memeId,
 
         quantity: req.body.quantity,
+
+        salePrice: req.body.salePrice
       });
 
       if (currentSession) {

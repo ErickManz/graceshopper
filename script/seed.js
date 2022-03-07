@@ -2,8 +2,9 @@
 
 const {
   db,
-  models: { User, Meme, Orders, OrderItem },
+  models: { User, Meme, Order, OrderItem,Roles },
 } = require('../server/db');
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -67,26 +68,39 @@ async function seed() {
     }),
   ]);
 
+
   const OrderItems = await Promise.all([
-    OrderItem.create({ quantity: 1 }),
-    OrderItem.create({ quantity: 2 }),
+    OrderItem.create({ quantity: 1, salePrice: 10 }),
+    OrderItem.create({ quantity: 2, salePrice: 10 }),
+
   ]);
 
-  const session = await Orders.create({ total: 30.0 });
+  const roles = await Promise.all([
+    Role.create({ name: 'admin' }),
+    Role.create({ name: 'user' }),
+    Role.create({ name: 'guest' }),
+  ]);
 
-  await users[0].setOrder(session);
+
+  const session = await Order.create();
+
+  await users[0].setOrders(session);
   await session.setOrderItems([...OrderItems]);
   await OrderItems[0].setMeme(memes[4]);
   await OrderItems[1].setMeme(memes[0]);
+=
 
+  await users[0].setRole(roles[0]);
+  await users[1].setRole(roles[1]);
   return {
     users: {
       cody: users[0],
       murphy: users[1],
     },
     memes,
-    OrderItems,
+    orderItems,
     session,
+    roles,
   };
 }
 

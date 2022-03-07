@@ -22,19 +22,21 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
+
   isAdmin: {
     type: Sequelize.BOOLEAN,
   },
-  Street: {
+  street: {
+
     type: Sequelize.TEXT,
   },
-  City: {
+  city: {
     type: Sequelize.STRING,
   },
-  Zip: {
+  zip: {
     type: Sequelize.STRING,
   },
-  PhoneNumber: {
+  phoneNumber: {
     type: Sequelize.STRING,
   },
   name: {
