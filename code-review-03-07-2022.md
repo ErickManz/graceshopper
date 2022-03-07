@@ -6,13 +6,14 @@
 - OrderItems.js is capitalized but the require in index.js isn't. This works on macOS (which is case-retentive but not case-sensitive) but doesn't work on Linux (which is case-senstive). Make sure you are consistent with filenames. (Heroku is linux so this would break once deployed)
 - More comments documenting the code.
 
-
 ## Security and Authentication
 
 - I can signup with a user with an empty username and password, then login with that empty username and password. (although after logging in with that empty username user, the navbar is broken)
 - I can add/update/delete memes without being logged in
 - I can add/update/delete the user's order info without being logged in
 - You have some middleware in the gatekeeping.js file but it's not being used.
+- You should hide or show certain nav bar items if the user isn't allowed to go to those pages.
+- Passwords are being stored in the redux store and being logged to the console.
 
 ## Products
 
@@ -27,6 +28,8 @@
 ## Styling
 
 - Needs some. At least style the pages with a nice font and adjust the layout. Product lists should have smaller images than product detail pages. You might use flex-wrap to get the product cards to wrap (if you are going for a card based layout, I don't know at this point)
+- A good rule for fonts is to pick a nice readable san-serif font from google fonts and then pick a fancier "decorative" font for your brand or logo on your site.  
+- Then choose a color palette, there's a lot of color palette generators out on the web that can help you.
 
 ## Project Management
 
