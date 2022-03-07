@@ -8,7 +8,7 @@ function Order(props) {
   const orderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
-  console.log(user);
+  // console.log(user);
   //not sure why getItem wont mount? I tried hardcoding userID.
   useEffect(() => {
     //me was from boiler plate
