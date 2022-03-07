@@ -22,9 +22,6 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
-  isAdmin: {
-    type: Sequelize.BOOLEAN,
-  },
   Street: {
     type: Sequelize.TEXT,
   },
@@ -54,6 +51,14 @@ User.prototype.correctPassword = function (candidatePwd) {
 
 User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT);
+};
+
+User.prototype.isAdmin = function () {
+  if (User.roleId === 1) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 /**
