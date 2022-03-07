@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createMeme } from '../../store/allMemes';
+import { createMeme } from '../../store/memesReducer';
 
 function CreateMemeForm(props) {
   const dispatch = useDispatch();

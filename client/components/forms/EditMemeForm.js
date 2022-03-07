@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { editMeme } from '../../store/singleMeme';
+import { editMeme } from '../../store/singleMemeReducer';
 
 function EditMemeForm(props) {
   const meme = props.meme;
