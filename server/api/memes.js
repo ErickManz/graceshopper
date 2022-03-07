@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Meme, Order, OrderItem } = require('../db');
+const Meme = require('../db/models/Meme');
 module.exports = router;
 const { body, validationResult } = require('express-validator');
 

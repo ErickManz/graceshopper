@@ -1,9 +1,6 @@
 'use strict';
 
-const {
-  db,
-  models: { User, Meme, Order, OrderItem, Role },
-} = require('../server/db');
+const { db, User, Meme, Order, OrderItem, Role } = require('../server/db');
 
 /**
  * seed - this function clears the database, updates tables to
