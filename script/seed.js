@@ -89,8 +89,8 @@ async function seed() {
   await orderItems[0].setMeme(memes[4]);
   await orderItems[1].setMeme(memes[0]);
 
-  await users[0].setRole(Role[0]);
-  await users[1].setRole(Role[1]);
+  await users[0].setRole(roles[0]);
+  await users[1].setRole(roles[1]);
   return {
     users: {
       cody: users[0],
