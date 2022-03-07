@@ -26,7 +26,6 @@ async function seed() {
       imageUrl:
         'https://i.guim.co.uk/img/media/327e46c3ab049358fad80575146be9e0e65686e7/0_0_1023_742/master/1023.jpg?width=700&quality=85&auto=format&fit=max&s=3d74c30c02485d03b0166f4908ddaa35',
       description: 'frog',
-      genre: 'pepe',
       stockQuantity: 5,
       status: 'listed',
     }),
@@ -36,9 +35,8 @@ async function seed() {
       imageUrl:
         'https://cdn.vox-cdn.com/thumbor/-khg_S_-tf3eS4XqudtTqK2JwqM=/69x0:856x525/1200x800/filters:focal(69x0:856x525)/cdn.vox-cdn.com/uploads/chorus_image/image/50263513/Screen_Shot_2016-08-01_at_12.34.21_PM.0.0.png',
       description: 'arthur',
-      genre: 'mad',
       stockQuantity: 10,
-      status: 'listed',
+      status: 'unlisted',
     }),
     Meme.create({
       name: 'evil patrick',
@@ -46,7 +44,6 @@ async function seed() {
       imageUrl:
         'https://pyxis.nymag.com/v1/imgs/0f9/f96/029acbf4c6d8c67e138e1eb06a277204bf-05-patrick.rsocial.w1200.jpg',
       description: 'evil patrick',
-      genre: 'evil',
       stockQuantity: 5,
     }),
     Meme.create({
@@ -55,16 +52,14 @@ async function seed() {
       imageUrl:
         'https://cdn.vox-cdn.com/thumbor/8rF2keXrhL8sYlEbVbtaJpIC4qs=/0x10:500x291/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/59741997/n4scgse21iuz.0.jpg',
       description: 'is this a butterfly',
-      genre: 'confused',
       stockQuantity: 5,
       status: 'listed',
     }),
     Meme.create({
-      name: 'kermit',
+      name: 'fancy pooh',
       price: 10,
-      genre: 'funny',
       stockQuantity: 5,
-      status: 'unlisted',
+      status: 'listed',
     }),
   ]);
 
@@ -76,7 +71,6 @@ async function seed() {
   const roles = await Promise.all([
     Role.create({ name: 'admin' }),
     Role.create({ name: 'user' }),
-    Role.create({ name: 'guest' }),
   ]);
 
   const session = await Order.create();

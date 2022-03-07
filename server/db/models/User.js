@@ -53,6 +53,14 @@ User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT);
 };
 
+User.prototype.isAdmin = function () {
+  if (this.roleId === 1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 /**
  * classMethods
  */
