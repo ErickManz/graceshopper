@@ -1,6 +1,6 @@
-import React, { useEffect,} from 'react';
+import React, { useEffect,useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, addItems } from '../store/Order';
+import { getItems, editItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
@@ -16,18 +16,17 @@ function Order(props) {
     dispatch(getItems(user));
   }, []);
 
-  const onSubmit = (e, meme) => {
+  const onSubmit = (e, meme, num) => {
     e.preventDefault();
-    dispatch(addItems(user, { memeId: meme.id, quantity: e.target.value}));
+    dispatch(editItems(user, { memeId: meme, quantity: num}));
   };
 
   console.log(orderItems);
-
+  let num = 0;
   return (
     <div>
       <div className="orderItem">
         {orderItems.map((orderItem) => (
-
           <div key={orderItem.id}>
             <h3>{orderItem.meme.name}</h3>
             <img src={orderItem.meme.imageUrl}></img>
@@ -38,9 +37,9 @@ function Order(props) {
                 type="number"
                 name="quantity"
                 value={orderItem.quantity}
-                onChange={(e) => onSubmit(e, orderItem.meme.id)}
+                onChange={(e) => {orderItem.quantity = e.target.value}} // usedipatch and edit it that way
               />
-                <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id)}>
+                <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , num)}>
                 set amount
                </button>
           </div>
