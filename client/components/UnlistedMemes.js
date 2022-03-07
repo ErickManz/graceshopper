@@ -45,9 +45,6 @@ function UnlistedMemes() {
                   onChange={(e) => setQuantity(e.target.value)}
                 />
               </div>
-              <button type="button" onClick={(e) => onSubmit(e, meme)}>
-                Add to cart{' '}
-              </button>
               <Link to={`/memes/${meme.id}`}>
                 <img src={meme.imageUrl} />
               </Link>
