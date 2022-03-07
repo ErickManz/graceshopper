@@ -22,10 +22,11 @@ const Navbar = () => {
             <a href="#" onClick={() => dispatch(logout())}>
               Logout
             </a>
-            <Link to="/memes">All Memes</Link>
+            <Link to="/memes">Listed Memes</Link>
+            <Link to="/unlistedMemes">Unlisted Memes</Link>
             <Link to="/mycart">View My Cart</Link>
             <Link to="/createMeme">Create Meme</Link>
-            <Link to="/users">View all users</Link>
+            <Link to="/users">View All Users</Link>
           </div>
         ) : isLoggedIn && isLogged.roleId === 2 ? (
           <div>

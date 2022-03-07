@@ -19,7 +19,6 @@ function EditMemeForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(meme);
     dispatch(editMeme(formData));
   };
 
@@ -69,6 +68,28 @@ function EditMemeForm(props) {
           name="description"
           placeholder="Description"
           value={formData.description}
+          onChange={handleChange}
+        />
+
+        <p>Status:</p>
+
+        <label htmlFor="listed">Listed</label>
+
+        <input
+          type="radio"
+          name="status"
+          id="listed"
+          value="listed"
+          onChange={handleChange}
+        />
+
+        <label htmlFor="unlisted">Unlisted</label>
+
+        <input
+          type="radio"
+          name="status"
+          id="unlisted"
+          value="unlisted"
           onChange={handleChange}
         />
 

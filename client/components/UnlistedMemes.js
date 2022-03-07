@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { addItems } from '../store/Order';
 import { me } from '../store';
 
-function AllMemes() {
+function UnlistedMemes() {
   const memes = useSelector((state) => state.memes);
   const user = useSelector((state) => state.auth.id);
   const [quantity, setQuantity] = useState(1);
@@ -30,9 +30,9 @@ function AllMemes() {
   return (
     <div id="all-meme-view">
       {memes.map((meme) => {
-        if (meme.status === 'listed')
+        if (meme.status === 'unlisted')
           return (
-            <div key={meme.id} className="listed-meme">
+            <div key={meme.id} className="unlisted-meme">
               <h2>{meme.name}</h2>
               <h4>{meme.price}</h4>
               <div>
@@ -45,9 +45,6 @@ function AllMemes() {
                   onChange={(e) => setQuantity(e.target.value)}
                 />
               </div>
-              <button type="button" onClick={(e) => onSubmit(e, meme)}>
-                Add to cart{' '}
-              </button>
               <Link to={`/memes/${meme.id}`}>
                 <img src={meme.imageUrl} />
               </Link>
@@ -58,4 +55,4 @@ function AllMemes() {
   );
 }
 
-export default AllMemes;
+export default UnlistedMemes;
