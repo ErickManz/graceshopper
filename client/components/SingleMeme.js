@@ -39,9 +39,14 @@ function SingleMeme(props) {
           onChange={(e) => setQuantity(e.target.value)}
         />
       </div>
-      <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
-        Add to cart{' '}
-      </button>
+      {meme.status === 'listed' ? (
+        <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
+          Add to cart{' '}
+        </button>
+      ) : (
+        <div>This Meme is currently Unavailable</div>
+      )}
+
       <div id="edit-meme">
         <EditMemeForm meme={meme} />
       </div>
