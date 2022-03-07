@@ -5,6 +5,7 @@ const {
   models: { User, Meme, Order, OrderItem,Roles },
 } = require('../server/db');
 
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -67,16 +68,19 @@ async function seed() {
     }),
   ]);
 
+
   const OrderItems = await Promise.all([
     OrderItem.create({ quantity: 1, salePrice: 10 }),
     OrderItem.create({ quantity: 2, salePrice: 10 }),
+
   ]);
 
-  const Role = await Promise.all([
-    Roles.create({name:'admin'}),
-    Roles.create({name:'user'}),
-    Roles.create({name:'guest'}),
-  ])
+  const roles = await Promise.all([
+    Role.create({ name: 'admin' }),
+    Role.create({ name: 'user' }),
+    Role.create({ name: 'guest' }),
+  ]);
+
 
   const session = await Order.create();
 
@@ -84,18 +88,19 @@ async function seed() {
   await session.setOrderItems([...OrderItems]);
   await OrderItems[0].setMeme(memes[4]);
   await OrderItems[1].setMeme(memes[0]);
+=
 
-  await users[0].setRole(Role[0]);
-  await users[1].setRole(Role[1]);
+  await users[0].setRole(roles[0]);
+  await users[1].setRole(roles[1]);
   return {
     users: {
       cody: users[0],
       murphy: users[1],
     },
     memes,
-    OrderItems,
+    orderItems,
     session,
-    Role
+    roles,
   };
 }
 

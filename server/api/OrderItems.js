@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
+
 const {
   models: { User, Meme, Order, OrderItem },
 } = require('../db');
+
 
 module.exports = router;
 

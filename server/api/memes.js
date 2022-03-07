@@ -1,7 +1,5 @@
 const router = require('express').Router();
-const {
-  models: { Meme },
-} = require('../db');
+const { User, Meme, Order, OrderItem } = require('../db');
 module.exports = router;
 const { body, validationResult } = require('express-validator');
 
@@ -57,17 +55,21 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 //validate if price is valid currency value
-router.put('/:id', body('price').isCurrency({allow_negatives: false}), async (req, res, next) => {
-  try {
-    const errors = validationResult(req)
-    if(!errors.isEmpty()) {
-      throw errors.mapped()
+router.put(
+  '/:id',
+  body('price').isCurrency({ allow_negatives: false }),
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw errors.mapped();
+      }
+      const meme = await Meme.findByPk(req.params.id);
+      const info = req.body;
+      const data = await meme.update(info);
+      res.json(data);
+    } catch (error) {
+      next(error);
     }
-    const meme = await Meme.findByPk(req.params.id);
-    const info = req.body;
-    const data = await meme.update(info);
-    res.json(data);
-  } catch (error) {
-    next(error);
   }
-});
+);
