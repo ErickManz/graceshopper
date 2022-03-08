@@ -11,13 +11,13 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
       // send everything to anyone who asks!
       attributes: [
         'id',
-        'username',
-        'email',
-        'street',
-        'city',
-        'zip',
-        'phoneNumber',
-        'name',
+        'Username',
+        'Email',
+        'Street',
+        'City',
+        'Zip',
+        'PhoneNumber',
+        'Name',
         'roleId',
       ],
     });
