@@ -8,20 +8,56 @@ import { authenticate } from '../../store';
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    street1: '',
+    street2: '',
+    city: '',
+    state: '',
+    zip: '',
+    phoneNumber: '',
+  });
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    const formName = evt.target.name;
+  const {
+    username,
+    password,
+    email,
+    firstName,
+    lastName,
+    street1,
+    street2,
+    city,
+    state,
+    zip,
+    phoneNumber,
+  } = formData;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formName = e.target.name;
 
     dispatch(authenticate(username, password, formName));
   };
-  const handleChangeForUser = (evt) => {
-    setUsername(evt.target.value);
-  };
-  const handleChangeForPassword = (evt) => {
-    setPassword(evt.target.value);
+
+  // const handleChangeForUser = (evt) => {
+  //   setUsername(evt.target.value);
+  // };
+  // const handleChangeForPassword = (evt) => {
+  //   setPassword(evt.target.value);
+  // };
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const val = e.target.value;
+
+    setFormData({ ...formData, [name]: val });
+    console.log(formData);
   };
 
   // let isUserNamePasswordEmpty = true;
@@ -40,7 +76,8 @@ const AuthForm = ({ name, displayName }) => {
             name="username"
             type="text"
             required={true}
-            onChange={handleChangeForUser}
+            value={username}
+            onChange={handleChange}
           />
 
           <label htmlFor="password">
@@ -51,7 +88,8 @@ const AuthForm = ({ name, displayName }) => {
             name="password"
             type="password"
             required={true}
-            onChange={handleChangeForPassword}
+            value={password}
+            onChange={handleChange}
           />
           {name === 'signup' ? (
             <>
@@ -63,6 +101,8 @@ const AuthForm = ({ name, displayName }) => {
                 type="email"
                 placeholder="email"
                 required={true}
+                value={email}
+                onChange={handleChange}
               />
 
               <label htmlFor="firstName">
@@ -72,32 +112,57 @@ const AuthForm = ({ name, displayName }) => {
                 name="firstName"
                 placeholder="First Name"
                 required={true}
+                value={firstName}
+                onChange={handleChange}
               />
 
               <label htmlFor="lastName">
                 <small>Last Name</small>
               </label>
-              <input name="lastName" placeholder="Last Name" required={true} />
+              <input
+                name="lastName"
+                placeholder="Last Name"
+                required={true}
+                value={lastName}
+                onChange={handleChange}
+              />
 
               <label htmlFor="street1">
                 <small>Address Line 1</small>
               </label>
-              <input name="street1" placeholder="123 Main St" required={true} />
+              <input
+                name="street1"
+                placeholder="123 Main St"
+                required={true}
+                value={street1}
+                onChange={handleChange}
+              />
 
               <label htmlFor="street2">
                 <small>Address Line 2</small>
               </label>
-              <input name="street2" placeholder="Apartment #304, etc." />
+              <input
+                name="street2"
+                placeholder="Apartment #304, etc."
+                value={street2}
+                onChange={handleChange}
+              />
 
               <label htmlFor="city">
                 <small>City</small>
               </label>
-              <input name="city" placeholder="City" required={true} />
+              <input
+                name="city"
+                placeholder="City"
+                required={true}
+                value={city}
+                onChange={handleChange}
+              />
 
               <label htmlFor="State">
                 <small>State</small>
               </label>
-              <select name="state">
+              <select name="state" value={state} onChange={handleChange}>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -159,18 +224,22 @@ const AuthForm = ({ name, displayName }) => {
                 type="number"
                 placeholder="12345"
                 required={true}
+                value={zip}
+                onChange={handleChange}
               />
 
-              <label htmlFor="phone">
+              <label htmlFor="phoneNumber">
                 <small>Telephone XXX-XXX-XXXX</small>
               </label>
               <input
-                name="phone"
+                name="phoneNumber"
                 type="tel"
                 required={true}
                 required
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 placeholder="ex. 123-456-7890"
+                value={phoneNumber}
+                onChange={handleChange}
               />
             </>
           ) : null}
