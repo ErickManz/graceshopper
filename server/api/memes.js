@@ -23,7 +23,7 @@ router.post('/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.get('/:id', requireToken, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const meme = await Meme.findByPk(id);
