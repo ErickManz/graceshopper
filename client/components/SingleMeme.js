@@ -11,7 +11,7 @@ function SingleMeme(props) {
   const meme = useSelector((state) => state.singleMeme);
   const user = useSelector((state) => state.auth);
   const [quantity, setQuantity] = useState(1);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function SingleMeme(props) {
     e.preventDefault();
     dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
     setQuantity(1);
-    setOpen(true)
+    setOpen(true);
   };
 
   return (
@@ -48,17 +48,21 @@ function SingleMeme(props) {
       </button>
 
       <div id="edit-meme">
-        {user.roleId === 1 ? <EditMemeForm meme={meme} />: (<div> </div>) }
+        {user.roleId === 1 ? <EditMemeForm meme={meme} /> : <div> </div>}
       </div>
       <Snackbar
-                  open={open}
-                  autoHideDuration={3000}
-                  onClose={() => setOpen(false)}
-                  message="Meme Added To Cart"
-                  action={<React.Fragment>
-                    <Button color="secondary" onClick={() => setOpen(false)}>CLOSE</Button>
-                  </React.Fragment>}
-                />
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Meme Added To Cart"
+        action={
+          <React.Fragment>
+            <Button color="secondary" onClick={() => setOpen(false)}>
+              CLOSE
+            </Button>
+          </React.Fragment>
+        }
+      />
     </div>
   );
 }
