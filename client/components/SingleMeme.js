@@ -7,7 +7,7 @@ import EditMemeForm from './forms/EditMemeForm';
 
 function SingleMeme(props) {
   const meme = useSelector((state) => state.singleMeme);
-  const user = useSelector((state) => state.auth.id);
+  const user = useSelector((state) => state.auth);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
@@ -39,17 +39,14 @@ function SingleMeme(props) {
           onChange={(e) => setQuantity(e.target.value)}
         />
       </div>
-      {meme.status === 'listed' ? (
-        <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
-          Add to cart{' '}
-        </button>
-      ) : (
-        <div>This Meme is currently Unavailable</div>
-      )}
+      <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
+        Add to cart{' '}
+      </button>
 
       <div id="edit-meme">
-        <EditMemeForm meme={meme} />
+        {user.roleId === 1 ? <EditMemeForm meme={meme} />: (<div> </div>) }
       </div>
+
     </div>
   );
 }
