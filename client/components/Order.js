@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, editItems, deleteItem } from '../store/orderReducer';
+import { getItems, editItems } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
@@ -19,10 +19,7 @@ function Order(props) {
     e.preventDefault();
     dispatch(editItems(user, { memeId: meme, quantity: num }));
   };
-  const onDelete = (e, meme) => {
-    e.preventDefault();
-    dispatch(deleteItem(user, { memeId: meme }));
-  };
+
 
   console.log(orderItems);
 

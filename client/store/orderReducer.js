@@ -39,7 +39,8 @@ export const addItems = (id, item) => {
    return async (dispatch) => {
      try{
       const token = localStorage.getItem("token");
-      const response = await axios.post(`/api/orderItems/${id}/cart`, item, {headers:{Authorization:token}});
+      await axios.post(`/api/orderItems/${id}/cart`, item, {headers:{Authorization:token}});
+      const response = await axios.get(`/api/orderItems/${id}`,{headers:{Authorization:token}});
       const newitem = response.data;
       dispatch(addItem(newitem));
      }catch(err){
@@ -65,13 +66,13 @@ export const submitOrder = (userId) => async (dispatch) => {
   const {orderId} = response.data
   dispatch(newOrder())
 }
-const OrderItemsReducer = (items = [], action) => {
+const itemsState = [];
+const OrderItemsReducer = (items = itemsState, action) => {
   switch (action.type) {
     case SET_ITEMS:
       return action.OrderItems;
     case ADD_ITEM:
-      items.push(action.OrderItem)
-      return items;
+      return action.OrderItem
     case NEW_ORDER:
       return [];
     case EDIT_ORDER:
