@@ -2,8 +2,9 @@ const router = require('express').Router();
 const Meme = require('../db/models/Meme');
 module.exports = router;
 const { body, validationResult } = require('express-validator');
+const { requireToken, isAdmin } = require('../security/gatekeeping');
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const memes = await Meme.findAll();
     res.json(memes);
@@ -12,7 +13,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const info = req.body;
     const meme = await Meme.create(info);
@@ -22,7 +23,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     const id = req.params.id;
     const meme = await Meme.findByPk(id);
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     const memeId = req.params.id;
     const data = await Meme.destroy({
@@ -57,6 +58,8 @@ router.delete('/:id', async (req, res, next) => {
 //validate if price is valid currency value
 router.put(
   '/:id',
+  requireToken,
+  isAdmin,
   body('price').isCurrency({ allow_negatives: false }),
   async (req, res, next) => {
     try {
