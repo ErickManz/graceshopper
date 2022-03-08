@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 
 const { User, Meme, Order, OrderItem } = require('../db');
+const { requireToken, isAdmin } = require('../security/gatekeeping');
 
 module.exports = router;
 
@@ -9,7 +10,7 @@ module.exports = router;
 //secure cart / user
 //reads token via payload
 //route only returns 'open' order items
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     const id = req.params.id;
     const currentSession = await Order.findOne({
@@ -48,6 +49,8 @@ const isValidMeme = () =>
 //validation for quantity > 1, valid memeId
 router.post(
   '/:id/cart',
+  requireToken,
+  isAdmin,
   isValidMeme(),
   body('quantity').isInt({ min: 1 }),
   async (req, res, next) => {
@@ -97,37 +100,49 @@ const isValidorderItem = () =>
       throw new Error('Invalid orderItemId');
     }
   });
-router.delete('/:id/cart', isValidorderItem(), async (req, res, next) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw errors.mapped();
+router.delete(
+  '/:id/cart',
+  requireToken,
+  isAdmin,
+  isValidorderItem(),
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw errors.mapped();
+      }
+      const itemToDelete = await OrderItem.findByPk(req.body.id);
+      itemToDelete.destroy();
+      res.json(itemToDelete);
+    } catch (error) {
+      next(error);
     }
-    const itemToDelete = await OrderItem.findByPk(req.body.id);
-    itemToDelete.destroy();
-    res.json(itemToDelete);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 //edit quantity of cart item
 //validating that body of request is an integer with express-validator
-router.patch('/:id/cart/', isValidorderItem(), async (req, res, next) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw errors.mapped();
-    }
-    const itemToUpdate = await OrderItem.findByPk(req.body.id);
-    if (req.body.quantity === 0) {
-      await itemToUpdate.destroy();
-    } else {
-      await itemToUpdate.update({ quantity: req.body.quantity });
-    }
+router.patch(
+  '/:id/cart/',
+  requireToken,
+  isAdmin,
+  isValidorderItem(),
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw errors.mapped();
+      }
+      const itemToUpdate = await OrderItem.findByPk(req.body.id);
+      if (req.body.quantity === 0) {
+        await itemToUpdate.destroy();
+      } else {
+        await itemToUpdate.update({ quantity: req.body.quantity });
+      }
 
-    res.send(itemToUpdate);
-  } catch (error) {
-    next(error);
+      res.send(itemToUpdate);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
