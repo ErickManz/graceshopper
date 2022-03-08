@@ -20,7 +20,8 @@ export const changeItems = (OrderItem) => ({
 export const getItems = (id) => {
   return async (dispatch) => {
     try {
-       const response = await axios.get(`/api/orderItems/${id}`);
+       const token = localStorage.getItem("token");
+       const response = await axios.get(`/api/orderItems/${id}`,{headers:{Authorization:token}});
        const OrderItems = response.data;
        dispatch(setItems(OrderItems));
     } catch (error) {
@@ -33,7 +34,8 @@ export const getItems = (id) => {
 export const addItems = (id, item) => {
    return async (dispatch) => {
      try{
-      const response = await axios.post(`/api/orderItems/${id}/cart`, item);
+      const token = localStorage.getItem("token");
+      const response = await axios.post(`/api/orderItems/${id}/cart`, item,{headers:{Authorization:token}});
       const newitem = response.data;
       dispatch(addItem(newitem));
      }catch(err){
@@ -44,8 +46,9 @@ export const addItems = (id, item) => {
 export const editItems = (id, item) => {
   return async (dispatch) => {
     try{
-     await axios.patch(`/api/orderItems/${id}/cart`, item);
-     const response = await axios.get(`/api/orderItems/${id}`);
+      const token = localStorage.getItem("token");
+     await axios.patch(`/api/orderItems/${id}/cart`, item,{headers:{Authorization:token}});
+     const response = await axios.get(`/api/orderItems/${id}`,{headers:{Authorization:token}});
      const OrderItems = response.data;
      dispatch(changeItems(OrderItems));
     }catch(err){

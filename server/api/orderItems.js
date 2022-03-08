@@ -10,7 +10,7 @@ module.exports = router;
 //secure cart / user
 //reads token via payload
 //route only returns 'open' order items
-router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
   try {
     const id = req.params.id;
     const currentSession = await Order.findOne({
@@ -50,7 +50,6 @@ const isValidMeme = () =>
 router.post(
   '/:id/cart',
   requireToken,
-  isAdmin,
   isValidMeme(),
   body('quantity').isInt({ min: 1 }),
   async (req, res, next) => {
@@ -125,7 +124,6 @@ router.delete(
 router.patch(
   '/:id/cart/',
   requireToken,
-  isAdmin,
   isValidorderItem(),
   async (req, res, next) => {
     try {
