@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, editItems } from '../store/orderReducer';
+import { getItems, editItems, deleteItem } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
@@ -8,10 +8,9 @@ function Order(props) {
   const orderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
-  // console.log(user);
-  //not sure why getItem wont mount? I tried hardcoding userID.
+
   useEffect(() => {
-    //me was from boiler plate
+
     dispatch(me());
     dispatch(getItems(user));
   }, []);
@@ -19,6 +18,10 @@ function Order(props) {
   const onSubmit = (e, meme, num) => {
     e.preventDefault();
     dispatch(editItems(user, { memeId: meme, quantity: num }));
+  };
+  const onDelete = (e, meme) => {
+    e.preventDefault();
+    dispatch(deleteItem(user, { memeId: meme }));
   };
 
   console.log(orderItems);
@@ -36,9 +39,7 @@ function Order(props) {
             <button
               type="button"
               onClick={(e) =>
-                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)
-              }
-            >
+                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)} >
               +
             </button>
             <button
@@ -46,10 +47,12 @@ function Order(props) {
               onClick={(e) =>
                 onSubmit(e, orderItem.meme.id, --orderItem.quantity)
               }
-            >
+              disabled= { orderItem.quantity <= 0}  >
               -
             </button>
+
           </div>
+
         ))}
 
         <button type="button">

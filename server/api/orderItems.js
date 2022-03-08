@@ -68,22 +68,40 @@ router.post(
           status: 'open',
         },
       });
+      const [itemToUpdate, newItem ] = await OrderItem.findOrCreate({
+        where:{
+          memeId: req.body.memeId,
+          orderId: currentSession.id
+          }
+        });
 
-      const currentItem = await OrderItem.create({
+      // const currentItem = await OrderItem.create({
+      //   memeId: req.body.memeId,
+
+      //   quantity: req.body.quantity,
+
+      //   salePrice: req.body.salePrice,
+      // });
+      if(itemToUpdate){
+       const total = itemToUpdate.quantity + parseInt(req.body.quantity)
+       await itemToUpdate.update({quantity: total })
+      }else{
+    var newOrder =   await newItem.update({
         memeId: req.body.memeId,
 
         quantity: req.body.quantity,
 
         salePrice: req.body.salePrice,
-      });
+      })
+    }
 
       if (currentSession) {
-        currentSession.addOrderItem(currentItem);
+        currentSession.addOrderItem(newOrder);
         // console.log(Object.keys(currentSession.__proto__));
         res.json(currentSession);
       } else {
         created.setUser(currentUser);
-        created.addOrderItem(currentItem);
+        created.addOrderItem(newOrder);
         res.json(created);
       }
     } catch (err) {
@@ -94,53 +112,41 @@ router.post(
 
 const isValidorderItem = () =>
   body('id').custom(async (orderItemId) => {
-    const meme = await OrderItem.findByPk(orderItemId);
+    const meme = await OrderItem.findOne({where:{orderItemId}});
     if (meme === null) {
       throw new Error('Invalid orderItemId');
     }
   });
-router.delete(
-  '/:id/cart',
-  requireToken,
-  isAdmin,
-  isValidorderItem(),
-  async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        throw errors.mapped();
-      }
-      const itemToDelete = await OrderItem.findByPk(req.body.id);
-      itemToDelete.destroy();
-      res.json(itemToDelete);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 //edit quantity of cart item
 //validating that body of request is an integer with express-validator
-router.patch(
-  '/:id/cart/',
-  requireToken,
-  isValidorderItem(),
-  async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        throw errors.mapped();
-      }
-      const itemToUpdate = await OrderItem.findByPk(req.body.id);
-      if (req.body.quantity === 0) {
-        await itemToUpdate.destroy();
-      } else {
-        await itemToUpdate.update({ quantity: req.body.quantity });
-      }
+router.patch('/:id/cart', requireToken, async (req, res, next) => {
+  try {
 
-      res.send(itemToUpdate);
-    } catch (error) {
-      next(error);
-    }
+    const userId = req.params.id
+    const currentUser = await User.findOne({where:{id: userId}});
+    const currentSession = await Order.findOne({
+        where: {
+          userId: currentUser.id,
+          status: 'open'
+        }
+      });
+
+    const itemToUpdate = await OrderItem.findOne({
+      where:{
+        memeId: req.body.memeId,
+        orderId: currentSession.id
+        }
+      });
+      let data = ''
+      if(req.body.quantity <= 0){
+      data = await itemToUpdate.destroy()
+      }else{
+
+      data = await itemToUpdate.update({ quantity: req.body.quantity });
+      }
+    res.send(data);
+  } catch (error) {
+    next(error);
   }
-);
+});
