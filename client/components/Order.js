@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../store/Order';
+import { getItems, editItems } from '../store/Order';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
@@ -16,7 +16,10 @@ function Order(props) {
     dispatch(getItems(user));
   }, []);
 
-  // console.log(user);
+  const onSubmit = (e, meme, num) => {
+    e.preventDefault();
+    dispatch(editItems(user, { memeId: meme, quantity: num}));
+  };
 
   console.log(orderItems);
 
@@ -28,7 +31,14 @@ function Order(props) {
             <h3>{orderItem.meme.name}</h3>
             <img src={orderItem.meme.imageUrl}></img>
             <h3>Price: {orderItem.meme.price}</h3>
-            <h3>Quantity: {orderItem.quantity}</h3>
+            <label htmlFor="quantity">Quantity:{orderItem.quantity}</label>
+
+                <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , ++orderItem.quantity)}>
+                +
+               </button>
+               <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , --orderItem.quantity)}>
+                -
+               </button>
           </div>
         ))}
 

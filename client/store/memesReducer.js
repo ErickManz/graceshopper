@@ -27,7 +27,8 @@ export const getMemes = () => {
 export const createMeme = (meme) => {
   return async (dispatch) => {
     try {
-      const { data: created } = await axios.post('/api/memes', meme);
+      const token = localStorage.getItem("token");
+      const { data: created } = await axios.post('/api/memes', meme, {headers:{Authorization:token}});
       dispatch(newMeme(created));
     } catch (error) {
       console.error(error);

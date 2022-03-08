@@ -13,7 +13,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
         'id',
         'username',
         'email',
-        'street',
+        'Street',
         'city',
         'zip',
         'phoneNumber',
