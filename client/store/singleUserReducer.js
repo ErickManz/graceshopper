@@ -16,7 +16,8 @@ const updateUser = (user) =>({
 export const getUser = (id) => {
   return async (dispatch) =>{
     try{
-      const {data} =await axios.get(`/api/users/${id}`);
+      const token = localStorage.getItem("token")
+      const {data} =await axios.get(`/api/users/${id}`,{headers:{Authorization:token}});
       dispatch(SingleUser(data));
     }catch(error){
       console.error(error);
@@ -26,8 +27,8 @@ export const getUser = (id) => {
 export const editUser = (id, info) => {
   return async (dispatch) =>{
     try{
-      console.log(info);
-      const {data} =await axios.put(`/api/users/${id}/update`, info);
+      const token = localStorage.getItem("token")
+      const {data} =await axios.put(`/api/users/${id}/update`, info,{headers:{Authorization:token}});
       dispatch(updateUser(data));
     }catch(error){
       console.error(error);
