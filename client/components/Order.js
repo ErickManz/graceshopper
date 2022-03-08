@@ -1,6 +1,6 @@
 import React, { useEffect,useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, editItems } from '../store/Order';
+import { getItems, editItems } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
