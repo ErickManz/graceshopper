@@ -4,7 +4,7 @@ module.exports = router;
 const { body, validationResult } = require('express-validator');
 const { requireToken, isAdmin } = require('../security/gatekeeping');
 
-router.get('/',  async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const memes = await Meme.findAll();
     res.json(memes);
@@ -23,7 +23,7 @@ router.post('/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
   try {
     const id = req.params.id;
     const meme = await Meme.findByPk(id);
