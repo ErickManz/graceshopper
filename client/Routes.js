@@ -12,6 +12,7 @@ import AllUser from './components/AllUsers';
 import SingleUser from './components/SingleUser';
 import { me } from './store/authReducer';
 import Order from './components/Order';
+import UnlistedMemes from './components/UnlistedMemes';
 
 /**
  * COMPONENT
@@ -31,13 +32,14 @@ const Routes = () => {
         <Switch>
           <Route path="/home" component={Home} />
           <Route exact path="/memes" component={AllMemes} />
+          <Route path="/unlistedMemes" component={UnlistedMemes} />
           <Route path="/memes/:id" component={SingleMeme} />
           <Route path="/confirmation" component={Confirmation} />
           <Route path="/mycart" component={Order} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/createMeme" component={CreateMemeForm} />
-          <Route path="/users" component={AllUser}/>
-          <Route path="/user/:id" component={SingleUser}/>
+          <Route path="/users" component={AllUser} />
+          <Route path="/user/:id" component={SingleUser} />
           <Redirect to="/home" />
         </Switch>
       ) : (

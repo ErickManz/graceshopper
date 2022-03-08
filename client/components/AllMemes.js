@@ -20,13 +20,13 @@ function AllMemes() {
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const arr = []
- arr.push(1)
- arr.push(2)
- localStorage.setItem("meme", JSON.stringify(arr));
- const rtn = localStorage.getItem("meme");
- console.log(rtn)
- localStorage.setItem("meme", JSON.stringify(rtn));
+  const arr = [];
+  arr.push(1);
+  arr.push(2);
+  localStorage.setItem('meme', JSON.stringify(arr));
+  const rtn = localStorage.getItem('meme');
+  console.log(rtn);
+  localStorage.setItem('meme', JSON.stringify(rtn));
   useEffect(() => {
     dispatch(me());
     dispatch(getMemes());
@@ -49,7 +49,7 @@ function AllMemes() {
       {memes.map((meme) => {
         if (meme.status === 'listed')
           return (
-            <Grid item key={meme.id}>
+            <Grid item xs={3} key={meme.id}>
               <Card
                 sx={{
                   height: '100%',
@@ -88,14 +88,18 @@ function AllMemes() {
           );
       })}
       <Snackbar
-                  open={open}
-                  autoHideDuration={3000}
-                  onClose={() => setOpen(false)}
-                  message="Meme Added To Cart"
-                  action={<React.Fragment>
-                    <Button color="secondary" onClick={() => setOpen(false)}>CLOSE</Button>
-                  </React.Fragment>}
-                />
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Meme Added To Cart"
+        action={
+          <React.Fragment>
+            <Button color="secondary" onClick={() => setOpen(false)}>
+              CLOSE
+            </Button>
+          </React.Fragment>
+        }
+      />
     </Grid>
   );
 }
