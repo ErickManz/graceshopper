@@ -40,6 +40,9 @@ const User = db.define('user', {
   city: {
     type: Sequelize.STRING,
   },
+  state: {
+    type: Sequelize.STRING,
+  },
   zip: {
     type: Sequelize.STRING,
   },
@@ -95,6 +98,7 @@ User.findByToken = async function (token) {
         'street1',
         'street2',
         'city',
+        'state',
         'zip',
         'phoneNumber',
         'firstName',

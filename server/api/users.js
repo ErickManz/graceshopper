@@ -16,6 +16,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
         'street1',
         'street2',
         'city',
+        'state',
         'zip',
         'phoneNumber',
         'firstName',

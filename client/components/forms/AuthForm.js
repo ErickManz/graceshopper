@@ -58,7 +58,41 @@ const AuthForm = ({ name, displayName }) => {
               <label htmlFor="email">
                 <small>Email</small>
               </label>
-              <input name="email" type="email" />{' '}
+              <input
+                name="email"
+                type="email"
+                placeholder="email"
+                required={true}
+              />
+
+              <label htmlFor="firstName">
+                <small>First Name</small>
+              </label>
+              <input
+                name="firstName"
+                placeholder="First Name"
+                required={true}
+              />
+
+              <label htmlFor="lastName">
+                <small>Last Name</small>
+              </label>
+              <input name="lastName" placeholder="Last Name" required={true} />
+
+              <label htmlFor="street1">
+                <small>Address Line 1</small>
+              </label>
+              <input name="street1" placeholder="123 Main St" required={true} />
+
+              <label htmlFor="street2">
+                <small>Address Line 2</small>
+              </label>
+              <input name="street2" placeholder="Apartment #304, etc." />
+
+              <label htmlFor="city">
+                <small>City</small>
+              </label>
+              <input name="city" placeholder="City" required={true} />
             </>
           ) : null}
         </div>
