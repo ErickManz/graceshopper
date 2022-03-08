@@ -37,24 +37,6 @@ router.get('/:id', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
-  try {
-    const memeId = req.params.id;
-    const data = await Meme.destroy({
-      where: {
-        id: memeId,
-      },
-    });
-    if (data) {
-      res.sendStatus(204);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
 //validate if price is valid currency value
 router.put(
   '/:id',

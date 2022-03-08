@@ -7,12 +7,14 @@ import Container from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
-import CartIcon from '@mui/icons-material/ShoppingCartOutlined'
+import CartBadge from './CartBadge';
+
 
 import AllMemes from './AllMemes';
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const isLogged = useSelector((state) => state.auth);
+  const orderItems = useSelector((state)=> state.OrderItems)
   const dispatch = useDispatch();
   console.log(isLogged);
   useEffect(() => {
@@ -48,7 +50,7 @@ const Navbar = () => {
                 View All Users
               </Button>
               <Button color="inherit" component={Link} to="/mycart">
-                View My Cart
+              <CartBadge orderItems={orderItems} />
               </Button>
             </div>
           ) : isLoggedIn && isLogged.roleId === 2 ? (
@@ -58,10 +60,13 @@ const Navbar = () => {
                 Logout
               </Button>
               <Button color="inherit" component={Link} to="/memes">Memes</Button>
-              <Button color="inherit" component={Link} to="/mycart">View My Cart</Button>
+
               <Button color="inherit" component={Link} to={`/user/${isLogged.id}`}>
                 Setting
               </Button>
+
+              <Button color="inherit" component={Link} to="/mycart"><CartBadge orderItems={orderItems}/></Button>
+
             </div>
           ) : (
             <div>
@@ -70,7 +75,7 @@ const Navbar = () => {
               <Button color="inherit" component={Link} to="/signup">Sign Up</Button>
               <Button color="inherit" component={Link} to="/memes">Memes</Button>
               <Button color="inherit" component={Link} to="/mycart">
-                <CartIcon />
+              <CartBadge orderItems={orderItems}/>
               </Button>
             </div>
           )}
