@@ -4,7 +4,7 @@ module.exports = router;
 const { body, validationResult } = require('express-validator');
 const { requireToken, isAdmin } = require('../security/gatekeeping');
 
-router.get('/', requireToken, isAdmin, async (req, res, next) => {
+router.get('/',  async (req, res, next) => {
   try {
     const memes = await Meme.findAll();
     res.json(memes);
