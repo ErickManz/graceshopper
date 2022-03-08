@@ -12,11 +12,18 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
   },
-
   password: {
     type: Sequelize.STRING,
+    alowNull: false,
   },
-
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -24,19 +31,22 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
-  street: {
-    type: Sequelize.TEXT,
+  street1: {
+    type: Sequelize.STRING,
+  },
+  street2: {
+    type: Sequelize.STRING,
   },
   city: {
+    type: Sequelize.STRING,
+  },
+  state: {
     type: Sequelize.STRING,
   },
   zip: {
     type: Sequelize.STRING,
   },
   phoneNumber: {
-    type: Sequelize.STRING,
-  },
-  name: {
     type: Sequelize.STRING,
   },
 });
@@ -86,11 +96,14 @@ User.findByToken = async function (token) {
         'id',
         'username',
         'email',
-        'street',
+        'street1',
+        'street2',
         'city',
+        'state',
         'zip',
         'phoneNumber',
-        'name',
+        'firstName',
+        'lastName',
         'roleId',
       ],
     });

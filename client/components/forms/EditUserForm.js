@@ -37,11 +37,19 @@ function EditUserForm(props) {
           onChange={handleChange}
         />
 
-        <label htmlFor="street">Street:</label>
+        <label htmlFor="street1">Street 1:</label>
         <input
-          name="street"
-          placeholder="street"
-          value={formData.street}
+          name="street1"
+          placeholder="street line 1"
+          value={formData.street1}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="street2">Street 2:</label>
+        <input
+          name="street2"
+          placeholder="street line 2"
+          value={formData.street2}
           onChange={handleChange}
         />
 
