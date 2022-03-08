@@ -1,6 +1,6 @@
-import React, { useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, editItems } from '../store/Order';
+import { getItems, editItems } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
@@ -18,7 +18,7 @@ function Order(props) {
 
   const onSubmit = (e, meme, num) => {
     e.preventDefault();
-    dispatch(editItems(user, { memeId: meme, quantity: num}));
+    dispatch(editItems(user, { memeId: meme, quantity: num }));
   };
 
   console.log(orderItems);
@@ -33,12 +33,22 @@ function Order(props) {
             <h3>Price: {orderItem.meme.price}</h3>
             <label htmlFor="quantity">Quantity:{orderItem.quantity}</label>
 
-                <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , ++orderItem.quantity)}>
-                +
-               </button>
-               <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , --orderItem.quantity)}>
-                -
-               </button>
+            <button
+              type="button"
+              onClick={(e) =>
+                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)
+              }
+            >
+              +
+            </button>
+            <button
+              type="button"
+              onClick={(e) =>
+                onSubmit(e, orderItem.meme.id, --orderItem.quantity)
+              }
+            >
+              -
+            </button>
           </div>
         ))}
 
