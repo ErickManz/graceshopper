@@ -18,7 +18,6 @@ function UnlistedMemes() {
   useEffect(() => {
     dispatch(me());
     dispatch(getMemes());
-    console.log(user.roleId);
   }, []);
 
   return (
