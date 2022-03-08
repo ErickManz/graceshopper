@@ -12,6 +12,7 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
   },
+
   password: {
     type: Sequelize.STRING,
   },
@@ -79,21 +80,19 @@ User.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
     const user = User.findOne({
-      where:{id:id },
+      where: { id: id },
       attributes: [
         'id',
         'username',
         'email',
-        'Street',
+        'street',
         'city',
         'zip',
         'phoneNumber',
         'name',
         'roleId',
-
       ],
-
-      });
+    });
     if (!user) {
       throw 'nooo';
     }

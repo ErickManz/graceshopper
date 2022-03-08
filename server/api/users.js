@@ -3,7 +3,7 @@ const { User, Meme, Order, OrderItem } = require('../db');
 module.exports = router;
 const { requireToken, isAdmin } = require('../security/gatekeeping');
 
-router.get('/',requireToken, isAdmin, async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
@@ -13,7 +13,7 @@ router.get('/',requireToken, isAdmin, async (req, res, next) => {
         'id',
         'username',
         'email',
-        'Street',
+        'street',
         'city',
         'zip',
         'phoneNumber',
