@@ -10,7 +10,9 @@ const AllUser = (users) =>({
 export const getUsers = () =>{
   return async (dispatch) =>{
     try {
-      const {data} = await axios.get('/api/users')
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const {data} = await axios.get('/api/users',{headers:{Authorization:token}})
       dispatch(AllUser(data));
     }catch(error) {
     console.error(error)

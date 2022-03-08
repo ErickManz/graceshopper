@@ -113,20 +113,33 @@ router.delete('/:id/cart', isValidorderItem(), async (req, res, next) => {
 
 //edit quantity of cart item
 //validating that body of request is an integer with express-validator
-router.patch('/:id/cart/', isValidorderItem(), async (req, res, next) => {
+router.patch('/:id/cart', async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw errors.mapped();
     }
-    const itemToUpdate = await OrderItem.findByPk(req.body.id);
-    if (req.body.quantity === 0) {
-      await itemToUpdate.destroy();
-    } else {
-      await itemToUpdate.update({ quantity: req.body.quantity });
-    }
+    console.log(req.params.id);
+    const userId = req.params.id
 
-    res.send(itemToUpdate);
+    const currentUser = await User.findOne({where:{id: userId}});
+    console.log(currentUser.id);
+    const currentSession = await Order.findOne({
+        where: {
+          userId: currentUser.id,
+          status: 'open'
+        }
+      });
+    const itemToUpdate = await OrderItem.findOne({
+      where:{
+        memeId: req.body.memeId,
+        orderId: currentSession.id
+        }
+      });
+
+      const data = await itemToUpdate.update({ quantity: req.body.quantity });
+
+    res.send(data);
   } catch (error) {
     next(error);
   }
