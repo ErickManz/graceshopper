@@ -16,6 +16,7 @@ const requireToken = async (req, res, next) => {
 const isAdmin = (req, res, next) => {
   console.log(req.user);
   if (!req.user.isAdmin()) {
+    console.log(req.user);
     return res.status(403).send('You do not have Admin privilege');
   } else {
     next();
