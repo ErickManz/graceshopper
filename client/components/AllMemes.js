@@ -4,6 +4,11 @@ import { getMemes } from '../store/memesReducer';
 import { Link } from 'react-router-dom';
 import { addItems } from '../store/orderReducer';
 import { me } from '../store';
+import Grid from '@mui/material/Grid' 
+import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
 
 function AllMemes() {
   const memes = useSelector((state) => state.memes);
@@ -28,14 +33,27 @@ function AllMemes() {
   };
 
   return (
-    <div id="all-meme-view">
+    <Grid container spacing='4' >
       {memes.map((meme) => {
         if (meme.status === 'listed')
           return (
-            <div key={meme.id} className="listed-meme">
-              <h2>{meme.name}</h2>
+            <Grid item key={meme.id}>
+              <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >
+              <CardMedia
+                    component="img"
+                    sx={{
+                      // 16:9
+                      pt: '56.25%',
+                    }}
+                    image={meme.imgUrl}
+                    alt={meme.name}
+                  />
+              <CardContent>
+                <h2>{meme.name}</h2>
               <h4>{meme.price}</h4>
-              <div>
+              </CardContent>
+              
+              <CardActions>
                 <label htmlFor="quantity">Quantity:</label>
                 <input
                   min="1"
@@ -44,17 +62,15 @@ function AllMemes() {
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
-              </div>
+              </CardActions>
               <button type="button" onClick={(e) => onSubmit(e, meme)}>
                 Add to cart{' '}
               </button>
-              <Link to={`/memes/${meme.id}`}>
-                <img src={meme.imageUrl} />
-              </Link>
-            </div>
+              </Card> 
+            </Grid>
           );
       })}
-    </div>
+    </Grid>
   );
 }
 
