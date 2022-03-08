@@ -84,12 +84,13 @@ User.findByToken = async function (token) {
         'id',
         'username',
         'email',
-        'street',
+        'Street',
         'city',
         'zip',
         'phoneNumber',
         'name',
         'roleId',
+
       ],
 
       });

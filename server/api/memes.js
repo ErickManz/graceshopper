@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Meme = require('../db/models/Meme');
 module.exports = router;
 const { body, validationResult } = require('express-validator');
+const { requireToken, isAdmin } = require('../security/gatekeeping');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -12,7 +13,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const info = req.body;
     const meme = await Meme.create(info);
