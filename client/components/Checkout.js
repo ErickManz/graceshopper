@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 import Confirmation from './Confirmation';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../store/Order';
+import { getItems, submitOrder } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
 
-function total(orderItems){
-  return orderItems.reduce((total, orderItem) => total + Number(orderItem.salePrice)*orderItem.quantity, 0)
+function total(orderItems) {
+  return orderItems.reduce(
+    (total, orderItem) =>
+      total + Number(orderItem.salePrice) * orderItem.quantity,
+    0
+  );
 }
 
-
 export default function Checkout() {
-  const OrderItems = useSelector((state) => state.OrderItems); 
+  const OrderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
@@ -20,8 +23,8 @@ export default function Checkout() {
     dispatch(getItems(user));
   }, []);
 
-  function onSubmit()  {
-    console.log('nice')
+  function onSubmit() {
+    dispatch(submitOrder(user.id));
   }
   return (
     <div className="container">
@@ -36,7 +39,6 @@ export default function Checkout() {
         <tbody>
           {OrderItems.map((orderItem) => {
             return (
-              
               <tr key={orderItem.meme.memeId}>
                 <td>{orderItem.meme.name}</td>
                 <td>${orderItem.salePrice}</td>
@@ -54,7 +56,11 @@ export default function Checkout() {
       <div className="payment">Payment Options</div>
       <div className="Shipping Address">Shipping Address</div>
       <Link to="/confirmation">
-        <button type="submit" label="confirm purchase" onClick={(e) => onSubmit(e, meme)}>
+        <button
+          type="submit"
+          label="confirm purchase"
+          onClick={() => onSubmit()}
+        >
           Confirm Purchase
         </button>
       </Link>

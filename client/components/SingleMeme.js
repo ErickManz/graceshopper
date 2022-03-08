@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMeme } from '../store/singleMeme';
-import { addItems } from '../store/Order';
+import { getMeme } from '../store/singleMemeReducer';
+import { addItems } from '../store/orderReducer';
 import { me } from '../store';
 import EditMemeForm from './forms/EditMemeForm';
 

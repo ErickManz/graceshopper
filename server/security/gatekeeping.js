@@ -1,6 +1,4 @@
-const {
-  User ,
-} = require('../db');
+const { User } = require('../db');
 
 const requireToken = async (req, res, next) => {
   console.log('test');

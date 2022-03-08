@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../store';
-import { me } from '../store';
+import { me, logout } from '../store/authReducer';
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const isLogged = useSelector((state) => state.auth);
@@ -22,10 +21,11 @@ const Navbar = () => {
             <a href="#" onClick={() => dispatch(logout())}>
               Logout
             </a>
-            <Link to="/memes">All Memes</Link>
+            <Link to="/memes">Listed Memes</Link>
+            <Link to="/unlistedMemes">Unlisted Memes</Link>
             <Link to="/mycart">View My Cart</Link>
             <Link to="/createMeme">Create Meme</Link>
-            <Link to="/users">View all users</Link>
+            <Link to="/users">View All Users</Link>
           </div>
         ) : isLoggedIn && isLogged.roleId === 2 ? (
           <div>
@@ -47,6 +47,7 @@ const Navbar = () => {
             </a>
 
             <Link to="/memes">All Memes</Link>
+            <Link to="/mycart">View My Cart</Link>
           </div>
         )}
       </nav>

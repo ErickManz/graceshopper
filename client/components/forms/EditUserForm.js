@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { editUser } from '../../store/SingleUser';
+import { editUser } from '../../store/singleUserReducer';
 function EditUserForm(props) {
   const user = props.user;
   const dispatch = useDispatch();
@@ -13,13 +13,13 @@ function EditUserForm(props) {
     const name = e.target.name;
     const val = e.target.value;
     setFormData({ ...formData, [name]: val });
-  }
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      dispatch(editUser(user.id, formData));
-    };
-    return(
-      <div className="create-edit">
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(editUser(user.id, formData));
+  };
+  return (
+    <div className="create-edit">
       <form id="edit-user" onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
@@ -78,7 +78,6 @@ function EditUserForm(props) {
       </form>
     </div>
   );
-
 }
 
 export default EditUserForm;
