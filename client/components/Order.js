@@ -8,10 +8,9 @@ function Order(props) {
   const orderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
-  // console.log(user);
-  //not sure why getItem wont mount? I tried hardcoding userID.
+
   useEffect(() => {
-    //me was from boiler plate
+
     dispatch(me());
     dispatch(getItems(user));
   }, []);
@@ -20,6 +19,7 @@ function Order(props) {
     e.preventDefault();
     dispatch(editItems(user, { memeId: meme, quantity: num }));
   };
+
 
   console.log(orderItems);
 
@@ -36,9 +36,7 @@ function Order(props) {
             <button
               type="button"
               onClick={(e) =>
-                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)
-              }
-            >
+                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)} >
               +
             </button>
             <button
@@ -46,10 +44,12 @@ function Order(props) {
               onClick={(e) =>
                 onSubmit(e, orderItem.meme.id, --orderItem.quantity)
               }
-            >
+              disabled= { orderItem.quantity <= 0}  >
               -
             </button>
+
           </div>
+
         ))}
 
         <button type="button">

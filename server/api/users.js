@@ -27,7 +27,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id',requireToken, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
 
@@ -40,7 +40,7 @@ router.get('/:id', async (req, res, next) => {
     next(err);
   }
 });
-router.put('/:id/update', async (req, res, next) => {
+router.put('/:id/update', requireToken, async (req, res, next) => {
   try {
     console.log(req.params.id);
     const user = await User.findByPk(req.params.id);
@@ -51,7 +51,7 @@ router.put('/:id/update', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id',requireToken,isAdmin, async (req, res, next) => {
   try {
     const user = await User.destroy({
       where: { id: req.params.id },
@@ -63,5 +63,16 @@ router.delete('/:id', async (req, res, next) => {
     }
   } catch (err) {
     next(err);
+  }
+});
+
+router.patch('/:id/update',requireToken, isAdmin, async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const user = await User.findByPk(req.params.id);
+    const updated = await user.update(req.body);
+    res.json(updated);
+  } catch (error) {
+    next(console.error(error));
   }
 });

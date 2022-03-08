@@ -42,7 +42,7 @@ const Navbar = () => {
               <Button color="inherit" component={Link} to="/unlistedMemes">
                 Unlisted
               </Button>
-              
+
               <Button color="inherit" component={Link} to="/createMeme">
                 Create Meme
               </Button>
@@ -55,12 +55,18 @@ const Navbar = () => {
             </div>
           ) : isLoggedIn && isLogged.roleId === 2 ? (
             <div>
-              {/* The navbar will show these links after you log in and you are a users */} 
+              {/* The navbar will show these links after you log in and you are a users */}
               <Button color="inherit" href="#" onClick={() => dispatch(logout())}>
                 Logout
               </Button>
               <Button color="inherit" component={Link} to="/memes">Memes</Button>
+
+              <Button color="inherit" component={Link} to={`/user/${isLogged.id}`}>
+                Setting
+              </Button>
+
               <Button color="inherit" component={Link} to="/mycart"><CartBadge orderItems={orderItems}/></Button>
+
             </div>
           ) : (
             <div>

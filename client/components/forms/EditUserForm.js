@@ -66,13 +66,6 @@ function EditUserForm(props) {
           value={formData.phoneNumber}
           onChange={handleChange}
         />
-        <label htmlFor="roleId">Role id:</label>
-        <input
-          name="roleId"
-          placeholder="2"
-          value={formData.roleId}
-          onChange={handleChange}
-        />
 
         <button type="submit">Submit</button>
       </form>
