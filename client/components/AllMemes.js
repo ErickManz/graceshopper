@@ -9,6 +9,9 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
+import CardActionArea from '@mui/material/CardActionArea'
+import Button from '@mui/material/Button'
+
 
 function AllMemes() {
   const memes = useSelector((state) => state.memes);
@@ -35,16 +38,18 @@ function AllMemes() {
   return (
     <Grid container spacing='6' >
       {memes.map((meme) => {
+        
         if (meme.status === 'listed')
           return (
-            <Grid item key={meme.id}>
-              <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column' , maxWidth:345, overflow: 'hidden'}} >
+            <Grid item key={meme.id} >
+              <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column'}} >
+              <CardActionArea component={Link} to={`/memes/${meme.id}`}>
               <CardMedia
                     component="img"
-                    style={{ height: "300px" }}
-                    img={meme.imgUrl}
-                    alt={meme.name}
+                    height="150px"
+                    image={meme.imageUrl}
                   />
+                  </CardActionArea>
               <CardContent>
                 <h6>{meme.name}</h6>
               <h6>{meme.price}</h6>
@@ -63,6 +68,7 @@ function AllMemes() {
               <button type="button" onClick={(e) => onSubmit(e, meme)}>
                 Add to cart{' '}
               </button>
+              
               </Card> 
             </Grid>
           );

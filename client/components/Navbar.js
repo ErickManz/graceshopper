@@ -21,6 +21,7 @@ const Navbar = () => {
     <AppBar position="relative">
       <Container maxwidth="xl">
         <Toolbar>
+           {/*These buttons are encapsulating the React Router Link Component*/}
           <Button color="inherit" component={Link} to="/home">
             <Typography sx={{ fontFamily: 'Syne' }}>MemeSupreme</Typography>
           </Button>
@@ -29,9 +30,9 @@ const Navbar = () => {
             <div>
               {/* The navbar will show these links after you log in and you are a admin */}
 
-              <a href="#" onClick={() => dispatch(logout())}>
+              <Button color="inherit" href="#" onClick={() => dispatch(logout())}>
                 Logout
-              </a>
+              </Button>
               <Button color="inherit" component={Link} to="/memes">
                 Listed Memes
               </Button>
@@ -51,24 +52,24 @@ const Navbar = () => {
           ) : isLoggedIn && isLogged.roleId === 2 ? (
             <div>
               {/* The navbar will show these links after you log in and you are a users */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={() => dispatch(logout())}>
+              <Button color="inherit" component={Link} to="/home">Home</Button>
+              <Button color="inherit" href="#" onClick={() => dispatch(logout())}>
                 Logout
-              </a>
-              <Link to="/memes">All Memes</Link>
-              <Link to="/mycart">View My Cart</Link>
+              </Button>
+              <Button color="inherit" component={Link} to="/memes">All Memes</Button>
+              <Button color="inherit" component={Link} to="/mycart">View My Cart</Button>
             </div>
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-              <a href="#" onClick={() => dispatch(logout())}>
+              <Button color="inherit" component={Link} to="/login">Login</Button>
+              <Button color="inherit" component={Link} to="/signup">Sign Up</Button>
+              <Button color="inherit" href="#" onClick={() => dispatch(logout())}>
                 Logout
-              </a>
+              </Button>
 
-              <Link to="/memes">All Memes</Link>
-              <Link to="/mycart">View My Cart</Link>
+              <Button color="inherit" component={Link} to="/memes">All Memes</Button>
+              <Button color="inherit" component={Link} to="/mycart">View My Cart</Button>
             </div>
           )}
         </Toolbar>
