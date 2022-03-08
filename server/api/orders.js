@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { User, Meme, Order, OrderItem } = require('../db');
 module.exports = router;
-
-router.get('/', async (req, res, next) => {
+const { requireToken, isAdmin } = require('../security/gatekeeping');
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const Orderss = await Order.findAll();
     res.json(Orderss);
@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //finds open order by userId and changes status to complete
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     const openOrder = await Order.findOne({
       where: {
@@ -31,7 +31,7 @@ router.patch('/:id', async (req, res, next) => {
 });
 
 //posts new open order to given order id if no open order exists
-router.post('/:id', async (req, res, next) => {
+router.post('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     const openOrder = await Order.findOne({
       where: {
