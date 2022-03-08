@@ -33,24 +33,21 @@ function AllMemes() {
   };
 
   return (
-    <Grid container spacing='4' >
+    <Grid container spacing='6' >
       {memes.map((meme) => {
         if (meme.status === 'listed')
           return (
             <Grid item key={meme.id}>
-              <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >
+              <Card  sx={{ height: '100%', display: 'flex', flexDirection: 'column' , maxWidth:345, overflow: 'hidden'}} >
               <CardMedia
                     component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image={meme.imgUrl}
+                    style={{ height: "300px" }}
+                    img={meme.imgUrl}
                     alt={meme.name}
                   />
               <CardContent>
-                <h2>{meme.name}</h2>
-              <h4>{meme.price}</h4>
+                <h6>{meme.name}</h6>
+              <h6>{meme.price}</h6>
               </CardContent>
               
               <CardActions>

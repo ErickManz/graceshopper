@@ -1,15 +1,14 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Routes from './Routes';
+import Container from '@mui/material/Container'
 
 const App = () => {
   return (
-    <div>
+    <Container>
       <Navbar />
-      <main>
         <Routes />
-      </main>
-    </div>
+    </Container>
   );
 };
 
