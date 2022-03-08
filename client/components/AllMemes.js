@@ -47,6 +47,7 @@ function AllMemes() {
           id: meme.id,
           price: meme.price,
           quantity: quantity,
+          url: meme.imageUrl,
         })
       );
     }

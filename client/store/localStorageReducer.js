@@ -2,8 +2,10 @@ import axios from 'axios';
 import OrderItemsReducer from './orderReducer';
 
 const ADD_ITEM = 'ADD_ITEM';
+const GET_ITEM = 'GET_ITEM';
 
 export const setCartItems = (OrderItem) => ({ type: ADD_ITEM, OrderItem });
+export const getCartItems = () => ({ type: GET_ITEM });
 
 export const addItemToLocalCart = (product) => {
   return async (dispatch) => {
@@ -18,9 +20,16 @@ export const addItemToLocalCart = (product) => {
         id: product.id,
         quantity: product.quantity,
         price: product.price,
+        url: product.url,
       });
     }
     dispatch(setCartItems(cart));
+  };
+};
+
+export const getCart = () => {
+  return async (dispatch) => {
+    dispatch(getCartItems());
   };
 };
 
@@ -31,6 +40,8 @@ const localStorageReducer = (products = [], action) => {
       localStorage.setItem('guestCart', product);
       return [...products, action.OrderItem];
     }
+    case GET_ITEM:
+      return products;
     default:
       return products;
   }

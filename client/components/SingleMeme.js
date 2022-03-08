@@ -36,6 +36,7 @@ function SingleMeme(props) {
           id: meme.id,
           price: meme.price,
           quantity: quantity,
+          url: meme.imageUrl,
         })
       );
     }

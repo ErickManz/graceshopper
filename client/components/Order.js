@@ -3,25 +3,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems, editItems } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
+import { getCart } from '../store/localStorageReducer';
 
 function Order(props) {
   const orderItems = useSelector((state) => state.OrderItems);
+  const localItems = JSON.parse(window.localStorage.getItem('guestCart'));
+  console.log(localItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     dispatch(me());
     dispatch(getItems(user));
   }, []);
 
   const onSubmit = (e, meme, num) => {
     e.preventDefault();
+
     dispatch(editItems(user, { memeId: meme, quantity: num }));
   };
 
+  // (orderItems.length === 0) {
 
-  console.log(orderItems);
+  // } else {
+  // }
 
   return (
     <div>
@@ -36,7 +41,9 @@ function Order(props) {
             <button
               type="button"
               onClick={(e) =>
-                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)} >
+                onSubmit(e, orderItem.meme.id, ++orderItem.quantity)
+              }
+            >
               +
             </button>
             <button
@@ -44,12 +51,11 @@ function Order(props) {
               onClick={(e) =>
                 onSubmit(e, orderItem.meme.id, --orderItem.quantity)
               }
-              disabled= { orderItem.quantity <= 0}  >
+              disabled={orderItem.quantity <= 0}
+            >
               -
             </button>
-
           </div>
-
         ))}
 
         <button type="button">

@@ -17,7 +17,7 @@ const reducer = combineReducers({
   OrderItems: OrderItemsReducer,
   user: userReducer,
   singleUser: singleUserReducer,
-  addlocalStorage: localStorageReducer,
+  localStorage: localStorageReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
