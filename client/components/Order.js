@@ -31,14 +31,14 @@ function Order(props) {
             <h3>{orderItem.meme.name}</h3>
             <img src={orderItem.meme.imageUrl}></img>
             <h3>Price: {orderItem.meme.price}</h3>
-            <label htmlFor="quantity">Quantity:</label>
-              <input
-                min="1"
-                type="number"
-                name="quantity"
-                value={orderItem.quantity}
-                onChange={(e) => {onSubmit(e, orderItem.meme.id ,++orderItem.quantity)}} // usedipatch and edit it that way
-              />
+            <label htmlFor="quantity">Quantity:{orderItem.quantity}</label>
+
+                <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , ++orderItem.quantity)}>
+                +
+               </button>
+               <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , --orderItem.quantity)}>
+                -
+               </button>
           </div>
         ))}
 
