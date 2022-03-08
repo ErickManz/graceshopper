@@ -51,8 +51,8 @@ export const addItems = (id, item) => {
 export const editItems = (id, item) => {
   return async (dispatch) => {
     try{
-      const token = localStorage.getItem("token");
-     await axios.patch(`/api/orderItems/${id}/cart`, item, {headers:{Authorization:token}});
+    const token = localStorage.getItem("token");
+     await axios.patch(`/api/orderItems/${id}/cart`, item, {headers:{authorization:token}});
      const response = await axios.get(`/api/orderItems/${id}`,{headers:{Authorization:token}});
      const OrderItems = response.data;
      dispatch(changeItems(OrderItems));

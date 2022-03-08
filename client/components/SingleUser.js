@@ -15,6 +15,8 @@ function SingleUser(props) {
       <h2>UserName:{user.username}</h2>
       <h2>Email:{user.email}</h2>
       <ul>
+        <li>First name: {user.firstName} </li>
+        <li>Last name: {user.lastName} </li>
         <li>Street 1: {user.street1} </li>
         <li>Street 2: {user.street2} </li>
         <li>City: {user.city} </li>
