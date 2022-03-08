@@ -75,13 +75,6 @@ router.post(
           }
         });
 
-      // const currentItem = await OrderItem.create({
-      //   memeId: req.body.memeId,
-
-      //   quantity: req.body.quantity,
-
-      //   salePrice: req.body.salePrice,
-      // });
       if(itemToUpdate){
        const total = itemToUpdate.quantity + parseInt(req.body.quantity)
        await itemToUpdate.update({quantity: total })

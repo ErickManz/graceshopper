@@ -20,7 +20,13 @@ function AllMemes() {
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const arr = []
+ arr.push(1)
+ arr.push(2)
+ localStorage.setItem("meme", JSON.stringify(arr));
+ const rtn = localStorage.getItem("meme");
+ console.log(rtn)
+ localStorage.setItem("meme", JSON.stringify(rtn));
   useEffect(() => {
     dispatch(me());
     dispatch(getMemes());

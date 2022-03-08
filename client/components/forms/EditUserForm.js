@@ -21,11 +21,18 @@ function EditUserForm(props) {
   return (
     <div className="create-edit">
       <form id="edit-user" onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="firstName">First Name:</label>
         <input
-          name="name"
-          placeholder="Name"
-          value={formData.name}
+          name="firstName"
+          placeholder="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+        />
+        <label htmlFor="lastName">last Name:</label>
+        <input
+          name="lastName"
+          placeholder="lastName"
+          value={formData.lastName}
           onChange={handleChange}
         />
 
@@ -50,6 +57,13 @@ function EditUserForm(props) {
           name="street2"
           placeholder="street line 2"
           value={formData.street2}
+          onChange={handleChange}
+        />
+        <label htmlFor="State">State:</label>
+        <input
+          name="state"
+          placeholder="state"
+          value={formData.state}
           onChange={handleChange}
         />
 

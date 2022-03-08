@@ -52,6 +52,9 @@ const Navbar = () => {
               <Button color="inherit" component={Link} to="/mycart">
               <CartBadge orderItems={orderItems} />
               </Button>
+              <Button color="inherit" component={Link} to={`/user/${isLogged.id}`}>
+                Setting
+              </Button>
             </div>
           ) : isLoggedIn && isLogged.roleId === 2 ? (
             <div>
