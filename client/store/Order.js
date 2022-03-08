@@ -13,9 +13,9 @@ export const addItem = (OrderItem) => ({ type: ADD_ITEM, OrderItem });
 
 const newOrder = () => ({type: NEW_ORDER})
 
-export const changeItems = (OrderItems) => ({
-  type: SET_ITEMS,
-  OrderItems,
+export const changeItems = (OrderItem) => ({
+  type: EDIT_ORDER,
+  OrderItem,
 });
 export const getItems = (id) => {
   return async (dispatch) => {
@@ -44,8 +44,10 @@ export const addItems = (id, item) => {
 export const editItems = (id, item) => {
   return async (dispatch) => {
     try{
-     const {data} = await axios.patch(`/api/orderItems/${id}/cart`, item);
-     dispatch(changeItems(data));
+     await axios.patch(`/api/orderItems/${id}/cart`, item);
+     const response = await axios.get(`/api/orderItems/${id}`);
+     const OrderItems = response.data;
+     dispatch(changeItems(OrderItems));
     }catch(err){
       console.log(err);
     }
@@ -64,15 +66,12 @@ const OrderItemsReducer = (items = [], action) => {
       return [...items, action.OrderItem];
     case NEW_ORDER:
       return [];
-    case EDIT_ORDER:{
-     return items.map(item => {
-        if(item.id === action.OrderItems.id){
-        return action.OrderItems
-        }else
-        return item
-      })
-
-    }
+    case EDIT_ORDER:
+      console.log(items);
+     return items.map((item) =>
+        item.id === action.OrderItem.id  ? action.OrderItem
+        :item
+      );
     default:
       return items;
   }

@@ -133,18 +133,13 @@ router.patch('/:id/cart', async (req, res, next) => {
     const itemToUpdate = await OrderItem.findOne({
       where:{
         memeId: req.body.memeId,
-        orderId:currentSession.id
+        orderId: currentSession.id
         }
       });
 
+      const data = await itemToUpdate.update({ quantity: req.body.quantity });
 
-    if (req.body.quantity === 0) {
-      await itemToUpdate.destroy();
-    } else {
-      await itemToUpdate.update({ quantity: req.body.quantity });
-    }
-
-    res.send(itemToUpdate);
+    res.send(data);
   } catch (error) {
     next(error);
   }

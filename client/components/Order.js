@@ -22,7 +22,7 @@ function Order(props) {
   };
 
   console.log(orderItems);
-  let num = 0;
+
   return (
     <div>
       <div className="orderItem">
@@ -37,11 +37,8 @@ function Order(props) {
                 type="number"
                 name="quantity"
                 value={orderItem.quantity}
-                onChange={(e) => {orderItem.quantity = e.target.value}} // usedipatch and edit it that way
+                onChange={(e) => {onSubmit(e, orderItem.meme.id ,++orderItem.quantity)}} // usedipatch and edit it that way
               />
-                <button type="button" onClick={(e) => onSubmit(e, orderItem.meme.id , num)}>
-                set amount
-               </button>
           </div>
         ))}
 
