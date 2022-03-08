@@ -8,8 +8,7 @@ import { authenticate } from '../../store';
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -41,16 +40,8 @@ const AuthForm = ({ name, displayName }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formName = e.target.name;
-
-    dispatch(authenticate(username, password, formName));
+    dispatch(authenticate(formData, formName));
   };
-
-  // const handleChangeForUser = (evt) => {
-  //   setUsername(evt.target.value);
-  // };
-  // const handleChangeForPassword = (evt) => {
-  //   setPassword(evt.target.value);
-  // };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -60,10 +51,6 @@ const AuthForm = ({ name, displayName }) => {
     console.log(formData);
   };
 
-  // let isUserNamePasswordEmpty = true;
-  // if (username.length > 0 && password.length > 0) {
-  //   isUserNamePasswordEmpty = false;
-  // }
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -162,7 +149,13 @@ const AuthForm = ({ name, displayName }) => {
               <label htmlFor="State">
                 <small>State</small>
               </label>
-              <select name="state" value={state} onChange={handleChange}>
+              <select
+                name="state"
+                value={state}
+                required={true}
+                onChange={handleChange}
+              >
+                <option value=""></option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -246,8 +239,6 @@ const AuthForm = ({ name, displayName }) => {
         </div>
 
         <button type="submit">{displayName}</button>
-
-        {/* {error && error.response && <div> {error.response.data} </div>} */}
       </form>
     </div>
   );
