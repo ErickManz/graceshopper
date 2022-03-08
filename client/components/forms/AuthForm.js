@@ -24,10 +24,10 @@ const AuthForm = ({ name, displayName }) => {
     setPassword(evt.target.value);
   };
 
-  let isUserNamePasswordEmpty = true;
-  if (username.length > 0 && password.length > 0) {
-    isUserNamePasswordEmpty = false;
-  }
+  // let isUserNamePasswordEmpty = true;
+  // if (username.length > 0 && password.length > 0) {
+  //   isUserNamePasswordEmpty = false;
+  // }
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -35,21 +35,36 @@ const AuthForm = ({ name, displayName }) => {
           <label htmlFor="username">
             <small>Username</small>
           </label>
-          <input name="username" type="text" onChange={handleChangeForUser} />
-        </div>
-        <div>
+
+          <input
+            name="username"
+            type="text"
+            required={true}
+            onChange={handleChangeForUser}
+          />
+
           <label htmlFor="password">
             <small>Password</small>
           </label>
+
           <input
             name="password"
             type="password"
+            required={true}
             onChange={handleChangeForPassword}
           />
+          {name === 'signup' ? (
+            <>
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <input name="email" type="email" />{' '}
+            </>
+          ) : null}
         </div>
-        <div>
-          {/* <button type="submit" disabled={isUserNamePasswordEmpty}>{displayName}</button> */}
-        </div>
+
+        <button type="submit">{displayName}</button>
+
         {/* {error && error.response && <div> {error.response.data} </div>} */}
       </form>
     </div>

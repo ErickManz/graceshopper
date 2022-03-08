@@ -31,8 +31,11 @@ const User = db.define('user', {
       isEmail: true,
     },
   },
-  street: {
-    type: Sequelize.TEXT,
+  street1: {
+    type: Sequelize.STRING,
+  },
+  street2: {
+    type: Sequelize.STRING,
   },
   city: {
     type: Sequelize.STRING,
@@ -89,11 +92,13 @@ User.findByToken = async function (token) {
         'id',
         'username',
         'email',
-        'street',
+        'street1',
+        'street2',
         'city',
         'zip',
         'phoneNumber',
-        'name',
+        'firstName',
+        'lastName',
         'roleId',
       ],
     });
