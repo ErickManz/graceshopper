@@ -4,11 +4,14 @@ import { getMeme } from '../store/singleMemeReducer';
 import { addItems } from '../store/orderReducer';
 import { me } from '../store';
 import EditMemeForm from './forms/EditMemeForm';
+import Snackbar from '@mui/material/Snackbar';
+import Button from '@mui/material/Button';
 
 function SingleMeme(props) {
   const meme = useSelector((state) => state.singleMeme);
   const user = useSelector((state) => state.auth);
   const [quantity, setQuantity] = useState(1);
+  const [open, setOpen] = useState(false)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,6 +22,7 @@ function SingleMeme(props) {
     e.preventDefault();
     dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
     setQuantity(1);
+    setOpen(true)
   };
 
   return (
@@ -46,7 +50,15 @@ function SingleMeme(props) {
       <div id="edit-meme">
         {user.roleId === 1 ? <EditMemeForm meme={meme} />: (<div> </div>) }
       </div>
-
+      <Snackbar
+                  open={open}
+                  autoHideDuration={3000}
+                  onClose={() => setOpen(false)}
+                  message="Meme Added To Cart"
+                  action={<React.Fragment>
+                    <Button color="secondary" onClick={() => setOpen(false)}>CLOSE</Button>
+                  </React.Fragment>}
+                />
     </div>
   );
 }

@@ -83,7 +83,7 @@ function AllMemes() {
       })}
       <Snackbar
                   open={open}
-                  autoHideDuration={6000}
+                  autoHideDuration={3000}
                   onClose={() => setOpen(false)}
                   message="Meme Added To Cart"
                   action={<React.Fragment>
