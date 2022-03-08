@@ -2,6 +2,14 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { me, logout } from '../store/authReducer';
+import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import CartIcon from '@mui/icons-material/ShoppingCartOutlined'
+
+import AllMemes from './AllMemes';
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const isLogged = useSelector((state) => state.auth);
@@ -11,48 +19,61 @@ const Navbar = () => {
     dispatch(me());
   }, []);
   return (
-    <div>
-      <h1>MemeSupreme</h1>
-      <nav>
-        {isLoggedIn && isLogged.roleId === 1 ? (
-          <div>
-            {/* The navbar will show these links after you log in and you are a admin */}
-            <Link to="/home">Home</Link>
-            <a href="#" onClick={() => dispatch(logout())}>
-              Logout
-            </a>
-            <Link to="/memes">Listed Memes</Link>
-            <Link to="/unlistedMemes">Unlisted Memes</Link>
-            <Link to="/mycart">View My Cart</Link>
-            <Link to="/createMeme">Create Meme</Link>
-            <Link to="/users">View All Users</Link>
-          </div>
-        ) : isLoggedIn && isLogged.roleId === 2 ? (
-          <div>
-            {/* The navbar will show these links after you log in and you are a users */}
-            <Link to="/home">Home</Link>
-            <a href="#" onClick={() => dispatch(logout())}>
-              Logout
-            </a>
-            <Link to="/memes">All Memes</Link>
-            <Link to="/mycart">View My Cart</Link>
-          </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-            <a href="#" onClick={() => dispatch(logout())}>
-              Logout
-            </a>
+    <AppBar position="relative">
+      <Container maxwidth="xl">
+        <Toolbar sx={{justifyContent: 'space-between'}}>
+           {/*These buttons are encapsulating the React Router Link Component*/}
+          <Button color="inherit" component={Link} to="/home">
+            <Typography sx={{ fontFamily: 'Syne' }}>MemeSupreme</Typography>
+          </Button>
 
-            <Link to="/memes">All Memes</Link>
-            <Link to="/mycart">View My Cart</Link>
-          </div>
-        )}
-      </nav>
-      <hr />
-    </div>
+          {isLoggedIn && isLogged.roleId === 1 ? (
+            <div>
+              {/* The navbar will show these links after you log in and you are a admin */}
+
+              <Button color="inherit" href="#" onClick={() => dispatch(logout())}>
+                Logout
+              </Button>
+              <Button color="inherit" component={Link} to="/memes">
+                Memes
+              </Button>
+              <Button color="inherit" component={Link} to="/unlistedMemes">
+                Unlisted
+              </Button>
+              
+              <Button color="inherit" component={Link} to="/createMeme">
+                Create Meme
+              </Button>
+              <Button color="inherit" component={Link} to="/users">
+                View All Users
+              </Button>
+              <Button color="inherit" component={Link} to="/mycart">
+                View My Cart
+              </Button>
+            </div>
+          ) : isLoggedIn && isLogged.roleId === 2 ? (
+            <div>
+              {/* The navbar will show these links after you log in and you are a users */} 
+              <Button color="inherit" href="#" onClick={() => dispatch(logout())}>
+                Logout
+              </Button>
+              <Button color="inherit" component={Link} to="/memes">Memes</Button>
+              <Button color="inherit" component={Link} to="/mycart">View My Cart</Button>
+            </div>
+          ) : (
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <Button color="inherit" component={Link} to="/login">Login</Button>
+              <Button color="inherit" component={Link} to="/signup">Sign Up</Button>
+              <Button color="inherit" component={Link} to="/memes">Memes</Button>
+              <Button color="inherit" component={Link} to="/mycart">
+                <CartIcon />
+              </Button>
+            </div>
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

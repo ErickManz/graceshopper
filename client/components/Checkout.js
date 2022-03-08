@@ -4,6 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems, submitOrder } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
+import Button from '@mui/material/Button'
+import Table from '@mui/material/Table'
+import Paper from '@mui/material/Paper'
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 function total(orderItems) {
   return orderItems.reduce(
@@ -28,41 +36,41 @@ export default function Checkout() {
   }
   return (
     <div className="container">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Meme</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
+      <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
+      <Table sx={{ maxWidth: 650 }} >
+        <TableHead>
+          <TableRow>
+            <TableCell scope="col">Meme</TableCell>
+            <TableCell scope="col">Price</TableCell>
+            <TableCell scope="col">Quantity</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {OrderItems.map((orderItem) => {
             return (
-              <tr key={orderItem.meme.memeId}>
-                <td>{orderItem.meme.name}</td>
-                <td>${orderItem.salePrice}</td>
-                <td>{orderItem.quantity}</td>
-              </tr>
+              
+              <TableRow key={orderItem.meme.memeId}>
+                <TableCell>{orderItem.meme.name}</TableCell>
+                <TableCell>{orderItem.quantity}</TableCell>
+                <TableCell>${orderItem.salePrice}</TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
+        </TableBody>
 
-        <tr>
-          <td>Total</td>
-          <td>${total(OrderItems)}</td>
-        </tr>
-      </table>
+        <TableRow>
+          <TableCell>Total</TableCell>
+          <TableCell>{' '}</TableCell>
+          <TableCell>${total(OrderItems)}</TableCell>
+        </TableRow>
+      </Table>
+      </TableContainer>
       <div className="payment">Payment Options</div>
       <div className="Shipping Address">Shipping Address</div>
       <Link to="/confirmation">
-        <button
-          type="submit"
-          label="confirm purchase"
-          onClick={() => onSubmit()}
-        >
+        <Button variant="contained" type="submit" label="confirm purchase" onClick={() => onSubmit()}>
           Confirm Purchase
-        </button>
+        </Button>
       </Link>
     </div>
   );
