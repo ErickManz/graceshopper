@@ -43,7 +43,9 @@ function SingleMeme(props) {
         Add to cart{' '}
       </button>
       <div id="edit-meme">
-        <EditMemeForm meme={meme} />
+      <div id="edit-meme">
+        {user.roleId === 1 ? <EditMemeForm meme={meme} />: (<div> </div>) }
+      </div>
       </div>
     </div>
   );
