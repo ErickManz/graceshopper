@@ -7,7 +7,7 @@ import EditMemeForm from './forms/EditMemeForm';
 
 function SingleMeme(props) {
   const meme = useSelector((state) => state.singleMeme);
-  const user = useSelector((state) => state.auth.id);
+  const user = useSelector((state) => state.auth);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ function SingleMeme(props) {
   }, []);
   const onSubmit = (e, memeId) => {
     e.preventDefault();
-    dispatch(addItems(user, { memeId: memeId, quantity: quantity }));
+    dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
     setQuantity(1);
   };
 
@@ -27,7 +27,7 @@ function SingleMeme(props) {
       <h4>{meme.price}</h4>
       <h4>{meme.genre}</h4>
       <img src={meme.imageUrl} />
-      <p>{`${meme.description} by ${meme.artist}`}</p>
+      <p>{meme.description}</p>
       <h4>Stock quantity left: {meme.stockQuantity}</h4>
       <div>
         <label htmlFor="quantity">Quantity:</label>
@@ -48,7 +48,7 @@ function SingleMeme(props) {
       )}
 
       <div id="edit-meme">
-        <EditMemeForm meme={meme} />
+        {user.roleId === 1 ? <EditMemeForm meme={meme} />: (<div> </div>) }
       </div>
     </div>
   );
