@@ -62,8 +62,7 @@ export const editItems = (id, item) => {
  };
 }
 export const submitOrder = (userId) => async (dispatch) => {
-  const response = await axios.patch(`/api/orders/${userId}`)
-  const {orderId} = response.data
+  await axios.patch(`/api/orders/${userId}`)
   dispatch(newOrder())
 }
 const itemsState = [];

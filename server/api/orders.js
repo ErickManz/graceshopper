@@ -12,7 +12,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
 });
 
 //finds open order by userId and changes status to complete
-router.patch('/:id', requireToken, isAdmin, async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const openOrder = await Order.findOne({
       where: {
@@ -22,7 +22,9 @@ router.patch('/:id', requireToken, isAdmin, async (req, res, next) => {
     });
 
     if (openOrder !== null) {
-      openOrder.update({ status: 'complete' });
+      await openOrder.update({ status: 'complete' });
+      console.log(openOrder)
+      await openOrder.save()
       res.status(200);
     }
   } catch (error) {

@@ -21,7 +21,7 @@ router.get('/:id', requireToken, async (req, res, next) => {
     });
 
     if (currentSession === null) {
-      throw new Error('Invalid User Id');
+      res.json([])
     }
 
     const items = await OrderItem.findAll({

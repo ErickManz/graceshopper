@@ -12,6 +12,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Container from '@mui/material/Container'
 
 function total(orderItems) {
   return orderItems.reduce(
@@ -32,17 +33,17 @@ export default function Checkout() {
   }, []);
 
   function onSubmit() {
-    dispatch(submitOrder(user.id));
+    dispatch(submitOrder(user));
   }
   return (
-    <div className="container">
+    <Container>
       <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
       <Table sx={{ maxWidth: 650 }} >
         <TableHead>
           <TableRow>
             <TableCell scope="col">Meme</TableCell>
-            <TableCell scope="col">Price</TableCell>
             <TableCell scope="col">Quantity</TableCell>
+            <TableCell scope="col">Price</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -72,6 +73,6 @@ export default function Checkout() {
           Confirm Purchase
         </Button>
       </Link>
-    </div>
+    </Container>
   );
 }
