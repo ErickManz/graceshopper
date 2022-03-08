@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMeme } from '../store/singleMemeReducer';
 import { addItems } from '../store/orderReducer';
 import { me } from '../store';
+import { addItemToLocalCart } from '../store/localStorageReducer';
 import EditMemeForm from './forms/EditMemeForm';
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
@@ -11,19 +12,43 @@ function SingleMeme(props) {
   const meme = useSelector((state) => state.singleMeme);
   const user = useSelector((state) => state.auth);
   const [quantity, setQuantity] = useState(1);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMeme(props.match.params.id));
     dispatch(me());
   }, []);
-  const onSubmit = (e, memeId) => {
+
+  const onSubmit = (e, meme) => {
     e.preventDefault();
-    dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
+    if (user.id) {
+      dispatch(
+        addItems(user, {
+          memeId: meme.id,
+          quantity: quantity,
+          salePrice: meme.price,
+        })
+      );
+    } else {
+      dispatch(
+        addItemToLocalCart({
+          id: meme.id,
+          price: meme.price,
+          quantity: quantity,
+        })
+      );
+    }
     setQuantity(1);
-    setOpen(true)
+    setOpen(true);
   };
+
+  // const onSubmit = (e, memeId) => {
+  //   e.preventDefault();
+  //   dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
+  //   setQuantity(1);
+  //   setOpen(true)
+  // };
 
   return (
     <div key={meme.id} className="singleMeme">
@@ -43,22 +68,26 @@ function SingleMeme(props) {
           onChange={(e) => setQuantity(e.target.value)}
         />
       </div>
-      <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
+      <button type="button" onClick={(e) => onSubmit(e, meme)}>
         Add to cart{' '}
       </button>
 
       <div id="edit-meme">
-        {user.roleId === 1 ? <EditMemeForm meme={meme} />: (<div> </div>) }
+        {user.roleId === 1 ? <EditMemeForm meme={meme} /> : <div> </div>}
       </div>
       <Snackbar
-                  open={open}
-                  autoHideDuration={3000}
-                  onClose={() => setOpen(false)}
-                  message="Meme Added To Cart"
-                  action={<React.Fragment>
-                    <Button color="secondary" onClick={() => setOpen(false)}>CLOSE</Button>
-                  </React.Fragment>}
-                />
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Meme Added To Cart"
+        action={
+          <React.Fragment>
+            <Button color="secondary" onClick={() => setOpen(false)}>
+              CLOSE
+            </Button>
+          </React.Fragment>
+        }
+      />
     </div>
   );
 }

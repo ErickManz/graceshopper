@@ -4,6 +4,7 @@ import { getMemes } from '../store/memesReducer';
 import { Link } from 'react-router-dom';
 import { addItems } from '../store/orderReducer';
 import { me } from '../store';
+import { addItemToLocalCart } from '../store/localStorageReducer';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -25,15 +26,30 @@ function AllMemes() {
     dispatch(me());
     dispatch(getMemes());
   }, []);
+
+  //make local storage reducer
+  //if guest use local reducer
+  //dispatch additemslocalcart thunk
+
   const onSubmit = (e, meme) => {
     e.preventDefault();
-    dispatch(
-      addItems(user, {
-        memeId: meme.id,
-        quantity: quantity,
-        salePrice: meme.price,
-      })
-    );
+    if (user) {
+      dispatch(
+        addItems(user, {
+          memeId: meme.id,
+          quantity: quantity,
+          salePrice: meme.price,
+        })
+      );
+    } else {
+      dispatch(
+        addItemToLocalCart({
+          id: meme.id,
+          price: meme.price,
+          quantity: quantity,
+        })
+      );
+    }
     setQuantity(1);
     setOpen(true);
   };
@@ -82,14 +98,18 @@ function AllMemes() {
           );
       })}
       <Snackbar
-                  open={open}
-                  autoHideDuration={3000}
-                  onClose={() => setOpen(false)}
-                  message="Meme Added To Cart"
-                  action={<React.Fragment>
-                    <Button color="secondary" onClick={() => setOpen(false)}>CLOSE</Button>
-                  </React.Fragment>}
-                />
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Meme Added To Cart"
+        action={
+          <React.Fragment>
+            <Button color="secondary" onClick={() => setOpen(false)}>
+              CLOSE
+            </Button>
+          </React.Fragment>
+        }
+      />
     </Grid>
   );
 }

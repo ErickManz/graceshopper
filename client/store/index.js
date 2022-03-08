@@ -8,6 +8,7 @@ import singleMemeReducer from './singleMemeReducer';
 import OrderItemsReducer from './orderReducer';
 import userReducer from './userReducer';
 import singleUserReducer from './singleUserReducer';
+import localStorageReducer from './localStorageReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   OrderItems: OrderItemsReducer,
   user: userReducer,
   singleUser: singleUserReducer,
+  addlocalStorage: localStorageReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
