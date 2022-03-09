@@ -40,6 +40,7 @@ function AllMemes() {
 
   const onSubmit = (e, meme) => {
     e.preventDefault();
+    console.log(meme);
     if (user) {
       dispatch(
         addItems(user, {

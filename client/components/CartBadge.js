@@ -1,13 +1,13 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import Badge from '@mui/material/Badge'
-import CartIcon from '@mui/icons-material/ShoppingCartOutlined'
+import Badge from '@mui/material/Badge';
+import CartIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 export default function CartBadge(props) {
-    return(
-        <Badge badgeContent={props.orderItems.length} color="secondary">
-            <CartIcon />
-        </Badge>
-    )
+  return (
+    <Badge badgeContent={props.orderItems.length} color="secondary">
+      <CartIcon />
+    </Badge>
+  );
 }

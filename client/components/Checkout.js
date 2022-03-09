@@ -32,17 +32,18 @@ export default function Checkout() {
 
   const OrderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
+  const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(me());
     dispatch(getItems(user));
-  }, []);
+  }, [user]);
 
   function onSubmit() {
     dispatch(submitOrder(user.id));
   }
-  if (localItems !== null) {
+  if (!isLoggedIn && localItems) {
     return (
       <div className="container">
         <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
@@ -50,8 +51,8 @@ export default function Checkout() {
             <TableHead>
               <TableRow>
                 <TableCell scope="col">Meme</TableCell>
-                <TableCell scope="col">Price</TableCell>
                 <TableCell scope="col">Quantity</TableCell>
+                <TableCell scope="col">Price</TableCell>
               </TableRow>
             </TableHead>
 
@@ -59,9 +60,63 @@ export default function Checkout() {
               {localItems.map((orderItem) => {
                 return (
                   <TableRow key={orderItem.id}>
-                    <TableCell>{orderItem.name}</TableCell>
-                    <TableCell>{orderItem.price}</TableCell>
-                    <TableCell>{orderItem.quantity}</TableCell>
+                    <TableCell key={orderItem.id}>{orderItem.price}</TableCell>
+                    <TableCell key={orderItem.id}>{orderItem.name}</TableCell>
+                    <TableCell key={orderItem.id}>
+                      {orderItem.quantity}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+
+            <TableRow>
+              <TableCell key={1}>Total</TableCell>
+              <TableCell> </TableCell>
+              <TableCell>{totalForLocal(localItems)}</TableCell>
+            </TableRow>
+          </Table>
+        </TableContainer>
+        <div className="payment">Payment Options</div>
+        <div className="Shipping Address">Shipping Address</div>
+        <Link to="/confirmation">
+          <Button variant="contained" type="submit" label="confirm purchase">
+            Confirm Purchase
+          </Button>
+        </Link>
+      </div>
+    );
+  } else if (isLoggedIn && OrderItems) {
+    return (
+      <div className="container">
+        <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
+          <Table sx={{ maxWidth: 650 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell key={1} scope="col">
+                  Meme
+                </TableCell>
+                <TableCell key={2} scope="col">
+                  Quantity
+                </TableCell>
+                <TableCell key={3} scope="col">
+                  Price
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OrderItems.map((orderItem) => {
+                return (
+                  <TableRow key={orderItem.meme.memeId}>
+                    <TableCell key={orderItem.meme.memeId}>
+                      {orderItem.meme.name}
+                    </TableCell>
+                    <TableCell key={orderItem.meme.memeId}>
+                      {orderItem.quantity}
+                    </TableCell>
+                    <TableCell key={orderItem.meme.memeId}>
+                      ${orderItem.salePrice}
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -70,7 +125,7 @@ export default function Checkout() {
             <TableRow>
               <TableCell>Total</TableCell>
               <TableCell> </TableCell>
-              <TableCell>{totalForLocal(localItems)}</TableCell>
+              <TableCell>${total(OrderItems)}</TableCell>
             </TableRow>
           </Table>
         </TableContainer>
@@ -89,49 +144,6 @@ export default function Checkout() {
       </div>
     );
   } else {
-    return (
-      <div className="container">
-        <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
-          <Table sx={{ maxWidth: 650 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell scope="col">Meme</TableCell>
-                <TableCell scope="col">Price</TableCell>
-                <TableCell scope="col">Quantity</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {OrderItems.map((orderItem) => {
-                return (
-                  <TableRow key={orderItem.meme.memeId}>
-                    <TableCell>{orderItem.meme.name}</TableCell>
-                    <TableCell>{orderItem.quantity}</TableCell>
-                    <TableCell>{orderItem.salePrice}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-
-            <TableRow>
-              <TableCell>Total</TableCell>
-              <TableCell> </TableCell>
-              <TableCell>{total(OrderItems)}</TableCell>
-            </TableRow>
-          </Table>
-        </TableContainer>
-        <div className="payment">Payment Options</div>
-        <div className="Shipping Address">Shipping Address</div>
-        <Link to="/confirmation">
-          <Button
-            variant="contained"
-            type="submit"
-            label="confirm purchase"
-            onClick={() => onSubmit()}
-          >
-            Confirm Purchase
-          </Button>
-        </Link>
-      </div>
-    );
+    return <div>Nothing to see here!</div>;
   }
 }

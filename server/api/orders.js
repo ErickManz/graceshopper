@@ -12,7 +12,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
 });
 
 //finds open order by userId and changes status to complete
-router.patch('/:id', requireToken, isAdmin, async (req, res, next) => {
+router.patch('/:id', requireToken, async (req, res, next) => {
   try {
     const openOrder = await Order.findOne({
       where: {
@@ -21,8 +21,8 @@ router.patch('/:id', requireToken, isAdmin, async (req, res, next) => {
       },
     });
 
-    if (openOrder !== null) {
-      openOrder.update({ status: 'complete' });
+    if (openOrder) {
+      await openOrder.update({ status: 'complete' });
       res.status(200);
     }
   } catch (error) {
@@ -42,7 +42,6 @@ router.post('/:id', requireToken, isAdmin, async (req, res, next) => {
 
     if (openOrder === null) {
       const user = await User.findByPk(req.params.id);
-      console.log(user);
       const newOrder = await Order.create();
       user.addOrder(newOrder);
       res.status(201).send(newOrder);

@@ -30,6 +30,7 @@ router.get('/:id', requireToken, async (req, res, next) => {
       },
       include: [{ model: Meme }],
     });
+    console.log('HERE ARE THE ORDER ITEMS!!!!', items);
     res.json(items);
   } catch (err) {
     next(err);
@@ -51,9 +52,10 @@ router.post(
   '/:id/cart',
   requireToken,
   isValidMeme(),
-  body('quantity').isInt({ min: 1 }),
+  body('quantity').isInt({ min: 0 }),
   async (req, res, next) => {
     try {
+      console.log(req.body);
       //collects errors from validators
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -68,25 +70,26 @@ router.post(
           status: 'open',
         },
       });
-      const [itemToUpdate, newItem ] = await OrderItem.findOrCreate({
-        where:{
+      const itemToUpdate = await OrderItem.findOne({
+        where: {
           memeId: req.body.memeId,
-          orderId: currentSession.id
-          }
+          orderId: currentSession.id,
+        },
+      });
+
+      if (itemToUpdate) {
+        const total = itemToUpdate.quantity + parseInt(req.body.quantity);
+        await itemToUpdate.update({ quantity: total });
+      } else {
+        console.log('Is it this one? #2', req.body);
+        var newOrder = await OrderItem.create({
+          memeId: req.body.memeId,
+
+          quantity: req.body.quantity,
+
+          salePrice: req.body.salePrice,
         });
-
-      if(itemToUpdate){
-       const total = itemToUpdate.quantity + parseInt(req.body.quantity)
-       await itemToUpdate.update({quantity: total })
-      }else{
-    var newOrder =   await newItem.update({
-        memeId: req.body.memeId,
-
-        quantity: req.body.quantity,
-
-        salePrice: req.body.salePrice,
-      })
-    }
+      }
 
       if (currentSession) {
         currentSession.addOrderItem(newOrder);
@@ -105,7 +108,7 @@ router.post(
 
 const isValidorderItem = () =>
   body('id').custom(async (orderItemId) => {
-    const meme = await OrderItem.findOne({where:{orderItemId}});
+    const meme = await OrderItem.findOne({ where: { orderItemId } });
     if (meme === null) {
       throw new Error('Invalid orderItemId');
     }
@@ -115,31 +118,108 @@ const isValidorderItem = () =>
 //validating that body of request is an integer with express-validator
 router.patch('/:id/cart', requireToken, async (req, res, next) => {
   try {
-
-    const userId = req.params.id
-    const currentUser = await User.findOne({where:{id: userId}});
+    const userId = req.params.id;
+    const currentUser = await User.findOne({ where: { id: userId } });
     const currentSession = await Order.findOne({
-        where: {
-          userId: currentUser.id,
-          status: 'open'
-        }
-      });
+      where: {
+        userId: currentUser.id,
+        status: 'open',
+      },
+    });
 
     const itemToUpdate = await OrderItem.findOne({
-      where:{
+      where: {
         memeId: req.body.memeId,
-        orderId: currentSession.id
-        }
-      });
-      let data = ''
-      if(req.body.quantity <= 0){
-      data = await itemToUpdate.destroy()
-      }else{
-
+        orderId: currentSession.id,
+      },
+    });
+    let data = '';
+    if (req.body.quantity <= 0) {
+      data = await itemToUpdate.destroy();
+    } else {
       data = await itemToUpdate.update({ quantity: req.body.quantity });
-      }
+    }
     res.send(data);
   } catch (error) {
     next(error);
   }
 });
+
+// router.post(
+//   '/:id/cart',
+//   requireToken,
+//   isValidMeme(),
+//   body('quantity').isInt({ min: 1 }),
+//   async (req, res, next) => {
+//     try {
+//       const currentUser = await User.findByPk(req.params.id);
+//       const currentSession = await Order.findOne({
+//         where: {
+//           userId: currentUser.id,
+//           status: 'open',
+//         },
+//       });
+//       if (!currentSession) {
+//         currentSession = await currentUser.createOrder({});
+//       }
+//     } catch (error) {}
+//   }
+// );
+
+// router.post(
+//   '/:id/cart',
+//   requireToken,
+//   isValidMeme(),
+//   body('quantity').isInt({ min: 1 }),
+//   async (req, res, next) => {
+//     try {
+//       console.log(req.body);
+//       //collects errors from validators
+//       const errors = validationResult(req);
+//       if (!errors.isEmpty()) {
+//         throw errors.mapped();
+//       }
+
+//       const currentUser = await User.findByPk(req.params.id);
+
+//       const [currentSession, created] = await Order.findOrCreate({
+//         where: {
+//           userId: currentUser.id,
+//           status: 'open',
+//         },
+//       });
+//       const [itemToUpdate, newItem] = await OrderItem.findOrCreate({
+//         where: {
+//           memeId: req.body.memeId,
+//           orderId: currentSession.id,
+//         },
+//       });
+
+//       if (itemToUpdate) {
+//         const total = itemToUpdate.quantity + parseInt(req.body.quantity);
+//         await itemToUpdate.update({ quantity: total });
+//       } else {
+//         console.log(req.body);
+//         var newOrder = await newItem.update({
+//           memeId: req.body.memeId,
+
+//           quantity: req.body.quantity,
+
+//           salePrice: req.body.salePrice,
+//         });
+//       }
+
+//       if (currentSession) {
+//         currentSession.addOrderItem(newOrder);
+//         // console.log(Object.keys(currentSession.__proto__));
+//         res.json(currentSession);
+//       } else {
+//         created.setUser(currentUser);
+//         created.addOrderItem(newOrder);
+//         res.json(created);
+//       }
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
