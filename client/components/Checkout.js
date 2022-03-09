@@ -80,12 +80,7 @@ export default function Checkout() {
         <div className="payment">Payment Options</div>
         <div className="Shipping Address">Shipping Address</div>
         <Link to="/confirmation">
-          <Button
-            variant="contained"
-            type="submit"
-            label="confirm purchase"
-            onClick={() => onSubmit()}
-          >
+          <Button variant="contained" type="submit" label="confirm purchase">
             Confirm Purchase
           </Button>
         </Link>
