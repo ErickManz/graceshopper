@@ -40,7 +40,8 @@ const AuthForm = ({ name, displayName }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formName = e.target.name;
-    dispatch(authenticate(formData, formName));
+    console.log(formName);
+    dispatch(authenticate(formData, displayName));
   };
 
   const handleChange = (e) => {
