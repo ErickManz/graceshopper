@@ -25,7 +25,7 @@ function Order(props) {
   useEffect(() => {
     dispatch(me());
     dispatch(getItems(user));
-  }, []);
+  }, [user]);
 
   const onSubmit = (e, meme, num) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ function Order(props) {
             <div key={orderItem.id}>
               <h3>{orderItem.meme.name}</h3>
               <img src={orderItem.meme.imageUrl}></img>
-              <h3>Price: {orderItem.meme.price}</h3>
+              <h3>Price: {orderItem.salePrice}</h3>
               <label htmlFor="quantity">Quantity:{orderItem.quantity}</label>
 
               <button

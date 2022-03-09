@@ -24,7 +24,7 @@ function SingleMeme(props) {
     e.preventDefault();
     if (user.id) {
       dispatch(
-        addItems(user, {
+        addItems(user.id, {
           memeId: meme.id,
           quantity: quantity,
           salePrice: meme.price,

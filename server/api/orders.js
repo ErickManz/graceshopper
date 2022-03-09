@@ -42,7 +42,6 @@ router.post('/:id', requireToken, isAdmin, async (req, res, next) => {
 
     if (openOrder === null) {
       const user = await User.findByPk(req.params.id);
-      console.log(user);
       const newOrder = await Order.create();
       user.addOrder(newOrder);
       res.status(201).send(newOrder);
