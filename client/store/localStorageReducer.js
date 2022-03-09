@@ -1,10 +1,10 @@
 import axios from 'axios';
 import OrderItemsReducer from './orderReducer';
 
-const ADD_ITEM = 'ADD_ITEM';
+const ADD_ITEM_LOCAL = 'ADD_ITEM';
 const GET_ITEM = 'GET_ITEM';
 
-export const setCartItems = (OrderItem) => ({ type: ADD_ITEM, OrderItem });
+export const setCartItems = (OrderItem) => ({ type: ADD_ITEM_LOCAL, OrderItem });
 export const getCartItems = () => ({ type: GET_ITEM });
 
 export const addItemToLocalCart = (product) => {
@@ -35,7 +35,7 @@ export const getCart = () => {
 
 const localStorageReducer = (products = [], action) => {
   switch (action.type) {
-    case ADD_ITEM: {
+    case ADD_ITEM_LOCAL: {
       const product = JSON.stringify(action.OrderItem);
       localStorage.setItem('guestCart', product);
       return [...products, action.OrderItem];

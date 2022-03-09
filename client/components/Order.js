@@ -3,12 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems, editItems } from '../store/orderReducer';
 import { Link } from 'react-router-dom';
 import { me } from '../store';
-import { getCart } from '../store/localStorageReducer';
 
 function Order(props) {
-  const orderItems = useSelector((state) => state.OrderItems);
-  const localItems = JSON.parse(window.localStorage.getItem('guestCart'));
+ console.log("hello world");
+ let orderItems = 0;
+ let localItems = 0
+ try{
+  orderItems = useSelector((state) => state.OrderItems);
+  localItems = JSON.parse(window.localStorage.getItem('guestCart'));
+ }catch(err){
+   console.log(err)
+ }
+
   console.log(localItems);
+  console.log(orderItems);
+
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
@@ -23,13 +32,31 @@ function Order(props) {
     dispatch(editItems(user, { memeId: meme, quantity: num }));
   };
 
-  // (orderItems.length === 0) {
+  if ( localItems !== null) {
+       return(
+       <div>
+         {localItems.map((item) => (
+          <div key = {item.id}>
 
-  // } else {
-  // }
+           <img src ={item.url}></img>
+           <h2>quantity: {item.quantity}</h2>
+           <h2>price: {item.price}</h2>
+          </div>
+         )
+
+         )}
+
+          <button type="button">
+          <Link to="/checkout">Checkout </Link>
+        </button>
+       </div>
+
+       )
+  } else if(orderItems !== null && localItems === null ) {
 
   return (
     <div>
+
       <div className="orderItem">
         {orderItems.map((orderItem) => (
           <div key={orderItem.id}>
@@ -64,16 +91,12 @@ function Order(props) {
       </div>
     </div>
   );
+}else{
+  return(
+    <h1>Nothing in the cart </h1>
+  )
+}
 }
 
 export default Order;
 
-// Completed Tier 1 (or mostly done!)
-// Up-to-date Project Board
-// Deployed website to demo for us at Code Review
-// You can walk through vertical slices of anyone's code
-
-// Teamwork
-// Coding practices
-// Architectural decisions
-// Security

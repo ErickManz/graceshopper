@@ -5,6 +5,7 @@ const isLoggedIn = false
 
 
 export default function Confirmation() {
+     localStorage.clear();
     return (
         <div classname="container">
             <div className="message">
@@ -14,6 +15,6 @@ export default function Confirmation() {
         ? <a>View Transactions</a>
         : <a>Create Account to review transactions</a>}
     </div>
-        
+
     )
 }

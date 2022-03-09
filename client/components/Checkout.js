@@ -20,8 +20,18 @@ function total(orderItems) {
     0
   );
 }
+function totalForLocal(orderItems) {
+  return orderItems.reduce(
+    (total, orderItem) =>
+      total + Number(orderItem.price) * orderItem.quantity,
+    0
+  );
+}
 
 export default function Checkout() {
+
+  const localItems = JSON.parse(window.localStorage.getItem('guestCart'));
+
   const OrderItems = useSelector((state) => state.OrderItems);
   const user = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
@@ -34,6 +44,49 @@ export default function Checkout() {
   function onSubmit() {
     dispatch(submitOrder(user.id));
   }
+  if(localItems.length > 0){
+    return(
+    <div className="container">
+    <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
+    <Table sx={{ maxWidth: 650 }} >
+      <TableHead>
+        <TableRow>
+          <TableCell scope="col">Meme</TableCell>
+          <TableCell scope="col">Price</TableCell>
+          <TableCell scope="col">Quantity</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {localItems.map((orderItem) => {
+          return (
+
+            <TableRow key={orderItem.id}>
+              <TableCell>{orderItem.id}</TableCell>
+              <TableCell>{orderItem.quantity}</TableCell>
+              <TableCell>${orderItem.price}</TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+
+      <TableRow>
+        <TableCell>Total</TableCell>
+        <TableCell>{' '}</TableCell>
+        <TableCell>${totalForLocal(localItems)}</TableCell>
+      </TableRow>
+    </Table>
+    </TableContainer>
+    <div className="payment">Payment Options</div>
+    <div className="Shipping Address">Shipping Address</div>
+    <Link to="/confirmation">
+      <Button variant="contained" type="submit" label="confirm purchase" onClick={() => onSubmit()}>
+        Confirm Purchase
+      </Button>
+    </Link>
+  </div>
+)
+
+  }else {
   return (
     <div className="container">
       <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
@@ -48,7 +101,7 @@ export default function Checkout() {
         <TableBody>
           {OrderItems.map((orderItem) => {
             return (
-              
+
               <TableRow key={orderItem.meme.memeId}>
                 <TableCell>{orderItem.meme.name}</TableCell>
                 <TableCell>{orderItem.quantity}</TableCell>
@@ -74,4 +127,5 @@ export default function Checkout() {
       </Link>
     </div>
   );
+}
 }
