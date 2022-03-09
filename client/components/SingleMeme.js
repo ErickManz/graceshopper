@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMeme } from '../store/singleMemeReducer';
 import { addItems } from '../store/orderReducer';
 import { me } from '../store';
+import { addItemToLocalCart } from '../store/localStorageReducer';
 import EditMemeForm from './forms/EditMemeForm';
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
@@ -18,12 +19,38 @@ function SingleMeme(props) {
     dispatch(getMeme(props.match.params.id));
     dispatch(me());
   }, []);
-  const onSubmit = (e, memeId) => {
+
+  const onSubmit = (e, meme) => {
     e.preventDefault();
-    dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
+    if (user.id) {
+      dispatch(
+        addItems(user, {
+          memeId: meme.id,
+          quantity: quantity,
+          salePrice: meme.price,
+        })
+      );
+    } else {
+      dispatch(
+        addItemToLocalCart({
+          id: meme.id,
+          name: meme.name,
+          price: meme.price,
+          quantity: quantity,
+          url: meme.imageUrl,
+        })
+      );
+    }
     setQuantity(1);
     setOpen(true);
   };
+
+  // const onSubmit = (e, memeId) => {
+  //   e.preventDefault();
+  //   dispatch(addItems(user.id, { memeId: memeId, quantity: quantity }));
+  //   setQuantity(1);
+  //   setOpen(true)
+  // };
 
   return (
     <div key={meme.id} className="singleMeme">
@@ -43,7 +70,7 @@ function SingleMeme(props) {
           onChange={(e) => setQuantity(e.target.value)}
         />
       </div>
-      <button type="button" onClick={(e) => onSubmit(e, meme.id)}>
+      <button type="button" onClick={(e) => onSubmit(e, meme)}>
         Add to cart{' '}
       </button>
 

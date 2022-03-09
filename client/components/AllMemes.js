@@ -4,6 +4,7 @@ import { getMemes } from '../store/memesReducer';
 import { Link } from 'react-router-dom';
 import { addItems } from '../store/orderReducer';
 import { me } from '../store';
+import { addItemToLocalCart } from '../store/localStorageReducer';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -17,6 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 function AllMemes() {
   const memes = useSelector((state) => state.memes);
   const user = useSelector((state) => state.auth.id);
+
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -31,15 +33,32 @@ function AllMemes() {
     dispatch(me());
     dispatch(getMemes());
   }, []);
+
+  //make local storage reducer
+  //if guest use local reducer
+  //dispatch additemslocalcart thunk
+
   const onSubmit = (e, meme) => {
     e.preventDefault();
-    dispatch(
-      addItems(user, {
-        memeId: meme.id,
-        quantity: quantity,
-        salePrice: meme.price,
-      })
-    );
+    if (user) {
+      dispatch(
+        addItems(user, {
+          memeId: meme.id,
+          quantity: quantity,
+          salePrice: meme.price,
+        })
+      );
+    } else {
+      dispatch(
+        addItemToLocalCart({
+          id: meme.id,
+          name: meme.name,
+          price: meme.price,
+          quantity: quantity,
+          url: meme.imageUrl,
+        })
+      );
+    }
     setQuantity(1);
     setOpen(true);
   };
