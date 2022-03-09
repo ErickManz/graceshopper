@@ -4,7 +4,10 @@ import OrderItemsReducer from './orderReducer';
 const ADD_ITEM_LOCAL = 'ADD_ITEM';
 const GET_ITEM = 'GET_ITEM';
 
-export const setCartItems = (OrderItem) => ({ type: ADD_ITEM_LOCAL, OrderItem });
+export const setCartItems = (OrderItem) => ({
+  type: ADD_ITEM_LOCAL,
+  OrderItem,
+});
 export const getCartItems = () => ({ type: GET_ITEM });
 
 export const addItemToLocalCart = (product) => {
@@ -18,6 +21,7 @@ export const addItemToLocalCart = (product) => {
     } else {
       cart.push({
         id: product.id,
+        name: product.name,
         quantity: product.quantity,
         price: product.price,
         url: product.url,

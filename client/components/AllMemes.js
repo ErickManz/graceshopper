@@ -18,6 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 function AllMemes() {
   const memes = useSelector((state) => state.memes);
   const user = useSelector((state) => state.auth.id);
+
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function AllMemes() {
       dispatch(
         addItemToLocalCart({
           id: meme.id,
+          name: meme.name,
           price: meme.price,
           quantity: quantity,
           url: meme.imageUrl,

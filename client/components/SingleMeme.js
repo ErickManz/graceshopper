@@ -34,6 +34,7 @@ function SingleMeme(props) {
       dispatch(
         addItemToLocalCart({
           id: meme.id,
+          name: meme.name,
           price: meme.price,
           quantity: quantity,
           url: meme.imageUrl,
